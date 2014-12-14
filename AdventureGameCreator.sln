@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{BDB1FF32-DF40-4E60-99EF-BC9B9161AFF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player", "Player\Player.csproj", "{D550A3F7-7DB8-4E14-B0DA-77FECFB86AB0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDB1FF32-DF40-4E60-99EF-BC9B9161AFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB1FF32-DF40-4E60-99EF-BC9B9161AFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB1FF32-DF40-4E60-99EF-BC9B9161AFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB1FF32-DF40-4E60-99EF-BC9B9161AFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D550A3F7-7DB8-4E14-B0DA-77FECFB86AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D550A3F7-7DB8-4E14-B0DA-77FECFB86AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D550A3F7-7DB8-4E14-B0DA-77FECFB86AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D550A3F7-7DB8-4E14-B0DA-77FECFB86AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
