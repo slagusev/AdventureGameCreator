@@ -10,29 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Player
+namespace Editor
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NewGame.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NewGame : Window
     {
-        public MainWindow()
+        public NewGame()
         {
             InitializeComponent();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void btnNew_Click(object sender, RoutedEventArgs e)
-        {   
-
         }
     }
 }

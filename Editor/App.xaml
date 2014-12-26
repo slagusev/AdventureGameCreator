@@ -1,8 +1,9 @@
 ﻿<Application x:Class="Editor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Editor="clr-namespace:Editor"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Editor:MainViewModel x:Key="MainViewModelStatic"></Editor:MainViewModel>
     </Application.Resources>
 </Application>

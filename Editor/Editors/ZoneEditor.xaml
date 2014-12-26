@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Editor.ZoneEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding ZoneName}"></TextBlock>
+            <TextBlock>ID:
+        <Run Text="{Binding ZoneId}"></Run>
+            </TextBlock>
+            <TextBlock FontSize="16">Rooms:</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <ListBox ItemsSource="{Binding Rooms}" Name="lstRooms" Height="300" ScrollViewer.VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Stretch" Margin="20" MouseDoubleClick="mainTree_MouseDoubleClick">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RoomName}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Grid.Column="1" Margin="20">
+                    <Button Margin="10" Command="{Binding NewRoomCommand}">New Room</Button>
+                    <Button Margin="10" Command="{Binding DeleteRoomCommand}">Delete Selected Room</Button>
+                </StackPanel>
+            </Grid>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -13,26 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Player
+namespace Editor.Editors
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RoomEditor.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RoomEditor : UserControl
     {
-        public MainWindow()
+        public RoomEditor()
         {
             InitializeComponent();
         }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e)
+        private void ListBox_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.Shutdown();
+            ((Editor.ObjectTypes.Room)this.DataContext).OpenSelectedExit();
         }
 
-        private void btnNew_Click(object sender, RoutedEventArgs e)
-        {   
 
-        }
+
     }
 }

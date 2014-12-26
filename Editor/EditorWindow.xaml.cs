@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Player
+namespace Editor
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EditorWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditorWindow : UserControl
     {
-        public MainWindow()
+        public EditorWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void btnNew_Click(object sender, RoutedEventArgs e)
-        {   
-
         }
     }
 }

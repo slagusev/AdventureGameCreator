@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Editor.Editors.RoomEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             d:DesignHeight="1000" d:DesignWidth="300">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel>
+        <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding RoomName}"></TextBlock>
+        <TextBlock>ID:
+        <Run Text="{Binding RoomID}"></Run>
+        </TextBlock>
+        <TextBlock Margin="0,20,0,0">Exits:</TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox SelectedItem="{Binding SelectedExit}" Margin="20" MaxHeight="300" ItemsSource="{Binding Exits}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="ListBox_MouseDoubleClick_1">
+                
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Direction}"/><Run Text=" - "/><Run Text="{Binding ZoneLink.ZoneName}"/><Run Text=" - "/><Run Text="{Binding RoomLink.RoomName}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Margin="20" Grid.Column="1">
+                    <TextBlock>Direction:</TextBlock>
+                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.Direction}" ItemsSource="{Binding PossibleDirections}"></ComboBox>
+                    <TextBlock>Zone:</TextBlock>
+                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.ZoneLink}" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ZoneName}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock>Room:</TextBlock>
+                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.RoomLink}" ItemsSource="{Binding SelectedExit.ZoneLink.Rooms}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                            <TextBlock Text="{Binding RoomName}"></TextBlock>
+                        </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="10" Command="{Binding NewExitCommand}">New Exit</Button>
+                    <Button Margin="10" Command="{Binding RemoveExitCommand}">Remove Selected Exit</Button>
+                    <Button Margin="10" Command="{Binding LinkExitCommand}" ToolTip="Quickly create a mirrored exit on the destination of this exit, back to this room.">Link Selected Exit</Button>
+                    <Button Margin="10" Command="{Binding OpenSelectedExitCommand}" ToolTip="Open the room the selected exit leadds to.">Open Selected Exit</Button>
+                </StackPanel>
+        </Grid>
+    </StackPanel>
+    </ScrollViewer>
+</UserControl>

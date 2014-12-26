@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Editor.EditorMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ZoneTemplate">
+            
+            <TextBlock  Text="{Binding ZoneName}" >
+            </TextBlock>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    <Grid>
+        <TreeView x:Name="mainTree" Margin="0,4,0,-4" MouseDoubleClick="mainTree_MouseDoubleClick">
+            <TreeViewItem Header="Zones" IsExpanded="True" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource ZoneTemplate}">
+                
+            </TreeViewItem>
+
+        </TreeView>
+    </Grid>
+</UserControl>

@@ -1,0 +1,13 @@
+﻿<Window x:Class="Editor.MainEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Editor="clr-namespace:Editor"
+        Title="MainEditor" Height="768" Width="1024">
+    <DockPanel>
+        <Editor:MainMenu DockPanel.Dock="Top"></Editor:MainMenu>
+        <Editor:EditorMenu DockPanel.Dock="Left" Width="200"></Editor:EditorMenu>
+        <Editor:MainContent></Editor:MainContent>
+        
+        
+    </DockPanel>
+</Window>
