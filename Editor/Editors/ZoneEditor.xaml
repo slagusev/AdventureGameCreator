@@ -9,17 +9,17 @@
              d:DesignHeight="500" d:DesignWidth="500">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding ZoneName}"></TextBlock>
+            <TextBlock FontSize="24" FontWeight="Bold"><Run Text="Zone: "></Run><Run  Text="{Binding ZoneName}"></Run></TextBlock>
             <TextBlock>ID:
         <Run Text="{Binding ZoneId}"></Run>
             </TextBlock>
-            <TextBlock FontSize="16">Rooms:</TextBlock>
+            <Expander Margin="0,20,0,0" Header="Rooms" IsExpanded="true">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ListBox ItemsSource="{Binding Rooms}" Name="lstRooms" Height="300" ScrollViewer.VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Stretch" Margin="20" MouseDoubleClick="mainTree_MouseDoubleClick">
+                <ListBox ItemsSource="{Binding Rooms}" Name="lstRooms" MinHeight="300"  ScrollViewer.VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Stretch" Margin="20" MouseDoubleClick="mainTree_MouseDoubleClick" SelectedItem="{Binding SelectedRoom}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding RoomName}"></TextBlock>
@@ -31,7 +31,7 @@
                     <Button Margin="10" Command="{Binding DeleteRoomCommand}">Delete Selected Room</Button>
                 </StackPanel>
             </Grid>
-            
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

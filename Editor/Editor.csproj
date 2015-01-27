@@ -58,8 +58,17 @@
     <Compile Include="EditorMenu.xaml.cs">
       <DependentUpon>EditorMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\InteractableEditor.xaml.cs">
+      <DependentUpon>InteractableEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\InteractableGroupViewer.xaml.cs">
+      <DependentUpon>InteractableGroupViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\RoomEditor.xaml.cs">
       <DependentUpon>RoomEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ScriptControl.xaml.cs">
+      <DependentUpon>ScriptControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditorWindow.xaml.cs">
       <DependentUpon>EditorWindow.xaml</DependentUpon>
@@ -71,6 +80,9 @@
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="NewForms\NewInteractable.xaml.cs">
+      <DependentUpon>NewInteractable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewRoom.xaml.cs">
       <DependentUpon>NewRoom.xaml</DependentUpon>
     </Compile>
@@ -78,9 +90,32 @@
       <DependentUpon>NewZone.xaml</DependentUpon>
     </Compile>
     <Compile Include="ObjectTypes\Exit.cs" />
+    <Compile Include="ObjectTypes\Interactable.cs" />
+    <Compile Include="ObjectTypes\InteractableGroup.cs" />
     <Compile Include="ObjectTypes\Room.cs" />
     <Compile Include="ObjectTypes\Zone.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ScriptEditors\CommentEditor.xaml.cs">
+      <DependentUpon>CommentEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\ConditionEditor.xaml.cs">
+      <DependentUpon>ConditionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\DisplayTextEditor.xaml.cs">
+      <DependentUpon>DisplayTextEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\ScriptSelector.xaml.cs">
+      <DependentUpon>ScriptSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scripter\Brancher.cs" />
+    <Compile Include="Scripter\Conditions\Conditional.cs" />
+    <Compile Include="Scripter\Misc\Blank.cs" />
+    <Compile Include="Scripter\Misc\Comment.cs" />
+    <Compile Include="Scripter\Script.cs" />
+    <Compile Include="Scripter\ScriptLine.cs" />
+    <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
+    <Compile Include="TestData.cs" />
+    <Compile Include="VisibilityConverter.cs" />
     <Compile Include="WindowView.cs" />
     <Compile Include="Editors\ZoneEditor.xaml.cs">
       <DependentUpon>ZoneEditor.xaml</DependentUpon>
@@ -89,7 +124,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Editors\InteractableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\InteractableGroupViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Editors\RoomEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ScriptControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,6 +172,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewForms\NewInteractable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +189,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ZoneEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\CommentEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ConditionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\DisplayTextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ScriptSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

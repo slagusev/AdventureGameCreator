@@ -5,5 +5,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Editor:MainViewModel x:Key="MainViewModelStatic"></Editor:MainViewModel>
+        <Editor:TestData x:Key="TestDataStatic"></Editor:TestData>
     </Application.Resources>
 </Application>

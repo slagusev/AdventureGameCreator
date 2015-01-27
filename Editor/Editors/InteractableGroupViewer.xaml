@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Editor.Editors.InteractableGroupViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" DataContext="{Binding TestInteractableGroup, Source={StaticResource TestDataStatic}}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold"><Run Text="Interactable Group: "></Run><Run  Text="{Binding Name}"></Run></TextBlock>
+            <TextBlock Margin="20">This group has the following Interactables:</TextBlock>
+            <ListBox Name="listInteractables" Margin="20,0" Height="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Interactables}" MouseDoubleClick="ListBox_MouseDoubleClick_1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding InteractableName}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

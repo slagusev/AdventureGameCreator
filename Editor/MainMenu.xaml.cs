@@ -51,5 +51,10 @@ namespace Editor
         {
             Application.Current.Shutdown();
         }
+
+        private void newInteractable_Click(object sender, RoutedEventArgs e)
+        {
+            new NewInteractable().ShowDialog();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.ObjectTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,28 @@ namespace Editor.Editors
         private void ListBox_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             ((Editor.ObjectTypes.Room)this.DataContext).OpenSelectedExit();
+        }
+
+        private void btnAddInteractable_Click(object sender, RoutedEventArgs e)
+        {
+            var item = treeLibrary.SelectedItem;
+            if (item != null && item.GetType() == typeof(Interactable))
+            {
+                var interactable = item as Interactable;
+                var room = (Room)this.DataContext;
+                room.DefaultInteractables.Add(interactable);
+            }
+        }
+
+        private void btnRemoveInteractable_Click(object sender, RoutedEventArgs e)
+        {
+            var item = lstInteractables.SelectedItem;
+            if (item != null && item.GetType() == typeof(Interactable))
+            {
+                var interactable = item as Interactable;
+                var room = (Room)this.DataContext;
+                room.DefaultInteractables.RemoveAt(lstInteractables.SelectedIndex);
+            }
         }
 
 

@@ -15,6 +15,7 @@ namespace Editor.ObjectTypes
         public Zone()
         {
             NewRoomCommand = new RelayCommand(NewRoom);
+            DeleteRoomCommand = new RelayCommand(DeleteSelectedRoom);
         }
         /// <summary>
         /// The <see cref="ZoneName" /> property's name.
@@ -105,7 +106,35 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(RoomsPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="SelectedRoom" /> property's name.
+        /// </summary>
+        public const string SelectedRoomPropertyName = "SelectedRoom";
 
+        private Room _selectedRoom = null;
+
+        /// <summary>
+        /// Sets and gets the SelectedRoom property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public Room SelectedRoom
+        {
+            get
+            {
+                return _selectedRoom;
+            }
+
+            set
+            {
+                if (_selectedRoom == value)
+                {
+                    return;
+                }
+
+                _selectedRoom = value;
+                RaisePropertyChanged(SelectedRoomPropertyName);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {
@@ -145,6 +174,7 @@ namespace Editor.ObjectTypes
             }
             return z;
         }
+
         #region Methods
         public void NewRoom()
         {
@@ -154,10 +184,19 @@ namespace Editor.ObjectTypes
         }
         public void DeleteSelectedRoom()
         {
+            if (SelectedRoom != null)
+            {
+                var result = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete " + SelectedRoom.RoomName + "?\nThis will also delete all exits to this room, and all scripts associated.\nYou can not undo this action.", "Confirmation", System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    MainViewModel.MainViewModelStatic.DeleteRoom(SelectedRoom);
+                }
+            }
         }
         #endregion Methods
         #region Commands
         public RelayCommand NewRoomCommand { get; private set; }
+        public RelayCommand DeleteRoomCommand { get; private set; }
         #endregion
     }
 }

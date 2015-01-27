@@ -1,4 +1,5 @@
-﻿using Editor.ObjectTypes;
+﻿using Editor.Editors;
+using Editor.ObjectTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,27 @@ namespace Editor
                                     DataContext = z
                                 }
                         };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
+            if (mainTree.SelectedItem.GetType() == typeof(InteractableGroup))
+            {
+                InteractableGroup g = mainTree.SelectedItem as InteractableGroup;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as InteractableGroupViewer
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Interactable Group - " + g.Name,
+                        Content = (UserControl)new InteractableGroupViewer
+                        {
+                            DataContext = g
+                        }
+                    };
                     MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
                 }
                 else wv = existingWindows.First();

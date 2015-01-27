@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Editor.Editors.InteractableEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+              xmlns:Editor="clr-namespace:Editor"
+             xmlns:Controls="clr-namespace:Editor.Editors"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Path="TestInteractable" Source="{StaticResource TestDataStatic}"/>
+    </UserControl.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Interactable: "/><Run Text="{Binding InteractableName}"/></TextBlock>
+            <TextBlock>ID:
+        <Run Text="{Binding InteractableID}"></Run></TextBlock>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock >Default Display Name:</TextBlock>
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultDisplayName}"></TextBox>
+            </StackPanel>
+            <StackPanel ToolTip="Define a sorting group for the " Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock>Group:</TextBlock>
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding GroupName}"></TextBox>
+            </StackPanel>
+            <Expander Margin="0,20,0,0" Header="Examine" IsExpanded="False">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding CanExamine}" IsEnabled="{Binding CanExamineUsesScript, ConverterParameter=InvertBoolean, Converter={StaticResource VisibilityConverter}}">This item is Examinable</CheckBox>
+                        <CheckBox IsChecked="{Binding CanExamineUsesScript}" Margin="50,0,0,0">This item uses a special examine condition [SCRIPT]</CheckBox>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding CanExamineUsesScript, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock>Can the user examine this object?</TextBlock>
+                        <Controls:ScriptControl DataContext="{Binding CanExamineScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding HasExamineScript, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock>Perform the following action on examine:</TextBlock>
+                        <Controls:ScriptControl DataContext="{Binding ExamineScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+            <Expander Margin="0,20,0,0" Header="Interaction" IsExpanded="False">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding CanInteract}" IsEnabled="{Binding CanInteractUsesScript, ConverterParameter=InvertBoolean, Converter={StaticResource VisibilityConverter}}">This item is Interactable</CheckBox>
+                        <CheckBox IsChecked="{Binding CanInteractUsesScript}" Margin="50,0,0,0">This item uses a special interact condition [SCRIPT]</CheckBox>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding CanInteractUsesScript, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock>Can the user interact this object?</TextBlock>
+                        <Controls:ScriptControl DataContext="{Binding CanInteractScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding HasInteractScript, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock>Perform the following action on examine:</TextBlock>
+                        <Controls:ScriptControl DataContext="{Binding InteractScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

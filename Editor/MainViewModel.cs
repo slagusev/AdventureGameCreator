@@ -1,4 +1,6 @@
 ﻿using Editor.ObjectTypes;
+using Editor.Scripter;
+using Editor.Scripter.Misc;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,13 +76,36 @@ namespace Editor
                 RoomID = Guid.NewGuid()
             }); 
             this.Zones.Add(mall);
+
             bedroom.Exits.Add(new Exit { ZoneLink = playerHouse, RoomLink = hallway, Direction = ExitDirection.West });
             hallway.Exits.Add(new Exit { ZoneLink = playerHouse, RoomLink = bedroom, Direction = ExitDirection.East });
+
 #endregion
 
 
 
             MainViewModelStatic = this;
+            var TestInteractable = new Interactable();
+            this.Interactables.Add(TestInteractable);
+            TestInteractable.InteractableName = "Bookshelf";
+            TestInteractable.DefaultDisplayName = "Old Bookshelf";
+            TestInteractable.CanExamine = true;
+            TestInteractable.CanExamineUsesScript = true;
+            TestInteractable.CanInteract = true;
+            TestInteractable.CanInteractUsesScript = false;
+            Script testIntCanExScript = new Script();
+            testIntCanExScript.AddBeforeSelected(new Comment { CommentText = "Test Can Examine Script" });
+            Script testIntCanInScript = new Script();
+            testIntCanInScript.AddBeforeSelected(new Comment { CommentText = "Test Can Interact Script" });
+            Script testIntExScript = new Script();
+            testIntExScript.AddBeforeSelected(new Comment { CommentText = "Test Examine Script" });
+            Script testIntInScript = new Script();
+            testIntInScript.AddBeforeSelected(new Comment { CommentText = "Test Interaction Script" });
+            TestInteractable.ExamineScript = testIntExScript;
+            TestInteractable.InteractScript = testIntInScript;
+            TestInteractable.CanInteractScript = testIntCanInScript;
+            TestInteractable.CanExamineScript = testIntCanExScript;
+            TestInteractable.GroupName = "Furniture";
         }
 
         /// <summary>
@@ -110,6 +135,85 @@ namespace Editor
 
                 _zones = value;
                 RaisePropertyChanged(ZonesPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="InteractableGroups" /> property's name.
+        /// </summary>
+        public const string InteractableGroupsPropertyName = "InteractableGroups";
+
+        private ObservableCollection<InteractableGroup> _interactableGroups = new ObservableCollection<InteractableGroup>();
+
+        /// <summary>
+        /// Sets and gets the InteractableGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<InteractableGroup> InteractableGroups
+        {
+            get
+            {
+                return _interactableGroups;
+            }
+
+            set
+            {
+                if (_interactableGroups == value)
+                {
+                    return;
+                }
+
+                _interactableGroups = value;
+                RaisePropertyChanged(InteractableGroupsPropertyName);
+            }
+        }
+
+
+        /// <summary>
+        /// The <see cref="Interactables" /> property's name.
+        /// </summary>
+        public const string InteractablesPropertyName = "Interactables";
+
+        private ObservableCollection<Interactable> _interactables = new ObservableCollection<Interactable>();
+
+        /// <summary>
+        /// Sets and gets the Interactables property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<Interactable> Interactables
+        {
+            get
+            {
+                return _interactables;
+            }
+
+            set
+            {
+                if (_interactables == value)
+                {
+                    return;
+                }
+
+                _interactables = value;
+                RaisePropertyChanged(InteractablesPropertyName);
+            }
+        }
+
+        public void RecalculateInteractableGroups()
+        {
+            foreach (var a in InteractableGroups)
+            {
+                a.Interactables.Clear();
+            }
+            foreach (var a in Interactables)
+            {
+                var group = InteractableGroups.Where(b => a.GroupName == b.Name).FirstOrDefault();
+                if (group == null)
+                {
+                    group = new InteractableGroup { Name = a.GroupName };
+                    InteractableGroups.Add(group);
+                }
+                group.Interactables.Add(a);
             }
         }
 
@@ -217,7 +321,8 @@ namespace Editor
         public XElement ToXML()
         {
             return new XElement("Game",
-                new XElement("Zones", from a in Zones select a.ToXML())
+                new XElement("Zones", from a in Zones select a.ToXML()),
+                new XElement("Interactables", from a in Interactables select a.ToXML())
                 );
         }
 
@@ -255,8 +360,67 @@ namespace Editor
                     }
                 }
             }
-
+            XElement interactables = xml.Element("Interactables");
+            if (interactables != null)
+            {
+                mvm.Interactables = new ObservableCollection<Interactable>(from a in interactables.Elements("Interactable") select Interactable.FromXML(a));
+            }
+            mvm.InteractableGroups.Clear();
+            mvm.RecalculateInteractableGroups();
+            //Resolve all interactable references
+            foreach (var a in mvm.InteractableRefStack)
+            {
+                var guid = a.Value;
+                var list = a.Key;
+                var interactable = mvm.Interactables.Where(i => i.InteractableID == guid).FirstOrDefault();
+            }
             return mvm;
         }
+        public List<KeyValuePair<ObservableCollection<Interactable>, Guid>> InteractableRefStack = new List<KeyValuePair<ObservableCollection<Interactable>, Guid>>();
+
+        public void DeleteRoom(Room r)
+        {
+
+            //delete all exits
+            foreach (var zone in Zones)
+            {
+                foreach (var room in zone.Rooms)
+                {
+                    Exit exitForDeletion = null;
+                    foreach (var exit in room.Exits)
+                    {
+                        if (exit.RoomLink == r)
+                        {
+                            exitForDeletion = exit;
+                            break;
+                        }
+                    }
+                    if (exitForDeletion != null) room.Exits.Remove(exitForDeletion);
+                }
+            }
+            //delete from zone
+            foreach (var zone in Zones)
+            {
+                if (zone.Rooms.Contains(r))
+                {
+                    zone.Rooms.Remove(r);
+                }
+            }
+            List<WindowView> vws = new List<WindowView>();
+
+            foreach (var vw in this.OpenWindows)
+            {
+                if (vw.Content.DataContext == r)
+                {
+                    vws.Add(vw);
+                }
+            }
+            
+            foreach (var vw in vws)
+            {
+                this.OpenWindows.Remove(vw);
+            }
+        }
+        
     }
 }

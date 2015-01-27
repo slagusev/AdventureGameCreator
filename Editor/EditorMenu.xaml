@@ -11,12 +11,22 @@
             <TextBlock  Text="{Binding ZoneName}" >
             </TextBlock>
         </DataTemplate>
-
+        <DataTemplate x:Key="InteractableTemplate">
+            
+        </DataTemplate>
+        <DataTemplate x:Key="InteractableGroupsTemplate">
+            <TextBlock  Text="{Binding Name}" >
+            </TextBlock>
+        
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <TreeView x:Name="mainTree" Margin="0,4,0,-4" MouseDoubleClick="mainTree_MouseDoubleClick">
             <TreeViewItem Header="Zones" IsExpanded="True" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource ZoneTemplate}">
                 
+            </TreeViewItem>
+            <TreeViewItem Header="Interactables (By Group)" IsExpanded="True" ItemsSource="{Binding InteractableGroups, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource InteractableGroupsTemplate}">
+
             </TreeViewItem>
 
         </TreeView>

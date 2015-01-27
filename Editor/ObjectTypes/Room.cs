@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Scripter;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -198,6 +199,189 @@ namespace Editor.ObjectTypes
             }
         }
 
+        /// <summary>
+        /// The <see cref="Description" /> property's name.
+        /// </summary>
+        public const string DescriptionPropertyName = "Description";
+
+        private string _description = "Enter your room description here. This is what is displayed to the player upon entering the room. Enclose variable names with {{}} to replace text with variable names. For example, {{health}} would display a player's health.";
+
+        /// <summary>
+        /// Sets and gets the Description property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+
+            set
+            {
+                if (_description == value)
+                {
+                    return;
+                }
+
+                _description = value;
+                RaisePropertyChanged(DescriptionPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="HasScriptDescription" /> property's name.
+        /// </summary>
+        public const string HasScriptDescriptionPropertyName = "HasScriptDescription";
+
+        private bool _hasScriptDescription = false;
+
+        /// <summary>
+        /// Sets and gets the HasScriptDescription property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool HasScriptDescription
+        {
+            get
+            {
+                return _hasScriptDescription;
+            }
+
+            set
+            {
+                if (_hasScriptDescription == value)
+                {
+                    return;
+                }
+
+                _hasPlaintextDescription = !value;
+                _hasScriptDescription = value;
+                RaisePropertyChanged(HasPlaintextDescriptionPropertyName);
+                RaisePropertyChanged(HasScriptDescriptionPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="HasPlaintextDescription" /> property's name.
+        /// </summary>
+        public const string HasPlaintextDescriptionPropertyName = "HasPlaintextDescription";
+
+        private bool _hasPlaintextDescription = true;
+
+        /// <summary>
+        /// Sets and gets the HasPlaintextDescription property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool HasPlaintextDescription
+        {
+            get
+            {
+                return _hasPlaintextDescription;
+            }
+
+            set
+            {
+                if (_hasPlaintextDescription == value)
+                {
+                    return;
+                }
+
+                _hasPlaintextDescription = value;
+                _hasScriptDescription = !value;
+                RaisePropertyChanged(HasPlaintextDescriptionPropertyName);
+                RaisePropertyChanged(HasScriptDescriptionPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RoomDescriptionScript" /> property's name.
+        /// </summary>
+        public const string RoomDescriptionScriptPropertyName = "RoomDescriptionScript";
+
+        private Scripter.Script _roomDescriptionScript = new Scripter.Script();
+
+        /// <summary>
+        /// Sets and gets the RoomDescriptionScript property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public Scripter.Script RoomDescriptionScript
+        {
+            get
+            {
+                return _roomDescriptionScript;
+            }
+
+            set
+            {
+                if (_roomDescriptionScript == value)
+                {
+                    return;
+                }
+
+                _roomDescriptionScript = value;
+                RaisePropertyChanged(RoomDescriptionScriptPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DefaultInteractables" /> property's name.
+        /// </summary>
+        public const string DefaultInteractablesPropertyName = "DefaultInteractables";
+
+        private ObservableCollection<Interactable> _defaultInteractables = new ObservableCollection<Interactable>();
+
+        /// <summary>
+        /// Sets and gets the DefaultInteractables property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<Interactable> DefaultInteractables
+        {
+            get
+            {
+                return _defaultInteractables;
+            }
+
+            set
+            {
+                if (_defaultInteractables == value)
+                {
+                    return;
+                }
+
+                _defaultInteractables = value;
+                RaisePropertyChanged(DefaultInteractablesPropertyName);
+            }
+        }
+        ///// <summary>
+        ///// The <see cref="SelectedInteractable" /> property's name.
+        ///// </summary>
+        //public const string SelectedInteractablePropertyName = "SelectedInteractable";
+
+        //private Interactable _selectedInteractable = null;
+
+        ///// <summary>
+        ///// Sets and gets the SelectedInteractable property.
+        ///// Changes to that property's value raise the PropertyChanged event.
+        ///// </summary>
+        //public Interactable SelectedInteractable
+        //{
+        //    get
+        //    {
+        //        return _selectedInteractable;
+        //    }
+
+        //    set
+        //    {
+        //        if (_selectedInteractable == value)
+        //        {
+        //            return;
+        //        }
+
+        //        _selectedInteractable = value;
+        //        RaisePropertyChanged(SelectedInteractablePropertyName);
+        //    }
+        //}
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {
@@ -211,10 +395,15 @@ namespace Editor.ObjectTypes
             return new XElement("Room",
                 new XElement("Name", RoomName),
                 new XElement("Id", RoomID),
-                new XElement("Exits", from a in Exits select a.ToXML())
+                new XElement("Exits", from a in Exits select a.ToXML()),
+                new XElement("TextDescription", Description),
+                new XElement("HasScriptDescription", HasScriptDescription),
+                new XElement("ScriptDescription", RoomDescriptionScript.ToXML()),
+                new XElement("DefaultInteractables", (from a in DefaultInteractables select new XElement("InteractableRef", a.InteractableID)))
                 );
 
         }
+
         public static Room FromXML(XElement xml)
         {
             Room r = new Room();
@@ -233,6 +422,26 @@ namespace Editor.ObjectTypes
             if (xml.Element("Exits") != null)
             {
                 r.Exits = new ObservableCollection<Exit>(from a in xml.Element("Exits").Elements("Exit") select Exit.FromXML(a));
+            }
+            if (xml.Element("TextDescription") != null)
+            {
+                r.Description = xml.Element("TextDescription").Value;
+            }
+            if (xml.Element("HasScriptDescription") != null)
+            {
+                r.HasScriptDescription = Convert.ToBoolean(xml.Element("HasScriptDescription").Value);
+                r.HasPlaintextDescription = !r.HasScriptDescription;
+            }
+            if (xml.Element("ScriptDescription") != null)
+            {
+                r.RoomDescriptionScript = Script.FromXML(xml.Element("ScriptDescription").Element("Script"));
+            }
+            if (xml.Element("DefaultInteractables") != null)
+            {
+                foreach (var a in xml.Element("DefaultInteractables").Elements("InteractableRef"))
+                {
+                    MainViewModel.MainViewModelStatic.InteractableRefStack.Add(new KeyValuePair<ObservableCollection<Interactable>, Guid>(r.DefaultInteractables, Guid.Parse(a.Value)));
+                }
             }
             return r;
         }
@@ -299,14 +508,22 @@ namespace Editor.ObjectTypes
                 }
                 else
                 {
-                    Zone z = MainViewModel.MainViewModelStatic.Zones.Where(a => a.Rooms.Contains(this)).First();
-                    SelectedExit.RoomLink.Exits.Add(new Exit
+
+                    if (SelectedExit.RoomLink.Exits.Where(a => a.RoomLink == this && a.Direction == destDir).Count() == 0)
                     {
-                        Direction = destDir,
-                        ZoneLink = z,
-                        RoomLink = this
-                    });
-                    System.Windows.Forms.MessageBox.Show("New exit created in " + SelectedExit.RoomLink.RoomName + ":\n\n" + destDir.ToString() + " - " + z.ZoneName + " - " + this.RoomName);
+                        Zone z = MainViewModel.MainViewModelStatic.Zones.Where(a => a.Rooms.Contains(this)).First();
+                        SelectedExit.RoomLink.Exits.Add(new Exit
+                        {
+                            Direction = destDir,
+                            ZoneLink = z,
+                            RoomLink = this
+                        });
+                        System.Windows.Forms.MessageBox.Show("New exit created in " + SelectedExit.RoomLink.RoomName + ":\n\n" + destDir.ToString() + " - " + z.ZoneName + " - " + this.RoomName);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Unable to link exit: A matching exit already exists.");
+                    }
                 }
             }
             else
@@ -314,7 +531,6 @@ namespace Editor.ObjectTypes
                 System.Windows.Forms.MessageBox.Show("Please select a room, first.");
             }
         }
-
         public void OpenSelectedExit()
         {
             if (SelectedExit != null)
