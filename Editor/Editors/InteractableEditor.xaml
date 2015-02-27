@@ -55,7 +55,7 @@
                         <Controls:ScriptControl DataContext="{Binding CanInteractScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
                     </StackPanel>
                     <StackPanel Visibility="{Binding HasInteractScript, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock>Perform the following action on examine:</TextBlock>
+                        <TextBlock>Perform the following action on interact:</TextBlock>
                         <Controls:ScriptControl DataContext="{Binding InteractScript}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto"></Controls:ScriptControl>
                     </StackPanel>
                 </StackPanel>

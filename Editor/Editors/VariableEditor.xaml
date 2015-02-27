@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Editor.Editors.VariableEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:Controls="clr-namespace:Editor.Editors"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             xmlns:xckt="http://schemas.xceed.com/wpf/xaml/toolkit"
+             d:DesignHeight="1000" d:DesignWidth="1000"
+             DataContext="{Binding TestNumberVariable, Source={StaticResource TestDataStatic}}">
+    <UserControl.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Variable: "/><Run Text="{Binding Name}"/></TextBlock>
+            <TextBlock>ID:
+        <Run Text="{Binding Id}"></Run>
+            </TextBlock>
+            <TextBlock Margin="20">
+                Type:
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                <CheckBox x:Name="rdoDateTime" IsChecked="{Binding IsDateTime}" Margin="10,0" >Date/Time</CheckBox>
+                <CheckBox x:Name="rdoNumber" IsChecked="{Binding IsNumber}" Margin="10,0" >Number</CheckBox>
+                <CheckBox x:Name="rdoString" IsChecked="{Binding IsString}" Margin="10,0" >String</CheckBox>
+
+            </StackPanel>
+            <TextBlock Margin="20">
+                Default Value:
+                
+            </TextBlock>
+            <xckt:DateTimePicker HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Value="{Binding DefaultDateTime}" Visibility="{Binding IsDateTime, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></xckt:DateTimePicker>
+            <TextBox HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Text="{Binding DefaultString}" Visibility="{Binding IsString, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></TextBox>
+            <TextBox HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Text="{Binding DefaultNumber}" Visibility="{Binding IsNumber, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></TextBox>
+        </StackPanel>
+    </ScrollViewer>
+    
+</UserControl>

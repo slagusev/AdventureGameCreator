@@ -111,5 +111,31 @@ namespace Editor.ScriptEditors
                 }
             }
         }
+
+        private void SetVariable_Click(object sender, RoutedEventArgs e)
+        {
+            var newSetVariableWindow = new ScriptEditors.SetVariableEditor();
+            var script = this.DataContext as Script;
+            if (script != null)
+            {
+                var newSetVariable = new Scripter.Flow.SetVariable();
+                script.AddBeforeSelected(newSetVariable);
+                newSetVariable.SelectedVariable = new ObjectTypes.VarRef() ;
+                newSetVariable.TargetVar = new ObjectTypes.VarRef();
+                newSetVariableWindow.DataContext = newSetVariable;
+                newSetVariableWindow.ShowDialog();
+                if (newSetVariableWindow.DialogResult == true)
+                {
+                    invalidate = true;
+                    newItem = newSetVariable;
+                    this.Close();
+                }
+                else
+                {
+                    script.ScriptLines.Remove(newSetVariable);
+                }
+
+            }
+        }
     }
 }

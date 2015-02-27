@@ -21,6 +21,7 @@
         <TextBlock>ID:
         <Run Text="{Binding RoomID}"></Run>
         </TextBlock>
+            <CheckBox Margin="0,20,0,0" IsChecked="{Binding StartingRoom}">This is the starting room</CheckBox>
             <Expander Margin="0,20,0,0" Header="Descriptions" IsExpanded="False">
                 <StackPanel>
                     <TextBlock Margin="10">Room Display Name:</TextBlock>
@@ -69,7 +70,9 @@
                         </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Margin="10" Command="{Binding NewExitCommand}">New Exit</Button>
+                        <TextBlock>Exit Name:</TextBlock>
+                        <TextBox Margin="10" Text="{Binding SelectedExit.ExitName}"></TextBox>
+                            <Button Margin="10" Command="{Binding NewExitCommand}">New Exit</Button>
                     <Button Margin="10" Command="{Binding RemoveExitCommand}">Remove Selected Exit</Button>
                     <Button Margin="10" Command="{Binding LinkExitCommand}" ToolTip="Quickly create a mirrored exit on the destination of this exit, back to this room.">Link Selected Exit</Button>
                     <Button Margin="10" Command="{Binding OpenSelectedExitCommand}" ToolTip="Open the room the selected exit leadds to.">Open Selected Exit</Button>
@@ -86,7 +89,7 @@
                         
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock><Run Text="{Binding InteractableName}"/><Run Text=" ("/><Run Text="{Binding DefaultDisplayName}"/><Run Text=")"/>
+                                <TextBlock><Run Text="{Binding LinkedInteractable.InteractableName}"/><Run Text=" ("/><Run Text="{Binding LinkedInteractable.DefaultDisplayName}"/><Run Text=")"/>
                                     
                                 </TextBlock>
                             </DataTemplate>

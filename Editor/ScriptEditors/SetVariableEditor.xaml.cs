@@ -12,18 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Editor
+namespace Editor.ScriptEditors
 {
     /// <summary>
-    /// Interaction logic for MainEditor.xaml
+    /// Interaction logic for SetVariable.xaml
     /// </summary>
-    public partial class MainEditor : Window
+    public partial class SetVariableEditor : Window
     {
-        public MainEditor()
+        public SetVariableEditor()
         {
             InitializeComponent();
-            //new Editor.ScriptEditors.SetVariableEditor().Show();
-            
+            //this.DialogResult = false;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

@@ -73,6 +73,27 @@ namespace Editor
                 }
                 else wv = existingWindows.First();
             }
+            if (mainTree.SelectedItem.GetType() == typeof(Variable))
+            {
+                Variable g = mainTree.SelectedItem as Variable;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as VariableEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Variable - " + g.Name,
+                        Content = (UserControl)new VariableEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
             if (wv != null)
                 MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(wv);
         }

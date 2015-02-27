@@ -21,6 +21,7 @@
                 <GroupBox Header="Program Flow">
                     <StackPanel >
                         <Button Name="IfThenElse" Click="IfThenElse_Click">If...Then...Else...</Button>
+                        <Button Name="SetVariable" Click="SetVariable_Click">Set Variable</Button>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

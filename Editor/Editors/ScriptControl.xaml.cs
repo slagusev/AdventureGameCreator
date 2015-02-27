@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Editor.Scripter.Conditions;
 using Editor.Scripter.TextFunctions;
+using Editor.Scripter.Flow;
 
 namespace Editor.Editors
 {
@@ -25,6 +26,25 @@ namespace Editor.Editors
     /// </summary>
     public partial class ScriptControl : UserControl
     {
+        static Dictionary<Type, Type> ScriptEditorsByScriptType = new Dictionary<Type, Type>();
+
+        static ScriptControl()
+        {
+            ScriptEditorsByScriptType.Add(typeof(Comment), typeof(ScriptEditors.Comment));
+            ScriptEditorsByScriptType.Add(typeof(Conditional), typeof(ScriptEditors.ConditionEditor));
+            ScriptEditorsByScriptType.Add(typeof(DisplayText), typeof(ScriptEditors.DisplayTextEditor));
+            ScriptEditorsByScriptType.Add(typeof(SetVariable), typeof(ScriptEditors.SetVariableEditor));
+        }
+
+        public Window GetScriptEditorByType(Type scriptLineType)
+        {
+            if (ScriptEditorsByScriptType.ContainsKey(scriptLineType))
+            {
+                return (Window)(Activator.CreateInstance(ScriptEditorsByScriptType[scriptLineType]));
+            }
+            return null;
+        }
+
         public ScriptControl()
         {
             InitializeComponent();
@@ -60,19 +80,7 @@ namespace Editor.Editors
             {
                 var selected = script.SelectedLine;
                 //Decide what kind of window to open.
-                if (selected.GetType() == typeof(Comment))
-                {
-                    window = new ScriptEditors.Comment();
-                }
-                if (selected.GetType() == typeof(Conditional))
-                {
-                    window = new ScriptEditors.ConditionEditor();
-                }
-                if (selected.GetType() == typeof(DisplayText))
-                {
-                    window = new ScriptEditors.DisplayTextEditor();
-                }
-                
+                window = GetScriptEditorByType(selected.GetType());
             }
             if (window != null)
             {

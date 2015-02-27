@@ -128,6 +128,9 @@ namespace Editor.Scripter
                     case "DisplayText":
                         script.ScriptLines.Add(TextFunctions.DisplayText.FromXML(element));
                         break;
+                    case "SetVariable":
+                        script.ScriptLines.Add(Flow.SetVariable.FromXML(element));
+                        break;
                     default:
                         break;
                 }

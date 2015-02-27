@@ -491,7 +491,7 @@ namespace Editor.ObjectTypes
             }
             if (xml.Element("CanExamineScript") != null)
             {
-                i.CanExamineScript = Script.FromXML(xml.Element("CanExamineScript"));
+                i.CanExamineScript = Script.FromXML(xml.Element("CanExamineScript").Element("Script"));
             }
             if (xml.Element("CanInteract") != null && Boolean.TryParse(xml.Element("CanInteract").Value, out tempBool))
             {
@@ -503,15 +503,15 @@ namespace Editor.ObjectTypes
             }
             if (xml.Element("CanInteractScript") != null)
             {
-                i.CanInteractScript = Script.FromXML(xml.Element("CanInteractScript"));
+                i.CanInteractScript = Script.FromXML(xml.Element("CanInteractScript").Element("Script"));
             }
             if (xml.Element("ExamineScript") != null)
             {
-                i.ExamineScript = Script.FromXML(xml.Element("ExamineScript"));
+                i.ExamineScript = Script.FromXML(xml.Element("ExamineScript").Element("Script"));
             }
             if (xml.Element("InteractScript") != null)
             {
-                i.InteractScript = Script.FromXML(xml.Element("InteractScript"));
+                i.InteractScript = Script.FromXML(xml.Element("InteractScript").Element("Script"));
             }
             if (xml.Element("GroupName") != null)
             {

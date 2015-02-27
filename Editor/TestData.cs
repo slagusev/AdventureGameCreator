@@ -1,6 +1,7 @@
 ﻿using Editor.ObjectTypes;
 using Editor.Scripter;
 using Editor.Scripter.Conditions;
+using Editor.Scripter.Flow;
 using Editor.Scripter.Misc;
 using Editor.Scripter.TextFunctions;
 using System;
@@ -8,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Editor
 {
     class TestData
@@ -23,11 +23,16 @@ namespace Editor
         public static Conditional TestCondition1 { get; set; }
         public static Conditional TestConditionNested { get; set; }
         public static Conditional TestConditionChild { get; set; }
+        public static SetVariable TestSetVariable { get; set; }
 
         //Interactable samples
         public static Interactable TestInteractable { get; set; }
         public static InteractableGroup TestInteractableGroup { get; set; }
 
+        //Variable Samples
+        public static Variable TestStringVariable { get; set; }
+        public static Variable TestDateTimeVariable { get; set; }
+        public static Variable TestNumberVariable { get; set; }
 
         static TestData()
         {
@@ -87,9 +92,27 @@ namespace Editor
             TestInteractable.CanExamineScript = testIntCanExScript;
             TestInteractable.GroupName = "Furniture";
 
-            TestInteractableGroup = MainViewModel.MainViewModelStatic.InteractableGroups.First();
+            TestInteractableGroup = MainViewModel.MainViewModelStatic.InteractableGroups.FirstOrDefault();
 
-            TestRoom.DefaultInteractables.Add(TestInteractable);
+            TestRoom.DefaultInteractables.Add(new InteractableRef(TestInteractable.InteractableID));
+
+            TestDateTimeVariable = new Variable();
+            TestDateTimeVariable.IsDateTime = true;
+            TestDateTimeVariable.DefaultDateTime = new DateTime(2015, 1, 30, 10, 20, 5);
+            TestDateTimeVariable.Name = "Test Date Time";
+
+            TestStringVariable = new Variable();
+            TestStringVariable.IsString = true;
+            TestStringVariable.DefaultString = "Test Data";
+            TestStringVariable.Name = "Test String";
+
+            TestNumberVariable = new Variable();
+            TestNumberVariable.IsNumber = true;
+            TestNumberVariable.DefaultNumber = 5;
+            TestNumberVariable.Name = "Test Number";
+
+            TestSetVariable = new SetVariable();
+            TestSetVariable.SelectedVariable = new VarRef(TestNumberVariable.Id);
         }
     }
 }

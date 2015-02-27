@@ -19,6 +19,7 @@ namespace Editor
 
         public MainViewModel()
         {
+            /*
 #region Debug Data
             this.Zones = new ObservableCollection<Zone>();
             Zone playerHouse = new Zone
@@ -81,10 +82,13 @@ namespace Editor
             hallway.Exits.Add(new Exit { ZoneLink = playerHouse, RoomLink = bedroom, Direction = ExitDirection.East });
 
 #endregion
-
+            */
 
 
             MainViewModelStatic = this;
+
+            #region More debug data
+            /*
             var TestInteractable = new Interactable();
             this.Interactables.Add(TestInteractable);
             TestInteractable.InteractableName = "Bookshelf";
@@ -106,6 +110,12 @@ namespace Editor
             TestInteractable.CanInteractScript = testIntCanInScript;
             TestInteractable.CanExamineScript = testIntCanExScript;
             TestInteractable.GroupName = "Furniture";
+
+            Variables.Add(TestData.TestDateTimeVariable);
+            Variables.Add(TestData.TestStringVariable);
+            Variables.Add(TestData.TestNumberVariable);
+             * */
+            #endregion
         }
 
         /// <summary>
@@ -318,11 +328,60 @@ namespace Editor
             }
         }
 
+        /// <summary>
+        /// The <see cref="Variables" /> property's name.
+        /// </summary>
+        public const string VariablesPropertyName = "Variables";
+
+        private ObservableCollection<Variable> _variables = new ObservableCollection<Variable>();
+
+        /// <summary>
+        /// Sets and gets the Variables property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<Variable> Variables
+        {
+            get
+            {
+                //Test if sorted
+                bool sorted = true;
+                Variable last = null;
+                foreach (var a in _variables)
+                {
+                    if (last != null && a.Name.CompareTo(last.Name) <= 0)
+                    {
+                        sorted = false;
+                    }
+                    
+                    last = a;
+                    
+                }
+                if (!sorted)
+                {
+                    _variables = new ObservableCollection<Variable>(_variables.OrderBy(a => a.Name));
+                    RaisePropertyChanged(VariablesPropertyName);
+                }
+                return _variables;
+            }
+
+            set
+            {
+                if (_variables == value)
+                {
+                    return;
+                }
+
+                _variables = value;
+                RaisePropertyChanged(VariablesPropertyName);
+            }
+        }
+
         public XElement ToXML()
         {
             return new XElement("Game",
                 new XElement("Zones", from a in Zones select a.ToXML()),
-                new XElement("Interactables", from a in Interactables select a.ToXML())
+                new XElement("Interactables", from a in Interactables select a.ToXML()),
+                new XElement("Variables", from a in Variables select a.ToXml())
                 );
         }
 
@@ -365,15 +424,20 @@ namespace Editor
             {
                 mvm.Interactables = new ObservableCollection<Interactable>(from a in interactables.Elements("Interactable") select Interactable.FromXML(a));
             }
+            XElement variables = xml.Element("Variables");
+            if (variables != null)
+            {
+                mvm.Variables = new ObservableCollection<Variable>(from a in variables.Elements("Variable") select Variable.FromXML(a));
+            }
             mvm.InteractableGroups.Clear();
             mvm.RecalculateInteractableGroups();
             //Resolve all interactable references
-            foreach (var a in mvm.InteractableRefStack)
-            {
-                var guid = a.Value;
-                var list = a.Key;
-                var interactable = mvm.Interactables.Where(i => i.InteractableID == guid).FirstOrDefault();
-            }
+            //foreach (var a in mvm.InteractableRefStack)
+            //{
+            //    var guid = a.Value;
+            //    var list = a.Key;
+            //    var interactable = mvm.Interactables.Where(i => i.InteractableID == guid).FirstOrDefault();
+            //}
             return mvm;
         }
         public List<KeyValuePair<ObservableCollection<Interactable>, Guid>> InteractableRefStack = new List<KeyValuePair<ObservableCollection<Interactable>, Guid>>();

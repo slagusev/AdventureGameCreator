@@ -49,12 +49,32 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataBoundRadioButton.cs" />
     <Compile Include="EditorMenu.xaml.cs">
       <DependentUpon>EditorMenu.xaml</DependentUpon>
     </Compile>
@@ -69,6 +89,12 @@
     </Compile>
     <Compile Include="Editors\ScriptControl.xaml.cs">
       <DependentUpon>ScriptControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\VariableEditor.xaml.cs">
+      <DependentUpon>VariableEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\VariableSelector.xaml.cs">
+      <DependentUpon>VariableSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditorWindow.xaml.cs">
       <DependentUpon>EditorWindow.xaml</DependentUpon>
@@ -86,13 +112,19 @@
     <Compile Include="NewForms\NewRoom.xaml.cs">
       <DependentUpon>NewRoom.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewForms\NewVariable.xaml.cs">
+      <DependentUpon>NewVariable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewZone.xaml.cs">
       <DependentUpon>NewZone.xaml</DependentUpon>
     </Compile>
     <Compile Include="ObjectTypes\Exit.cs" />
     <Compile Include="ObjectTypes\Interactable.cs" />
     <Compile Include="ObjectTypes\InteractableGroup.cs" />
+    <Compile Include="ObjectTypes\InteractableRef.cs" />
     <Compile Include="ObjectTypes\Room.cs" />
+    <Compile Include="ObjectTypes\Variable.cs" />
+    <Compile Include="ObjectTypes\VarRef.cs" />
     <Compile Include="ObjectTypes\Zone.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ScriptEditors\CommentEditor.xaml.cs">
@@ -107,14 +139,20 @@
     <Compile Include="ScriptEditors\ScriptSelector.xaml.cs">
       <DependentUpon>ScriptSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\SetVariableEditor.xaml.cs">
+      <DependentUpon>SetVariableEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scripter\Brancher.cs" />
+    <Compile Include="Scripter\Conditions\Condition.cs" />
     <Compile Include="Scripter\Conditions\Conditional.cs" />
+    <Compile Include="Scripter\Flow\SetVariable.cs" />
     <Compile Include="Scripter\Misc\Blank.cs" />
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />
     <Compile Include="Scripter\ScriptLine.cs" />
     <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
     <Compile Include="TestData.cs" />
+    <Compile Include="VariableSelectorConverter.cs" />
     <Compile Include="VisibilityConverter.cs" />
     <Compile Include="WindowView.cs" />
     <Compile Include="Editors\ZoneEditor.xaml.cs">
@@ -137,6 +175,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ScriptControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\VariableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\VariableSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewForms\NewVariable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewZone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +258,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\SetVariableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NewGame.xaml.cs">
@@ -230,6 +284,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

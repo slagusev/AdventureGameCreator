@@ -19,16 +19,23 @@
             </TextBlock>
         
         </DataTemplate>
+        <DataTemplate x:Key="VariableTemplate">
+        <TextBlock  Text="{Binding Name}" >
+        </TextBlock>
+
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <TreeView x:Name="mainTree" Margin="0,4,0,-4" MouseDoubleClick="mainTree_MouseDoubleClick">
-            <TreeViewItem Header="Zones" IsExpanded="True" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource ZoneTemplate}">
+            <TreeViewItem Header="Zones" IsExpanded="False" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource ZoneTemplate}">
                 
             </TreeViewItem>
-            <TreeViewItem Header="Interactables (By Group)" IsExpanded="True" ItemsSource="{Binding InteractableGroups, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource InteractableGroupsTemplate}">
+            <TreeViewItem Header="Interactables (By Group)" IsExpanded="False" ItemsSource="{Binding InteractableGroups, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource InteractableGroupsTemplate}">
 
             </TreeViewItem>
-
+            <TreeViewItem Header="Variables" IsExpanded="True" ItemsSource="{Binding Variables, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource VariableTemplate}">
+                
+            </TreeViewItem>
         </TreeView>
     </Grid>
 </UserControl>

@@ -173,7 +173,35 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(DirectionPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="ExitName" /> property's name.
+        /// </summary>
+        public const string ExitNamePropertyName = "ExitName";
 
+        private string _exitName = "";
+
+        /// <summary>
+        /// Sets and gets the ExitName property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string ExitName
+        {
+            get
+            {
+                return _exitName;
+            }
+
+            set
+            {
+                if (_exitName == value)
+                {
+                    return;
+                }
+
+                _exitName = value;
+                RaisePropertyChanged(ExitNamePropertyName);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {
@@ -188,6 +216,7 @@ namespace Editor.ObjectTypes
             return new XElement("Exit",
                 new XElement("ZoneID", ZoneID),
                 new XElement("RoomID", RoomID),
+                new XElement("ExitName", ExitName),
                 new XElement("Direction", Direction.ToString()));
         }
 
@@ -201,6 +230,10 @@ namespace Editor.ObjectTypes
             if (xml.Element("RoomID") != null)
             {
                 exit.RoomID = Guid.Parse(xml.Element("RoomID").Value);
+            }
+            if (xml.Element("ExitName") != null)
+            {
+                exit.ExitName = xml.Element("ExitName").Value;
             }
             if (xml.Element("Direction") != null)
             {

@@ -16,6 +16,7 @@
             <MenuItem Header="_Room" Click="newRoom_Click"></MenuItem>
 
             <MenuItem Header="_Interactable" Click="newInteractable_Click"></MenuItem>
+            <MenuItem Header="_Variable" Click="MenuItem_Click_1"></MenuItem>
         </MenuItem>
     </Menu>
 </UserControl>

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit.Primitives;
 
 namespace Editor.Editors
 {
@@ -38,7 +39,7 @@ namespace Editor.Editors
             {
                 var interactable = item as Interactable;
                 var room = (Room)this.DataContext;
-                room.DefaultInteractables.Add(interactable);
+                room.DefaultInteractables.Add(new InteractableRef(interactable.InteractableID));
             }
         }
 

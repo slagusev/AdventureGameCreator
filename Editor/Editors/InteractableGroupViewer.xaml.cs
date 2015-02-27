@@ -29,7 +29,7 @@ namespace Editor.Editors
         private void ListBox_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             WindowView wv = null;
-            if (listInteractables.SelectedItem.GetType() == typeof(Interactable))
+            if (listInteractables != null && listInteractables.SelectedItem != null && listInteractables.SelectedItem.GetType() == typeof(Interactable))
             {
                 
                 Interactable g = listInteractables.SelectedItem as Interactable;

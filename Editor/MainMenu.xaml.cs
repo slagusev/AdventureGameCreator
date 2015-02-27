@@ -56,5 +56,10 @@ namespace Editor
         {
             new NewInteractable().ShowDialog();
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            new NewVariable().ShowDialog();
+        }
     }
 }

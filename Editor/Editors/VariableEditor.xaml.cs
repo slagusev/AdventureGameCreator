@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Editor
+namespace Editor.Editors
 {
     /// <summary>
-    /// Interaction logic for MainEditor.xaml
+    /// Interaction logic for VariableEditor.xaml
     /// </summary>
-    public partial class MainEditor : Window
+    public partial class VariableEditor : UserControl
     {
-        public MainEditor()
+        public VariableEditor()
         {
             InitializeComponent();
-            //new Editor.ScriptEditors.SetVariableEditor().Show();
-            
         }
     }
 }

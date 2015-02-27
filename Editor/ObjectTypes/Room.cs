@@ -326,13 +326,13 @@ namespace Editor.ObjectTypes
         /// </summary>
         public const string DefaultInteractablesPropertyName = "DefaultInteractables";
 
-        private ObservableCollection<Interactable> _defaultInteractables = new ObservableCollection<Interactable>();
+        private ObservableCollection<InteractableRef> _defaultInteractables = new ObservableCollection<InteractableRef>();
 
         /// <summary>
         /// Sets and gets the DefaultInteractables property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public ObservableCollection<Interactable> DefaultInteractables
+        public ObservableCollection<InteractableRef> DefaultInteractables
         {
             get
             {
@@ -348,6 +348,49 @@ namespace Editor.ObjectTypes
 
                 _defaultInteractables = value;
                 RaisePropertyChanged(DefaultInteractablesPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="StartingRoom" /> property's name.
+        /// </summary>
+        public const string StartingRoomPropertyName = "StartingRoom";
+
+        private bool _startingRoom = false;
+
+        /// <summary>
+        /// Sets and gets the StartingRoom property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool StartingRoom
+        {
+            get
+            {
+                return _startingRoom;
+            }
+
+            set
+            {
+                if (_startingRoom == value)
+                {
+                    return;
+                }
+
+                _startingRoom = value;
+                RaisePropertyChanged(StartingRoomPropertyName);
+                if (value)
+                {
+                    foreach (var zone in MainViewModel.MainViewModelStatic.Zones)
+                    {
+                        foreach (var room in zone.Rooms)
+                        {
+                            if (room != this)
+                            {
+                                room.StartingRoom = false;
+                            }
+                        }
+                    }
+                }
             }
         }
         ///// <summary>
@@ -399,7 +442,8 @@ namespace Editor.ObjectTypes
                 new XElement("TextDescription", Description),
                 new XElement("HasScriptDescription", HasScriptDescription),
                 new XElement("ScriptDescription", RoomDescriptionScript.ToXML()),
-                new XElement("DefaultInteractables", (from a in DefaultInteractables select new XElement("InteractableRef", a.InteractableID)))
+                new XElement("StartingRoom", StartingRoom),
+                new XElement("DefaultInteractables", (from a in DefaultInteractables select new XElement("InteractableRef", a.LinkedInteractableId)))
                 );
 
         }
@@ -436,11 +480,15 @@ namespace Editor.ObjectTypes
             {
                 r.RoomDescriptionScript = Script.FromXML(xml.Element("ScriptDescription").Element("Script"));
             }
+            if (xml.Element("StartingRoom") != null)
+            {
+                r.StartingRoom = Convert.ToBoolean(xml.Element("StartingRoom").Value);
+            }
             if (xml.Element("DefaultInteractables") != null)
             {
                 foreach (var a in xml.Element("DefaultInteractables").Elements("InteractableRef"))
                 {
-                    MainViewModel.MainViewModelStatic.InteractableRefStack.Add(new KeyValuePair<ObservableCollection<Interactable>, Guid>(r.DefaultInteractables, Guid.Parse(a.Value)));
+                    r.DefaultInteractables.Add(new InteractableRef(Guid.Parse(a.Value)));
                 }
             }
             return r;
