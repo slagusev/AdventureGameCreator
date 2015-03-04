@@ -1,4 +1,5 @@
 ﻿using Editor.Scripter;
+using Editor.Scripter.Flow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,6 +137,22 @@ namespace Editor.ScriptEditors
                 }
 
             }
+        }
+
+        private void ReturnTrue_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            var newReturnTrue = new ReturnTrue();
+            script.AddBeforeSelected(newReturnTrue);
+            this.Close();
+        }
+
+        private void ReturnFalse_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            var newReturnFalse = new ReturnFalse();
+            script.AddBeforeSelected(newReturnFalse);
+            this.Close();
         }
     }
 }

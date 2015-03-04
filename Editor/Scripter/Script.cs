@@ -131,6 +131,12 @@ namespace Editor.Scripter
                     case "SetVariable":
                         script.ScriptLines.Add(Flow.SetVariable.FromXML(element));
                         break;
+                    case "ReturnTrue":
+                        script.ScriptLines.Add(new Flow.ReturnTrue());
+                        break;
+                    case "ReturnFalse":
+                        script.ScriptLines.Add(new Flow.ReturnFalse());
+                        break;
                     default:
                         break;
                 }

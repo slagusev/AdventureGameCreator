@@ -59,6 +59,8 @@
     <Compile Include="ScriptLineTypes\CommentWrapper.cs" />
     <Compile Include="ScriptLineTypes\ConditionalWrapper.cs" />
     <Compile Include="ScriptLineTypes\DisplayTextWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ReturnFalseWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ReturnTrueWrapper.cs" />
     <Compile Include="ScriptLineTypes\ScriptLineWrapper.cs" />
     <Compile Include="ScriptLineTypes\SetVariableWrapper.cs" />
     <Page Include="MainPlayer.xaml">

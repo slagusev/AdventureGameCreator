@@ -100,14 +100,14 @@ namespace Player
                 {
                     var roomWrapper = new RoomWrapper(room);
                     g.Rooms.Add(room.RoomID, roomWrapper);
-                    if (room.StartingRoom)
-                        g.CurrentRoom = roomWrapper;
+
                 }
             }
             foreach (var v in mvm.Variables)
             {
-                g.VarById[v.Id] = new VariableWrapper(v);
-                g.VarByName[v.Name] = new VariableWrapper(v);
+                var wrapper = new VariableWrapper(v);
+                g.VarById[v.Id] = wrapper;
+                g.VarByName[v.Name] = wrapper;
             }
             return g;
 

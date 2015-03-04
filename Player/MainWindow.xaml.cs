@@ -48,7 +48,15 @@ namespace Player
                 var mvm = new MainViewModel();
                 //player.DataContext = mvm;
                 mvm.CurrentGame = Game.FromXml(xml);
+
+
                 Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
+
+                foreach (var room in mvm.CurrentGame.Rooms)
+                {
+                    if (room.Value.RoomBase.StartingRoom)
+                        mvm.CurrentGame.CurrentRoom = room.Value;
+                }
 
                 var player = new MainPlayer();
 

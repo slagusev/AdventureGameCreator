@@ -35,6 +35,14 @@ namespace Player.ScriptLineTypes
             {
                 return new SetVariableWrapper((SetVariable)line);
             }
+            if (lineType == typeof(ReturnTrue))
+            {
+                return new ReturnTrueWrapper();
+            }
+            if (lineType == typeof(ReturnFalse))
+            {
+                return new ReturnFalseWrapper();
+            }
             return null;
         }
     }
