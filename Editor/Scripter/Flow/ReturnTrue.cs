@@ -19,9 +19,5 @@ namespace Editor.Scripter.Flow
             return new XElement("ReturnTrue");
         }
 
-        public static ScriptLine FromXML(XElement xml)
-        {
-            return new ReturnTrue();
-        }
     }
 }

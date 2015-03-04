@@ -24,6 +24,7 @@
                         <Button Name="SetVariable" Click="SetVariable_Click">Set Variable</Button>
                         <Button Name="ReturnTrue" Click="ReturnTrue_Click">Return True</Button>
                         <Button Name="ReturnFalse" Click="ReturnFalse_Click">Return False</Button>
+                        <Button Name="StopGame" Click="StopGame_Click">Game Over</Button>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

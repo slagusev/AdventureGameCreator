@@ -148,6 +148,7 @@
     <Compile Include="Scripter\Flow\ReturnFalse.cs" />
     <Compile Include="Scripter\Flow\ReturnTrue.cs" />
     <Compile Include="Scripter\Flow\SetVariable.cs" />
+    <Compile Include="Scripter\Flow\StopGame.cs" />
     <Compile Include="Scripter\Misc\Blank.cs" />
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />

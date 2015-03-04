@@ -137,6 +137,9 @@ namespace Editor.Scripter
                     case "ReturnFalse":
                         script.ScriptLines.Add(new Flow.ReturnFalse());
                         break;
+                    case "StopGame":
+                        script.ScriptLines.Add(new Flow.StopGame());
+                        break;
                     default:
                         break;
                 }

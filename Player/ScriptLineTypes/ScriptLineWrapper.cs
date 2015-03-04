@@ -43,6 +43,10 @@ namespace Player.ScriptLineTypes
             {
                 return new ReturnFalseWrapper();
             }
+            if (lineType == typeof(StopGame))
+            {
+                return new StopGameWrapper();
+            }
             return null;
         }
     }

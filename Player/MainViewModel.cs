@@ -146,7 +146,37 @@ namespace Player
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        
 
+
+
+        /// <summary>
+        /// The <see cref="IsGameOver" /> property's name.
+        /// </summary>
+        public const string IsGameOverPropertyName = "IsGameOver";
+
+        private bool _isGameOver = false;
+
+        /// <summary>
+        /// Sets and gets the IsGameOver property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsGameOver
+        {
+            get
+            {
+                return _isGameOver;
+            }
+
+            set
+            {
+                if (_isGameOver == value)
+                {
+                    return;
+                }
+
+                _isGameOver = value;
+                RaisePropertyChanged(IsGameOverPropertyName);
+            }
+        }
     }
 }

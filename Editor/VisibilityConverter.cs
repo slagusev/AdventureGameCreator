@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace Editor
 {
-    class VisibilityConverter : IValueConverter
+    public class VisibilityConverter : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

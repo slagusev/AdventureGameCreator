@@ -154,5 +154,13 @@ namespace Editor.ScriptEditors
             script.AddBeforeSelected(newReturnFalse);
             this.Close();
         }
+
+        private void StopGame_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            var stopGame = new StopGame();
+            script.AddBeforeSelected(stopGame);
+            this.Close();
+        }
     }
 }

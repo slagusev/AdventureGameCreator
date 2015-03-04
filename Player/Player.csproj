@@ -63,6 +63,7 @@
     <Compile Include="ScriptLineTypes\ReturnTrueWrapper.cs" />
     <Compile Include="ScriptLineTypes\ScriptLineWrapper.cs" />
     <Compile Include="ScriptLineTypes\SetVariableWrapper.cs" />
+    <Compile Include="ScriptLineTypes\StopGameWrapper.cs" />
     <Page Include="MainPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
