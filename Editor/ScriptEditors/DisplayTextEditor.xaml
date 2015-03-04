@@ -5,7 +5,7 @@
     <Grid>
         <StackPanel Margin="-10,10,10,-10">
             <TextBlock Margin="10">Please enter the text to display to the user:</TextBlock>
-            <TextBox Margin="10" AcceptsReturn="True" AcceptsTab="True"  Text="{Binding Text}" VerticalScrollBarVisibility="Auto" Height="100"></TextBox>
+            <TextBox Margin="10" AcceptsReturn="True" AcceptsTab="True"  Text="{Binding Text}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100"></TextBox>
             <TextBlock Margin="10" TextWrapping="Wrap">Hint: Enclose a variable name in double braces, and the variable will be substituted in-game. For example, "You have ${{Money}}." may show in-game as "You have $10."</TextBlock>
             <Button HorizontalAlignment="Center" Width="100" Click="Button_Click_1">OK</Button>
         </StackPanel>
