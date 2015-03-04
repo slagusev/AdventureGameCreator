@@ -33,7 +33,7 @@
             <TreeViewItem Header="Interactables (By Group)" IsExpanded="False" ItemsSource="{Binding InteractableGroups, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource InteractableGroupsTemplate}">
 
             </TreeViewItem>
-            <TreeViewItem Header="Variables" IsExpanded="True" ItemsSource="{Binding Variables, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource VariableTemplate}">
+            <TreeViewItem Header="Variables" IsExpanded="False" ItemsSource="{Binding Variables, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource VariableTemplate}">
                 
             </TreeViewItem>
         </TreeView>

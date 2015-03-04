@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.Misc
 {
-    class Comment : ScriptLine
+    public class Comment : ScriptLine
     {
         /// <summary>
         /// The <see cref="Text" /> property's name.

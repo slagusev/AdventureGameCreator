@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Editor.Scripter
 {
-    abstract class Brancher : ScriptLine
+    public abstract class Brancher : ScriptLine
     {
         /// <summary>
         /// The <see cref="Contents" /> property's name.

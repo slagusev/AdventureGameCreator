@@ -11,7 +11,7 @@ using System.Xml.Linq;
 namespace Editor.Scripter
 {
     public enum ScriptTypes { Interact, None };
-    internal class Script : INotifyPropertyChanged
+    public class Script : INotifyPropertyChanged
     {
 
         public Script()

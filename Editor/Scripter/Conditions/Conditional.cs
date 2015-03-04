@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.Conditions
 {
-    class Conditional : Brancher, INotifyPropertyChanged
+    public class Conditional : Brancher, INotifyPropertyChanged
     {
 
         private void ClearAllButMe(string property)

@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace Editor.ObjectTypes
 {
-    class Room : INotifyPropertyChanged
+    public class Room : INotifyPropertyChanged
     {
 
         public Room()

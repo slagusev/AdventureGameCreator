@@ -53,6 +53,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ObjectTypesWrappers\InteractableWrapper.cs" />
+    <Compile Include="ObjectTypesWrappers\VariableWrapper.cs" />
+    <Compile Include="RandNums.cs" />
+    <Compile Include="ScriptLineTypes\CommentWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ConditionalWrapper.cs" />
+    <Compile Include="ScriptLineTypes\DisplayTextWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ScriptLineWrapper.cs" />
+    <Compile Include="ScriptLineTypes\SetVariableWrapper.cs" />
+    <Page Include="MainPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -61,12 +73,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Game.cs" />
+    <Compile Include="MainPlayer.xaml.cs">
+      <DependentUpon>MainPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectTypesWrappers\ExitWrapper.cs" />
+    <Compile Include="ObjectTypesWrappers\RoomWrapper.cs" />
+    <Compile Include="ObjectTypesWrappers\ScriptWrapper.cs" />
+    <Compile Include="ObjectTypesWrappers\ZoneWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Editor\Editor.csproj">
+      <Project>{bdb1ff32-df40-4e60-99ef-bc9b9161aff9}</Project>
+      <Name>Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

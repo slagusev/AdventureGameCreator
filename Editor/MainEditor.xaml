@@ -8,6 +8,5 @@
         <Editor:EditorMenu DockPanel.Dock="Left" Width="200"></Editor:EditorMenu>
         <Editor:MainContent></Editor:MainContent>
         
-        
     </DockPanel>
 </Window>

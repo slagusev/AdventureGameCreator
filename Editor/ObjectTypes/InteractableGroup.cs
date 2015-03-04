@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Editor.ObjectTypes
 {
-    class InteractableGroup : INotifyPropertyChanged
+    public class InteractableGroup : INotifyPropertyChanged
     {
 
         /// <summary>

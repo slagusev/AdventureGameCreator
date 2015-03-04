@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter
 {
-    abstract class ScriptLine : INotifyPropertyChanged
+    public abstract class ScriptLine : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.Flow
 {
-    class SetVariable : ScriptLine
+    public class SetVariable : ScriptLine
     {
         /// <summary>
         /// The <see cref="SelectedVariable" /> property's name.

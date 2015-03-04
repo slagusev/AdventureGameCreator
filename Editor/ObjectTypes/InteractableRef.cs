@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Editor.ObjectTypes
 {
-    class InteractableRef : INotifyPropertyChanged
+    public class InteractableRef : INotifyPropertyChanged
     {
 
         public InteractableRef(Guid id)

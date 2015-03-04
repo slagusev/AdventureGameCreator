@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Editor
 {
-    class WindowView : INotifyPropertyChanged
+    public class WindowView : INotifyPropertyChanged
     {
         /// <summary>
         /// The <see cref="TabName" /> property's name.

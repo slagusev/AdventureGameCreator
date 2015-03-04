@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace Editor.ObjectTypes
 {
     public enum ExitDirection { North, South, East, West, Other };
-    class Exit : INotifyPropertyChanged
+    public class Exit : INotifyPropertyChanged
     {
         /// <summary>
         /// The <see cref="ZoneID" /> property's name.
@@ -202,6 +202,7 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(ExitNamePropertyName);
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {

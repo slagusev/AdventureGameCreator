@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.Conditions
 {
-    abstract class Condition : INotifyPropertyChanged
+    public abstract class Condition : INotifyPropertyChanged
     {
 
 

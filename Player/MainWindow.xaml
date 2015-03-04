@@ -12,7 +12,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Name="btnNew" Margin="5" Grid.Column="1" Click="btnNew_Click">New</Button>
-            <Button Name="btnLoad" Margin="5" Grid.Column="2">Load</Button>
+            <Button Name="btnLoad" Margin="5" Grid.Column="2" IsEnabled="False">Load</Button>
             <Button Name="btnExit" Margin="5" Grid.Column="3" Click="btnExit_Click">Exit</Button>
         </Grid>
     </Grid>

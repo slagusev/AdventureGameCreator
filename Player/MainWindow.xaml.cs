@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Player
 {
@@ -31,8 +34,32 @@ namespace Player
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "XML Files (*.xml)|*.xml";
+            if (ofd.ShowDialog().Value)
+            {
+                
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                var sr = new StreamReader(fs);
+                var xml = XElement.Parse(sr.ReadToEnd());
+                sr.Close();
 
+                var mvm = new MainViewModel();
+                //player.DataContext = mvm;
+                mvm.CurrentGame = Game.FromXml(xml);
+                Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
+
+                var player = new MainPlayer();
+
+                mvm.OutputCurrentRoomDescription();
+                
+                
+                
+                
+                player.Show();
+                this.Close();
+            }
         }
     }
 }

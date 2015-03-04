@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    class RelayCommand<T> : ICommand
+    public class RelayCommand<T> : ICommand
     {
         public RelayCommand(Action<T> command)
         {
@@ -28,7 +28,7 @@ namespace Editor
             Command((T)parameter);
         }
     }
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         public RelayCommand(Action command)
         {

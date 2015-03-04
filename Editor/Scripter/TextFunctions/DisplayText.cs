@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.TextFunctions
 {
-    class DisplayText : ScriptLine
+    public class DisplayText : ScriptLine
     {
         /// <summary>
         /// The <see cref="Text" /> property's name.

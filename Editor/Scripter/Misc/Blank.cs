@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Editor.Scripter.Misc
 {
-    class Blank : ScriptLine
+    public class Blank : ScriptLine
     {
         public override string Plaintext
         {

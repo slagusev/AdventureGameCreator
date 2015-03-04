@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace Editor
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public static MainViewModel MainViewModelStatic;
 
@@ -83,10 +83,10 @@ namespace Editor
 
 #endregion
             */
-
+            
 
             MainViewModelStatic = this;
-
+            //this.OpenWindows.Add(new WindowView { Content = new Editor.Editors.InteractableEditor() });
             #region More debug data
             /*
             var TestInteractable = new Interactable();

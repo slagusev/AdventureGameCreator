@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Editor.ObjectTypes
 {
-    class Interactable : INotifyPropertyChanged
+    public class Interactable : INotifyPropertyChanged
     {
 
         /// <summary>
