@@ -1,0 +1,14 @@
+﻿<Window x:Class="Editor.ScriptEditors.GetCurrentItemEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor" 
+        Title="Get Current Item" Height="300" Width="500">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10,10,10,-10">
+            <TextBlock>Which variable do you want to set?</TextBlock>
+            <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1"  Content="OK"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

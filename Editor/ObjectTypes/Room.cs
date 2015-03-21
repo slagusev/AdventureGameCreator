@@ -19,6 +19,8 @@ namespace Editor.ObjectTypes
             RemoveExitCommand = new RelayCommand(RemoveExit);
             LinkExitCommand = new RelayCommand(LinkExit);
             OpenSelectedExitCommand = new RelayCommand(OpenSelectedExit);
+
+            this.RoomDescriptionScript.CanReturn = false;
         }
 
         /// <summary>
@@ -478,7 +480,7 @@ namespace Editor.ObjectTypes
             }
             if (xml.Element("ScriptDescription") != null)
             {
-                r.RoomDescriptionScript = Script.FromXML(xml.Element("ScriptDescription").Element("Script"));
+                r.RoomDescriptionScript = Script.FromXML(xml.Element("ScriptDescription").Element("Script"), r.RoomDescriptionScript);
             }
             if (xml.Element("StartingRoom") != null)
             {

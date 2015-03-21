@@ -47,6 +47,7 @@ namespace Editor
                 sw.Write(xml.ToString());
                 sw.Close();
                 MainViewModel.MainViewModelStatic.Location = sfd.FileName;
+                MainViewModel.MainViewModelStatic.ItemClasses.Add(Editor.ObjectTypes.ItemClass.GetBaseItemClass());
                 //mvm.Zones = new System.Collections.ObjectModel.ObservableCollection<ObjectTypes.Zone>();
                 new MainEditor().Show();
                 this.Close();
@@ -67,8 +68,15 @@ namespace Editor
                 var mvm = MainViewModel.FromXML(xml);
                 mvm.Location = ofd.FileName;
                 //mvm.Zones = new System.Collections.ObjectModel.ObservableCollection<ObjectTypes.Zone>();
+                if (MainViewModel.MainViewModelStatic.ItemClasses.Count == 0)
+                    mvm.ItemClasses.Add(Editor.ObjectTypes.ItemClass.GetBaseItemClass());
                 Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
                 new MainEditor().Show();
+                //MainViewModel.MainViewModelStatic.OpenWindows.Add(new WindowView()
+                //{
+                //    TabName = "Test Item",
+                //    Content = new Editor.Editors.ItemEditor()
+                //});
                 this.Close();
             }
         }

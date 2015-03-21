@@ -1,0 +1,40 @@
+﻿<Window x:Class="Editor.ScriptEditors.SetItemPropertyEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor" 
+        Title="Set Item Property" Height="600" Width="500">
+            <Window.Resources>
+                <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+
+            </Window.Resources>
+            <Window.DataContext>
+                <Binding Path="TestSetProperty" Source="{StaticResource TestDataStatic}"/>
+            </Window.DataContext>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10,10,10,-10">
+                    <TextBlock Margin="10,0,0,0">Which variable is the source?</TextBlock>
+                    <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="True" ShowNumber="True" ShowString="True" ShowItems="True" SelectedItem="{Binding SourceVarRef, Mode=TwoWay}" Height="150" />
+                    <TextBlock Margin="10,10,0,0">Item to set the property of:</TextBlock>
+                    <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
+                    <TextBlock Margin="10,0,0,0">Item Class:</TextBlock>
+                    <ListBox  Margin="10" Height="100" SelectedItem="{Binding SelectedItemClass}" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Margin="10,0,0,0">Property:</TextBlock>
+                    <ListBox Margin="10" Height="100" SelectedItem="{Binding SelectedProperty}" ItemsSource="{Binding AvailableProperties}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1"  Content="OK"/>
+                </StackPanel>
+            </ScrollViewer>
+
+</Window>

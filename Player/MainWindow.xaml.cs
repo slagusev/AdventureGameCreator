@@ -26,6 +26,10 @@ namespace Player
         public MainWindow()
         {
             InitializeComponent();
+            if (!string.IsNullOrEmpty((App.Current.Resources["FileName"] ?? "").ToString()))
+            {
+                OpenGame(App.Current.Resources["FileName"].ToString());
+            }
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -39,35 +43,46 @@ namespace Player
             ofd.Filter = "XML Files (*.xml)|*.xml";
             if (ofd.ShowDialog().Value)
             {
-                
-                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
-                var sr = new StreamReader(fs);
-                var xml = XElement.Parse(sr.ReadToEnd());
-                sr.Close();
 
-                var mvm = new MainViewModel();
-                //player.DataContext = mvm;
-                mvm.CurrentGame = Game.FromXml(xml);
+                OpenGame(ofd.FileName);
+            }
+        }
+
+        private void OpenGame(string fileName)
+        {
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            var sr = new StreamReader(fs);
+            var xml = XElement.Parse(sr.ReadToEnd());
+            sr.Close();
+
+            var mvm = new MainViewModel();
+            //player.DataContext = mvm;
+            mvm.CurrentGame = Game.FromXml(xml);
 
 
-                Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
+            Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
 
-                foreach (var room in mvm.CurrentGame.Rooms)
-                {
-                    if (room.Value.RoomBase.StartingRoom)
-                        mvm.CurrentGame.CurrentRoom = room.Value;
-                }
-
+            foreach (var room in mvm.CurrentGame.Rooms)
+            {
+                if (room.Value.RoomBase.StartingRoom)
+                    mvm.CurrentGame.CurrentRoom = room.Value;
+            }
+            if (mvm.CurrentGame.CurrentRoom == null)
+            {
+                MessageBox.Show("Error:\n\nNo starting room was found. Using the editor, please \nselect one room from this game to be the starting room.");
+            }
+            else
+            {
                 var player = new MainPlayer();
 
                 mvm.OutputCurrentRoomDescription();
-                
-                
-                
-                
+
+
+
+
                 player.Show();
-                this.Close();
             }
+            this.Close();
         }
     }
 }

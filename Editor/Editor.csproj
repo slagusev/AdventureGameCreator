@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -78,11 +78,20 @@
     <Compile Include="EditorMenu.xaml.cs">
       <DependentUpon>EditorMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ItemSelector.xaml.cs">
+      <DependentUpon>ItemSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\InteractableEditor.xaml.cs">
       <DependentUpon>InteractableEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Editors\InteractableGroupViewer.xaml.cs">
       <DependentUpon>InteractableGroupViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ItemClassEditor.xaml.cs">
+      <DependentUpon>ItemClassEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ItemEditor.xaml.cs">
+      <DependentUpon>ItemEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Editors\RoomEditor.xaml.cs">
       <DependentUpon>RoomEditor.xaml</DependentUpon>
@@ -109,6 +118,15 @@
     <Compile Include="NewForms\NewInteractable.xaml.cs">
       <DependentUpon>NewInteractable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewForms\NewItem.xaml.cs">
+      <DependentUpon>NewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewForms\NewItemClass.xaml.cs">
+      <DependentUpon>NewItemClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewForms\NewProperty.xaml.cs">
+      <DependentUpon>NewProperty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewRoom.xaml.cs">
       <DependentUpon>NewRoom.xaml</DependentUpon>
     </Compile>
@@ -122,11 +140,21 @@
     <Compile Include="ObjectTypes\Interactable.cs" />
     <Compile Include="ObjectTypes\InteractableGroup.cs" />
     <Compile Include="ObjectTypes\InteractableRef.cs" />
+    <Compile Include="ObjectTypes\Item.cs" />
+    <Compile Include="ObjectTypes\ItemClass.cs" />
+    <Compile Include="ObjectTypes\ItemProperty.cs" />
+    <Compile Include="ObjectTypes\ItemRef.cs" />
     <Compile Include="ObjectTypes\Room.cs" />
     <Compile Include="ObjectTypes\Variable.cs" />
     <Compile Include="ObjectTypes\VarRef.cs" />
     <Compile Include="ObjectTypes\Zone.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ScriptEditors\AddItemEditor.xaml.cs">
+      <DependentUpon>AddItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\AddTextEditor.xaml.cs">
+      <DependentUpon>AddTextEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\CommentEditor.xaml.cs">
       <DependentUpon>CommentEditor.xaml</DependentUpon>
     </Compile>
@@ -136,8 +164,20 @@
     <Compile Include="ScriptEditors\DisplayTextEditor.xaml.cs">
       <DependentUpon>DisplayTextEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\GetCurrentItemEditor.xaml.cs">
+      <DependentUpon>GetCurrentItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\GetItemPropertyEditor.xaml.cs">
+      <DependentUpon>GetItemPropertyEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\RemoveItemEditor.xaml.cs">
+      <DependentUpon>RemoveItemEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\ScriptSelector.xaml.cs">
       <DependentUpon>ScriptSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\SetItemPropertyEditor.xaml.cs">
+      <DependentUpon>SetItemPropertyEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\SetVariableEditor.xaml.cs">
       <DependentUpon>SetVariableEditor.xaml</DependentUpon>
@@ -149,10 +189,17 @@
     <Compile Include="Scripter\Flow\ReturnTrue.cs" />
     <Compile Include="Scripter\Flow\SetVariable.cs" />
     <Compile Include="Scripter\Flow\StopGame.cs" />
+    <Compile Include="Scripter\ItemManagement\GetCurrentItem.cs" />
+    <Compile Include="Scripter\ItemManagement\GetItemProperty.cs" />
+    <Compile Include="Scripter\ItemManagement\AddItemToInventory.cs" />
+    <Compile Include="Scripter\ItemManagement\RemoveItem.cs" />
+    <Compile Include="Scripter\ItemManagement\RemoveThisItem.cs" />
+    <Compile Include="Scripter\ItemManagement\SetItemProperty.cs" />
     <Compile Include="Scripter\Misc\Blank.cs" />
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />
     <Compile Include="Scripter\ScriptLine.cs" />
+    <Compile Include="Scripter\TextFunctions\AddText.cs" />
     <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="VariableSelectorConverter.cs" />
@@ -165,11 +212,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Editors\ItemSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Editors\InteractableEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\InteractableGroupViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ItemClassEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ItemEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -225,6 +284,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewForms\NewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewForms\NewItemClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewForms\NewProperty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,6 +316,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\AddItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\AddTextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\CommentEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,7 +336,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\GetCurrentItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\GetItemPropertyEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\RemoveItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\ScriptSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\SetItemPropertyEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

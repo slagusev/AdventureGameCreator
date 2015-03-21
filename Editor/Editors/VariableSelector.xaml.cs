@@ -25,6 +25,7 @@ namespace Editor.Editors
         public static readonly DependencyProperty ShowDateTimeProperty = DependencyProperty.Register("ShowDateTime", typeof(bool), typeof(VariableSelector), new PropertyMetadata(true, PropertiesChanged));
         public static readonly DependencyProperty ShowStringProperty = DependencyProperty.Register("ShowString", typeof(bool), typeof(VariableSelector), new PropertyMetadata(true, PropertiesChanged));
         public static readonly DependencyProperty ShowNumberProperty = DependencyProperty.Register("ShowNumber", typeof(bool), typeof(VariableSelector), new PropertyMetadata(true, PropertiesChanged));
+        public static readonly DependencyProperty ShowItemsProperty = DependencyProperty.Register("ShowItems", typeof(bool), typeof(VariableSelector), new PropertyMetadata(true, PropertiesChanged));
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(VarRef), typeof(VariableSelector), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, SelectedItemChanged));
         public bool ShowDateTime { get { 
             return (bool)GetValue(ShowDateTimeProperty); 
@@ -67,6 +68,7 @@ namespace Editor.Editors
         }
         public bool ShowString { get { return (bool)GetValue(ShowStringProperty); } set { SetValue(ShowStringProperty, value); } }
         public bool ShowNumber { get { return (bool)GetValue(ShowNumberProperty); } set { SetValue(ShowNumberProperty, value); } }
+        public bool ShowItems { get { return (bool)GetValue(ShowItemsProperty); } set { SetValue(ShowItemsProperty, value); } }
         public VariableSelector()
         {
             //ShowDateTime = true;
@@ -87,6 +89,7 @@ namespace Editor.Editors
             var DateTimeVars = vars.Where(a => a.LinkedVariable.IsDateTime);
             var StringVars = vars.Where(a => a.LinkedVariable.IsString);
             var NumberVars = vars.Where(a => a.LinkedVariable.IsNumber);
+            var ItemVars = vars.Where(a => a.LinkedVariable.IsItem);
             vars = new ObservableCollection<VarRef>();
             if (ShowDateTime)
             {
@@ -109,7 +112,13 @@ namespace Editor.Editors
                     vars.Add(a);
                 }
             }
-
+            if (ShowItems)
+            {
+                foreach (var a in ItemVars)
+                {
+                    vars.Add(a);
+                }
+            }
     
             this.lstItems.ItemsSource = vars;
             if (SelectedItem != null && lstItems.Items.Contains(SelectedItem))

@@ -44,9 +44,9 @@
                             </StackPanel>
                         
                         <TextBlock><Run Text="Compare:"/></TextBlock>
-                        <Controls:VariableSelector SelectedItem="{Binding SelectedVariable, Mode=TwoWay}" Height="150"/>
+                        <Controls:VariableSelector SelectedItem="{Binding SelectedVariable, Mode=TwoWay}" ShowItems="False" Height="150"/>
                         <TextBlock><Run Text="To:"/></TextBlock>
-                        <Controls:VariableSelector Height="150" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" Visibility="{Binding IsComparisonToVariable, Converter={StaticResource VisibilityConverter}}" SelectedItem="{Binding VariableToCompare, Mode=TwoWay}"/>
+                        <Controls:VariableSelector Height="150" ShowItems="False" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" Visibility="{Binding IsComparisonToVariable, Converter={StaticResource VisibilityConverter}}" SelectedItem="{Binding VariableToCompare, Mode=TwoWay}"/>
                             <StackPanel Visibility="{Binding IsComparisonToConstant, Converter={StaticResource VisibilityConverter}}">
                                 <xckt:DateTimePicker Visibility="{Binding IsDateTime, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Left" Width="300" Value="{Binding DateToCompareTo}"/>
                                 <TextBox Text="{Binding NumberToCompareTo}" Visibility="{Binding IsNumber, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Left" Width="200"/>

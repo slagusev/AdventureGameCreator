@@ -11,7 +11,19 @@ namespace Editor.ObjectTypes
 {
     public class Interactable : INotifyPropertyChanged
     {
-
+        public Interactable()
+        {
+            this.CanExamineScript.CanDisplayText = false;
+            this.CanExamineScript.CanStopGame = false;
+            this.CanExamineScript.HasTextFunctionality = false;
+            this.CanExamineScript.CanAddItem = false;
+            this.ExamineScript.CanReturn = false;
+            this.CanInteractScript.CanDisplayText = false;
+            this.CanInteractScript.CanStopGame = false;
+            this.CanInteractScript.HasTextFunctionality = false;
+            this.CanInteractScript.CanAddItem = false;
+            this.InteractScript.CanReturn = false;
+        }
         /// <summary>
         /// The <see cref="InteractableName" /> property's name.
         /// </summary>
@@ -491,7 +503,7 @@ namespace Editor.ObjectTypes
             }
             if (xml.Element("CanExamineScript") != null)
             {
-                i.CanExamineScript = Script.FromXML(xml.Element("CanExamineScript").Element("Script"));
+                i.CanExamineScript = Script.FromXML(xml.Element("CanExamineScript").Element("Script"), i.CanExamineScript);
             }
             if (xml.Element("CanInteract") != null && Boolean.TryParse(xml.Element("CanInteract").Value, out tempBool))
             {
@@ -503,15 +515,15 @@ namespace Editor.ObjectTypes
             }
             if (xml.Element("CanInteractScript") != null)
             {
-                i.CanInteractScript = Script.FromXML(xml.Element("CanInteractScript").Element("Script"));
+                i.CanInteractScript = Script.FromXML(xml.Element("CanInteractScript").Element("Script"), i.CanInteractScript);
             }
             if (xml.Element("ExamineScript") != null)
             {
-                i.ExamineScript = Script.FromXML(xml.Element("ExamineScript").Element("Script"));
+                i.ExamineScript = Script.FromXML(xml.Element("ExamineScript").Element("Script"), i.ExamineScript);
             }
             if (xml.Element("InteractScript") != null)
             {
-                i.InteractScript = Script.FromXML(xml.Element("InteractScript").Element("Script"));
+                i.InteractScript = Script.FromXML(xml.Element("InteractScript").Element("Script"), i.InteractScript);
             }
             if (xml.Element("GroupName") != null)
             {

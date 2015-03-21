@@ -1,0 +1,13 @@
+﻿<Window x:Class="Editor.ScriptEditors.AddTextEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Text" Height="300" Width="500" DataContext="{Binding TestAddText, Source={StaticResource TestDataStatic}}">
+    <Grid>
+        <StackPanel Margin="-10,10,10,-10">
+            <TextBlock Margin="10">Please enter the text to add to the script result:</TextBlock>
+            <TextBox Margin="10" AcceptsReturn="True" AcceptsTab="True"  Text="{Binding Text}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100"></TextBox>
+            <TextBlock Margin="10" TextWrapping="Wrap">Hint: Enclose a variable name in double braces, and the variable will be substituted in-game. For example, "You have ${{Money}}." may show in-game as "You have $10."</TextBlock>
+            <Button HorizontalAlignment="Center" Width="100" Click="Button_Click_1">OK</Button>
+        </StackPanel>
+    </Grid>
+</Window>

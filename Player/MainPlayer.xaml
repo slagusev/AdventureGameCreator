@@ -5,12 +5,7 @@
         Title="Adventure Game Player" Height="768" Width="1024" DataContext="{Binding Source={StaticResource MainViewModelStatic}}">
     <Window.Resources>
         <Editor:VisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <Style TargetType="ListBox">
-            <Style.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
-            </Style.Resources>
-        </Style>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,12 +20,21 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBox Name="mainFeedback" Grid.Row="1" Grid.Column="1" Margin="20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding FeedbackText, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"></TextBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Visibility="{Binding IsGameOver, ConverterParameter=Invert, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <!--Directions-->
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" Visibility="{Binding ExploreMode, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding IsGameOver, ConverterParameter=Invert, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel.Resources>
+                    <Style TargetType="ListBox" x:Name="ButtonListBoxStyle">
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                        </Style.Resources>
+                    </Style>
+                </StackPanel.Resources>
+                    <!--Directions-->
             <StackPanel VerticalAlignment="Stretch">
                 <TextBlock Text="Directions:"></TextBlock>
             <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Exits, Source={StaticResource MainViewModelStatic}}">
-                <ListBox.ItemTemplate>
+                        <ListBox.ItemTemplate>
                     <DataTemplate>
                             <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding ExitBase.ExitName}" Command="{Binding UseExitCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding}"></Button>
                     </DataTemplate>
@@ -61,6 +65,33 @@
                 </ListBox>
 
             </StackPanel>
+            <StackPanel VerticalAlignment="Stretch" Margin="10,0,0,0">
+                <TextBlock Text="Other:"></TextBlock>
+                    <StackPanel>
+                        <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Inventory" Command="{Binding ViewInventoryCommand, Source={StaticResource MainViewModelStatic}}" ></Button>
+                        
+                    </StackPanel>
+
+                </StackPanel>
         </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" Visibility="{Binding InventoryMode, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding IsGameOver, ConverterParameter=Invert, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ListBox SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CurrentGame.PlayerInventory, Source={StaticResource MainViewModelStatic}}" Width="200" Margin="20">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CurrentName}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="300" Margin="10" Text="{Binding CurrentItemDescription}"></TextBox>
+                <StackPanel>
+                    <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Use Item" Command="{Binding UseItemCommand}" ></Button>
+                    <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Drop Item" IsEnabled="{Binding SelectedItem.CanBeDropped}" Command="{Binding DropItemCommand}" ></Button>
+                    <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Equip Item" IsEnabled="False" Command="{Binding EquipItemCommand}" ></Button>
+                    <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Back" Command="{Binding ExploreModeCommand}" ></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

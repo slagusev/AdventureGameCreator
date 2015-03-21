@@ -15,10 +15,12 @@ namespace Player.ObjectTypesWrappers
             if (v.IsDateTime) CurrentDateTimeValue = v.DefaultDateTime;
             else if (v.IsNumber) CurrentNumberValue = v.DefaultNumber;
             else if (v.IsString) CurrentStringValue = v.DefaultString;
+            else if (v.IsItem) CurrentItemValue = null;
         }
         public Variable VariableBase  { get; set; }
         public DateTime CurrentDateTimeValue { get; set; }
         public int CurrentNumberValue { get; set; }
         public string CurrentStringValue { get; set; }
+        public ItemInstance CurrentItemValue { get; set; }
     }
 }

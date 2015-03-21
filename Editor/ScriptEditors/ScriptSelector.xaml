@@ -1,47 +1,67 @@
-﻿<Window x:Class="Editor.ScriptEditors.ScriptSelector"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Editor="clr-namespace:Editor" x:Class="Editor.ScriptEditors.ScriptSelector"
         Title="Script Selector" Height="480" Width="1024" Closed="Window_Closed_1">
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"></Setter>
-            <Setter Property="Width" Value="150"></Setter>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="150"/>
         </Style>
-        <Style TargetType="StackPanel">
-            <Setter Property="Margin" Value="10"></Setter>
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="10"/>
         </Style>
-        <Style TargetType="ScrollViewer">
-            <Setter Property="Margin" Value="10"></Setter>
+        <Style TargetType="{x:Type ScrollViewer}">
+            <Setter Property="Margin" Value="10"/>
         </Style>
     </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="TestScript" Source="{StaticResource TestDataStatic}"/>
+    </Window.DataContext>
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-        
+
         <StackPanel Orientation="Horizontal">
             <ScrollViewer>
                 <GroupBox Header="Program Flow">
                     <StackPanel >
-                        <Button Name="IfThenElse" Click="IfThenElse_Click">If...Then...Else...</Button>
-                        <Button Name="SetVariable" Click="SetVariable_Click">Set Variable</Button>
-                        <Button Name="ReturnTrue" Click="ReturnTrue_Click">Return True</Button>
-                        <Button Name="ReturnFalse" Click="ReturnFalse_Click">Return False</Button>
-                        <Button Name="StopGame" Click="StopGame_Click">Game Over</Button>
+                        <Button x:Name="IfThenElse" Click="IfThenElse_Click" Content="If...Then...Else..." Visibility="{Binding CanConditional, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="SetVariable" Click="SetVariable_Click" Content="Set Variable" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="ReturnTrue" Click="ReturnTrue_Click" Content="Return True" Visibility="{Binding CanReturn, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="ReturnFalse" Click="ReturnFalse_Click" Content="Return False" Visibility="{Binding CanReturn, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="StopGame" Click="StopGame_Click" Content="Game Over" Visibility="{Binding CanStopGame, Converter={StaticResource VisibilityConverter}}"/>
+                    </StackPanel>
+                </GroupBox>
+            </ScrollViewer>
+            <ScrollViewer Visibility="{Binding HasTextFunctionality, Converter={StaticResource VisibilityConverter}}">
+                <GroupBox Header="Text Functionality" >
+                    <StackPanel >
+                        <Button x:Name="displayText" Click="displayText_Click" Content="Display Text..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" />
+                        <Button x:Name="addText" Click="addText_Click" Content="Add Text..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" />
+                    </StackPanel>
+                </GroupBox>
+            </ScrollViewer>
+            <ScrollViewer>
+                <GroupBox Header="Item Management">
+                    <StackPanel >
+                        <Button Content="Add Item..." x:Name="addItem" Click="addItem_Click" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Remove Item..." x:Name="removeItem" Click="removeItem_Click" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Remove Current Item..." x:Name="removeCurrentItem" Click="removeCurrentItem_Click" Visibility="{Binding IsVariableScript, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Get Item Property..." x:Name="getItemProperty" Click="getItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Set Item Property..." x:Name="setItemProperty" Click="setItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Get Current Item..." x:Name="getCurrentItemProperty" Click="getCurrentItemClick" Visibility="{Binding IsVariableScript, Converter={StaticResource VisibilityConverter}}"/>
+                        
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
             <ScrollViewer>
                 <GroupBox Header="Miscellaneous">
                     <StackPanel >
-                        <Button Content="Add Comment..." Name="addComment" Click="addComment_Click"/>
+                        <Button Content="Add Comment..." x:Name="addComment" Click="addComment_Click" Visibility="{Binding CanComment, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
-            <ScrollViewer>
-                <GroupBox Header="Text Functionality">
-                    <StackPanel >
-                        <Button Name="displayText" Click="displayText_Click" >Display Text...</Button>
-                    </StackPanel>
-                </GroupBox>
-            </ScrollViewer>
+            
 
         </StackPanel>
 

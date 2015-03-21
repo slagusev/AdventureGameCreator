@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="Editor.Editors.ItemEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:Controls="clr-namespace:Editor.Editors"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Path="TestItem" Source="{StaticResource TestDataStatic}"/>
+    </UserControl.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Item: "/><Run Text="{Binding ItemName}"/></TextBlock>
+            <TextBlock>ID:
+        <Run Text="{Binding ItemID}"></Run></TextBlock>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock >Default Display Name:</TextBlock>
+                
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultName}"></TextBox>
+            </StackPanel>
+            <CheckBox Margin="0,10,0,0" IsChecked="{Binding Removable}">This item can be thrown away by the player.</CheckBox>
+            <Expander Header="Item Class" Margin="20,20,5,0">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Margin="20,20,0,0"><Run Text="Item Class: "/><Run Text="{Binding ItemClassParent.Name}"/></TextBlock>
+                    <TextBlock Margin="20,20,0,0"><Run Text="Available classes:"/></TextBlock>
+                    <ListBox Width="200" HorizontalAlignment="Left" Height="200" Margin="20" SelectedItem="{Binding ItemClassParentTemp}" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Command="{Binding SetItemClassCommand}" Margin="20,0,20,20">Confirm Item Class Change</Button>
+                    <TextBlock TextWrapping="Wrap" Width="200">Warning: Changing an item's class will reset ALL of its properties' default values!</TextBlock>
+                </StackPanel>
+            </Expander>
+            <Expander Header="Description" Margin="20,0,5,0">
+                
+                <Controls:ScriptControl Height="200" DataContext="{Binding Description}"></Controls:ScriptControl>
+            </Expander>
+            <Expander Header="On Use" Margin="20,0,5,0">
+                <Controls:ScriptControl Height="200" DataContext="{Binding OnUse}"></Controls:ScriptControl>
+            </Expander>
+                <Expander Header="Properties" Margin="20,0,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox Margin="20" Width="200" Height="200" SelectedItem="{Binding SelectedProperty}" ItemsSource="{Binding ItemProperties}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1" Visibility="{Binding SelectedProperty, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Margin="20">Property: <Run Text="{Binding SelectedProperty.Name, Mode=OneWay}"/></TextBlock>
+                        <CheckBox Margin="20" IsChecked="{Binding SelectedProperty.UseDefaultValue}">Use Item Class Default Value?</CheckBox>
+                        <TextBlock Margin="20">Default Value:</TextBlock>
+                        <TextBox Margin="25,5,25,5" IsEnabled="False" Text="{Binding SelectedProperty.BaseVariable.DefaultValue, Mode=OneWay}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}}"></TextBox>
+                        <TextBox Margin="25,5,25,5" Text="{Binding SelectedProperty.Value}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"></TextBox>
+                    </StackPanel>
+                </Grid>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

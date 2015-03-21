@@ -18,6 +18,7 @@
                 <CheckBox Margin="0,0,5,0" IsEnabled="False" IsChecked="{Binding IsNumber, Mode=TwoWay}">Number</CheckBox>
                 <CheckBox Margin="0,0,5,0" IsEnabled="False" IsChecked="{Binding IsString, Mode=TwoWay}">String</CheckBox>
                 <CheckBox Margin="0,0,5,0" IsEnabled="False" IsChecked="{Binding IsDateTime, Mode=TwoWay}">Date/Time</CheckBox>
+                <CheckBox Margin="0,0,5,0" IsEnabled="False" IsChecked="{Binding IsItem, Mode=TwoWay}">Item</CheckBox>
             </StackPanel>
             <!--
             <ListBox Height="100" ItemsSource="{Binding Variables, Source={StaticResource MainViewModelStatic}}">
@@ -31,10 +32,12 @@
             <TextBlock Text="Perform which operation?"/>
             <StackPanel Orientation="Horizontal">
                 <CheckBox Margin="5" IsChecked="{Binding IsSet, Mode=TwoWay}" Content="Set"/>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}">
                 <CheckBox Margin="5" IsChecked="{Binding IsIncrement, Mode=TwoWay}"  Content="Increment" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
                 <!--Only show this with numbers and dates-->
                 <CheckBox Margin="5" IsChecked="{Binding IsDecrement, Mode=TwoWay}"  Content="Decrement" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
                 <CheckBox Margin="5" IsChecked="{Binding IsRandomized, Mode=TwoWay}" Content="Randomize" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
+                </StackPanel>
                 <!--Only show this with numbers and dates-->
                 <CheckBox Margin="5" IsChecked="{Binding IsMultiply, Mode=TwoWay}"  Content="Multiply" Visibility="{Binding IsNumber, Converter={StaticResource VisibilityConverter}}"/>
                 <!--Only show this with numbers -->
@@ -48,10 +51,15 @@
             </StackPanel>
 
             <TextBlock Visibility="{Binding IsRandomized, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"><Run Text="Change by Constant Value or Variable?"/></TextBlock>
-            <TextBlock Visibility="{Binding IsRandomized, Converter={StaticResource VisibilityConverter}}"><Run Text="Randomize by Constant Value or Variable?"/></TextBlock>
+            <TextBlock Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"><Run Text="Create a new instance, or fetch an existing item?"/></TextBlock>
+            <Grid Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}">
+                <TextBlock Visibility="{Binding IsRandomized, Converter={StaticResource VisibilityConverter}}"><Run Text="Randomize by Constant Value or Variable?"/></TextBlock>
+            </Grid>
             <StackPanel Orientation="Horizontal">
-                <CheckBox Margin="5" IsChecked="{Binding IsStatic, Mode=TwoWay}" Content="Constant Value" />
-                <CheckBox Margin="5" IsChecked="{Binding IsVariable, Mode=TwoWay}" Content="Variable" />
+                <CheckBox Margin="5" IsChecked="{Binding IsStatic, Mode=TwoWay}" Content="Constant Value" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
+                <CheckBox Margin="5" IsChecked="{Binding IsStatic, Mode=TwoWay}" Content="New instance" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}" />
+                <CheckBox Margin="5" IsChecked="{Binding IsVariable, Mode=TwoWay}" Content="Variable" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
+                <CheckBox Margin="5" IsChecked="{Binding IsVariable, Mode=TwoWay}" Content="Existing" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"/>
             </StackPanel>
             <TextBlock Visibility="{Binding IsRandomized, Converter={StaticResource VisibilityConverter}}">Pick a random number between 0 and...</TextBlock>
             <StackPanel Visibility="{Binding IsDateTimeStatic, Converter={StaticResource VisibilityConverter}}">
@@ -87,8 +95,14 @@
                     <TextBox Width="100" Text="{Binding StringValue, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
+            <StackPanel>
+                <!--Item-->
+            </StackPanel>
 
-            <Editors:VariableSelector  SelectedItem="{Binding TargetVar, Mode=TwoWay}" Height="150" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" Visibility="{Binding IsVariable, Converter={StaticResource VisibilityConverter}}"/>
+            <Editors:VariableSelector  SelectedItem="{Binding TargetVar, Mode=TwoWay}" Height="150" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" ShowItems="{Binding IsItem}" Visibility="{Binding IsVariable, Converter={StaticResource VisibilityConverter}}"/>
+            <Grid Visibility="{Binding IsStatic, Converter={StaticResource VisibilityConverter}}">
+            <Editors:ItemSelector SelectedItem="{Binding ItemValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"></Editors:ItemSelector>
+            </Grid>
             <Button HorizontalAlignment="Center" Width="100" Content="OK" Click="Button_Click_1"/>
         </StackPanel>
     </Grid>

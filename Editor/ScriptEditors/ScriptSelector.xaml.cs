@@ -1,5 +1,6 @@
 ﻿using Editor.Scripter;
 using Editor.Scripter.Flow;
+using Editor.Scripter.ItemManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Editor.ScriptEditors
             var script = this.DataContext as Script;
             if (script != null)
             {
-                var newComment = new Scripter.Conditions.Conditional();
+                var newComment = new Scripter.Conditions.Conditional(script);
                 script.AddBeforeSelected(newComment);
                 newConditionalWindow.DataContext = newComment;
                 newConditionalWindow.ShowDialog();
@@ -162,5 +163,123 @@ namespace Editor.ScriptEditors
             script.AddBeforeSelected(stopGame);
             this.Close();
         }
+
+        private void addItem_Click(object sender, RoutedEventArgs e)
+        {
+            var newAddNewItemWindow = new ScriptEditors.AddItemEditor();
+            var script = this.DataContext as Script;
+            if (script != null)
+            {
+                var newAddItem = new Scripter.ItemManagement.AddItemToInventory();
+                script.AddBeforeSelected(newAddItem);
+                newAddNewItemWindow.DataContext = newAddItem;
+                newAddNewItemWindow.ShowDialog();
+                if (newAddNewItemWindow.DialogResult == true)
+                {
+                    invalidate = true;
+                    newItem = newAddItem;
+                    this.Close();
+                }
+                else
+                {
+                    script.ScriptLines.Remove(newAddItem);
+                }
+
+            }
+
+
+        }
+
+        private void getItemPropertyClick(object sender, RoutedEventArgs e)
+        {
+            var newGetItemPropertyWindow = new ScriptEditors.GetItemPropertyEditor();
+            var script = this.DataContext as Script;
+            if (script != null)
+            {
+                var getItemProperty = new Scripter.GetItemProperty();
+                script.AddBeforeSelected(getItemProperty);
+                newGetItemPropertyWindow.DataContext = getItemProperty;
+                newGetItemPropertyWindow.ShowDialog();
+                if (newGetItemPropertyWindow.DialogResult == true)
+                {
+                    invalidate = true;
+                    newItem = getItemProperty;
+                    this.Close();
+                }
+                else
+                {
+                    script.ScriptLines.Remove(getItemProperty);
+                }
+
+            }
+        }
+
+        private void addText_Click(object sender, RoutedEventArgs e)
+        {
+            var newAddTextWindow = new ScriptEditors.AddTextEditor();
+            var script = this.DataContext as Script;
+            if (script != null)
+            {
+                var newAddText = new Scripter.TextFunctions.AddText();
+                script.AddBeforeSelected(newAddText);
+                newAddTextWindow.DataContext = newAddText;
+                newAddTextWindow.ShowDialog();
+                if (newAddTextWindow.DialogResult == true)
+                {
+                    invalidate = true;
+                    newItem = newAddText;
+                    this.Close();
+                }
+                else
+                {
+                    script.ScriptLines.Remove(newAddText);
+                }
+            }
+        }
+
+        private void setItemPropertyClick(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new SetItemPropertyEditor(), new SetItemProperty());
+        }
+
+        private void getCurrentItemClick(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new GetCurrentItemEditor(), new GetCurrentItem());
+        }
+
+        private void removeItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new RemoveItemEditor(), new RemoveItem());
+        }
+
+        private void removeCurrentItem_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            var newRemoveCurrentItem = new RemoveThisItem();
+            script.AddBeforeSelected(newRemoveCurrentItem);
+            this.Close();
+        }
+        private void LoadWindow(Window editor, ScriptLine line)
+        {
+            var script = this.DataContext as Script;
+            if (script != null)
+            {
+                script.AddBeforeSelected(line);
+                editor.DataContext = line;
+                editor.ShowDialog();
+                if (editor.DialogResult == true)
+                {
+                    invalidate = true;
+                    newItem = line;
+                    this.Close();
+                }
+                else
+                {
+                    script.ScriptLines.Remove(line);
+                }
+
+            }
+        }
+
     }
 }

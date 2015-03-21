@@ -112,5 +112,34 @@ namespace Player
             return g;
 
         }
+        /// <summary>
+        /// The <see cref="PlayerInventory" /> property's name.
+        /// </summary>
+        public const string PlayerInventoryPropertyName = "PlayerInventory";
+
+        private ObservableCollection<ItemInstance> _inventory = new ObservableCollection<ItemInstance>();
+
+        /// <summary>
+        /// Sets and gets the PlayerInventory property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<ItemInstance> PlayerInventory
+        {
+            get
+            {
+                return _inventory;
+            }
+
+            set
+            {
+                if (_inventory == value)
+                {
+                    return;
+                }
+
+                _inventory = value;
+                RaisePropertyChanged(PlayerInventoryPropertyName);
+            }
+        }
     }
 }

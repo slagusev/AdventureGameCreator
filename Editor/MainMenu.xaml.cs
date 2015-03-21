@@ -61,5 +61,22 @@ namespace Editor
         {
             new NewVariable().ShowDialog();
         }
+
+        private void newItemClass_Click(object sender, RoutedEventArgs e)
+        {
+            new NewItemClass().ShowDialog();
+        }
+
+        private void menuTest_Click(object sender, RoutedEventArgs e)
+        {
+            menuSave_Click_1(sender, e);
+            string location = MainViewModel.MainViewModelStatic.Location;
+            System.Diagnostics.Process.Start("Player.exe", location);
+        }
+
+        private void newItem_Click(object sender, RoutedEventArgs e)
+        {
+            new NewItem().ShowDialog();
+        }
     }
 }

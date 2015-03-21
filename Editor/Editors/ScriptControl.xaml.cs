@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using Editor.Scripter.Conditions;
 using Editor.Scripter.TextFunctions;
 using Editor.Scripter.Flow;
+using Editor.Scripter.ItemManagement;
 
 namespace Editor.Editors
 {
@@ -33,7 +34,12 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(Comment), typeof(ScriptEditors.Comment));
             ScriptEditorsByScriptType.Add(typeof(Conditional), typeof(ScriptEditors.ConditionEditor));
             ScriptEditorsByScriptType.Add(typeof(DisplayText), typeof(ScriptEditors.DisplayTextEditor));
+            ScriptEditorsByScriptType.Add(typeof(AddText), typeof(ScriptEditors.AddTextEditor));
             ScriptEditorsByScriptType.Add(typeof(SetVariable), typeof(ScriptEditors.SetVariableEditor));
+            ScriptEditorsByScriptType.Add(typeof(AddItemToInventory), typeof(ScriptEditors.AddItemEditor));
+            ScriptEditorsByScriptType.Add(typeof(GetItemProperty), typeof(ScriptEditors.GetItemPropertyEditor));
+            ScriptEditorsByScriptType.Add(typeof(SetItemProperty), typeof(ScriptEditors.SetItemPropertyEditor));
+            ScriptEditorsByScriptType.Add(typeof(GetCurrentItem), typeof(ScriptEditors.GetCurrentItemEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

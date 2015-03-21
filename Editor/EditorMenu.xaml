@@ -36,6 +36,20 @@
             <TreeViewItem Header="Variables" IsExpanded="False" ItemsSource="{Binding Variables, Source={StaticResource MainViewModelStatic}}" ItemTemplate="{StaticResource VariableTemplate}">
                 
             </TreeViewItem>
+            <TreeViewItem Header="Item Classes" IsExpanded="False" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
+            <TreeViewItem Header="Items" IsExpanded="False" ItemsSource="{Binding Items, Source={StaticResource MainViewModelStatic}}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ItemName}"></TextBlock>
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
         </TreeView>
     </Grid>
 </UserControl>

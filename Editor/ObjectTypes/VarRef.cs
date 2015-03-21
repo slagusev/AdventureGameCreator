@@ -101,5 +101,6 @@ namespace Editor.ObjectTypes
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        
     }
 }

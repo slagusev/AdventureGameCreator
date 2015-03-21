@@ -27,11 +27,13 @@ namespace Player.ScriptLineTypes
             if (conditionResult == true)
             {
                 ScriptWrapper s = new ScriptWrapper(line.ThenStatement);
+                s.parent = parent;
                 result = s.Execute();
             }
             else if (conditionResult == false)
             {
                 ScriptWrapper s = new ScriptWrapper(line.ElseStatement);
+                s.parent = parent;
                 result = s.Execute();
             }
 

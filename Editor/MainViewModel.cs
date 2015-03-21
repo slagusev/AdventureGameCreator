@@ -227,6 +227,66 @@ namespace Editor
             }
         }
 
+
+        /// <summary>
+        /// The <see cref="ItemClasses" /> property's name.
+        /// </summary>
+        public const string ItemClassesPropertyName = "ItemClasses";
+
+        private ObservableCollection<ItemClass> _itemClasses = new ObservableCollection<ItemClass>();
+
+        /// <summary>
+        /// Sets and gets the ItemClasses property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<ItemClass> ItemClasses
+        {
+            get
+            {
+                return _itemClasses;
+            }
+
+            set
+            {
+                if (_itemClasses == value)
+                {
+                    return;
+                }
+
+                _itemClasses = value;
+                RaisePropertyChanged(ItemClassesPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Items" /> property's name.
+        /// </summary>
+        public const string ItemsPropertyName = "Items";
+
+        private ObservableCollection<Item> _items = new ObservableCollection<Item>();
+
+        /// <summary>
+        /// Sets and gets the Items property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<Item> Items
+        {
+            get
+            {
+                return _items;
+            }
+
+            set
+            {
+                if (_items == value)
+                {
+                    return;
+                }
+
+                _items = value;
+                RaisePropertyChanged(ItemsPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="OpenWindows" /> property's name.
         /// </summary>
@@ -381,7 +441,9 @@ namespace Editor
             return new XElement("Game",
                 new XElement("Zones", from a in Zones select a.ToXML()),
                 new XElement("Interactables", from a in Interactables select a.ToXML()),
-                new XElement("Variables", from a in Variables select a.ToXml())
+                new XElement("Variables", from a in Variables select a.ToXml()),
+                new XElement("ItemClasses", from a in ItemClasses select a.ToXML()),
+                new XElement("Items", from a in Items select a.ToXml())
                 );
         }
 
@@ -431,6 +493,24 @@ namespace Editor
             }
             mvm.InteractableGroups.Clear();
             mvm.RecalculateInteractableGroups();
+            XElement itemClasses = xml.Element("ItemClasses");
+            mvm.ItemClasses = new ObservableCollection<ItemClass>();
+            if (itemClasses != null)
+            {
+                foreach (var a in itemClasses.Elements("ItemClass"))
+                {
+                    mvm.ItemClasses.Add(ItemClass.FromXML(a));
+                } 
+            }
+            XElement items = xml.Element("Items");
+            mvm.Items = new ObservableCollection<Item>();
+            if (items != null)
+            {
+                foreach (var a in items.Elements("Item"))
+                {
+                    mvm.Items.Add(Item.FromXml(a));
+                }
+            }
             //Resolve all interactable references
             //foreach (var a in mvm.InteractableRefStack)
             //{

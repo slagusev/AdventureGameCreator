@@ -43,12 +43,15 @@ namespace Editor.Scripter.Flow
                     this.IsDateTime = false;
                     this.IsNumber = false;
                     this.IsString = false;
+                    this.IsItem = false;
                     if (SelectedVariable.LinkedVariable.IsDateTime)
                         this.IsDateTime = true;
                     else if (SelectedVariable.LinkedVariable.IsNumber)
                         this.IsNumber = true;
                     else if (SelectedVariable.LinkedVariable.IsString)
                         this.IsString = true;
+                    else if (SelectedVariable.LinkedVariable.IsItem)
+                        this.IsItem = true;
                     //SelectedVariable.PropertyChanged += this.PropertyChanged;
                 }
                 
@@ -86,8 +89,75 @@ namespace Editor.Scripter.Flow
                     IsDateTimeStatic = false;
                     IsNumberStatic = IsStatic;
                     IsStringStatic = false;
+
                 }
                 RaisePropertyChanged(IsNumberPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsItem" /> property's name.
+        /// </summary>
+        public const string IsItemPropertyName = "IsItem";
+
+        private bool _isItem = false;
+
+        /// <summary>
+        /// Sets and gets the IsItem property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsItem
+        {
+            get
+            {
+                return _isItem;
+            }
+
+            set
+            {
+                if (_isItem == value)
+                {
+                    return;
+                }
+                if (value)
+                    IsSet = true;
+                _isItem = value;
+                RaisePropertyChanged(IsItemPropertyName);
+                if (value)
+                {
+                    IsDateTimeStatic = false;
+                    IsNumberStatic = false;
+                    IsStringStatic = false;
+                }
+            }
+        }
+        /// <summary>
+        /// The <see cref="ItemValue" /> property's name.
+        /// </summary>
+        public const string ItemValuePropertyName = "ItemValue";
+
+        private ItemRef _itemValue = null;
+
+        /// <summary>
+        /// Sets and gets the ItemValue property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ItemRef ItemValue
+        {
+            get
+            {
+                return _itemValue;
+            }
+
+            set
+            {
+                if (_itemValue == value)
+                {
+                    return;
+                }
+
+                _itemValue = value;
+                RaisePropertyChanged(ItemValuePropertyName);
             }
         }
         /// <summary>
@@ -825,6 +895,8 @@ namespace Editor.Scripter.Flow
                 type = "Number";
             if (IsString)
                 type = "String";
+            if (IsItem)
+                type = "Item";
             xml.Add(new XElement("Type", type));
             string action = "";
             if (IsSet)
@@ -862,6 +934,8 @@ namespace Editor.Scripter.Flow
                     xml.Add(new XElement("Value", NumberValue));
                 else if (IsString)
                     xml.Add(new XElement("Value", StringValue));
+                else if (IsItem)
+                    xml.Add(new XElement("Value", ItemValue != null && ItemValue.LinkedItemId != null ? ItemValue.LinkedItemId : Guid.Empty));
             }
             
 
@@ -887,6 +961,9 @@ namespace Editor.Scripter.Flow
                         break;
                     case "String":
                         sv.IsString = true;
+                        break;
+                    case "Item":
+                        sv.IsItem = true;
                         break;
                 }
             }
@@ -923,6 +1000,7 @@ namespace Editor.Scripter.Flow
                 {
                     if (xml.Element("SourceVarRef") != null)
                     {
+                        sv.IsVariable = true;
                         sv.TargetVar = new VarRef(Guid.Parse(xml.Element("TargetVarRef").Value));
                     }
                 }
@@ -959,6 +1037,13 @@ namespace Editor.Scripter.Flow
                         if (xml.Element("Value") != null)
                         {
                             sv.StringValue = xml.Element("Value").Value;
+                        }
+                    }
+                    else if (sv.IsItem)
+                    {
+                        if (xml.Element("Value") != null)
+                        {
+                            sv.ItemValue = new ItemRef(Guid.Parse(xml.Element("Value").Value));
                         }
                     }
                 }
@@ -1015,6 +1100,10 @@ namespace Editor.Scripter.Flow
                     else if (IsNumber)
                     {
                         sb.Append(NumberValue);
+                    }
+                    else if (IsItem)
+                    {
+                        sb.Append("a new instance of " + ((ItemValue != null && ItemValue.LinkedItem != null) ? ItemValue.LinkedItem.ItemName : "UNKNOWN"));
                     }
                     else
                     {

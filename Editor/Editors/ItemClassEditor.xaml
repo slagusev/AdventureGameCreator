@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Editor.Editors.ItemClassEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:Controls="clr-namespace:Editor.Editors"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             d:DesignHeight="1000" d:DesignWidth="1000"
+             DataContext="{Binding TestItemClass, Source={StaticResource TestDataStatic}}">
+    <UserControl.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Item Class: "/><Run Text="{Binding Name}"/></TextBlock>
+            <TextBlock Margin="0,20,0,0">Parent Class: <Run Text="{Binding ParentClass.Name}"></Run></TextBlock>
+            <Expander Margin="0,20,0,0" Header="Inherited By:" IsExpanded="False">
+                <ListBox Margin="20" ItemsSource="{Binding ChildClasses}" Height="100" Width="200" HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Expander>
+            <Expander Margin="0,20,0,0" Header="Items" IsExpanded="False">
+                <ListBox Margin="20" ItemsSource="{Binding Items}" Height="100" Width="200" HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DefaultName}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Expander>
+            <Expander Margin="0,20,0,0" Header="Properties">
+                <Grid Margin="20" Height="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom">
+                            <Button Margin="10" Click="Button_Click_1">New Property</Button>
+                            <Button Margin="10" Click="Button_Click_2">Remove Property</Button>
+                        </StackPanel>
+                        <ListBox Margin="10" ItemsSource="{Binding ItemProperties}" SelectedItem="{Binding SelectedProperty}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}">
+
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                    <StackPanel Grid.Column="1" Visibility="{Binding SelectedPropertyNotNull, Converter={StaticResource VisibilityConverter}}">
+                    <Controls:VariableEditor DataContext="{Binding SelectedProperty}"></Controls:VariableEditor>
+                    </StackPanel>
+                </Grid>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

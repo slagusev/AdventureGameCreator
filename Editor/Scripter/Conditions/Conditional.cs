@@ -30,12 +30,12 @@ namespace Editor.Scripter.Conditions
         }
 
         //Condition property
-        public Conditional()
+        public Conditional(Script baseScript)
         {
             this.Contents = new ObservableCollection<Script>();
-            this.Contents.Add(new Script());
+            this.Contents.Add(new Script(baseScript));
             //this.Contents[0].ScriptLines.Add(new Scripter.Misc.Blank());
-            this.Contents.Add(new Script());
+            this.Contents.Add(new Script(baseScript));
             //this.Contents[1].ScriptLines.Add(new Scripter.Misc.Blank());
             ThenStatement = this.Contents[0];
             ElseStatement = this.Contents[1];
@@ -824,9 +824,9 @@ namespace Editor.Scripter.Conditions
                                      new XElement("Else", ElseStatement.ToXML()));    
         }
 
-        public static Conditional FromXML(XElement xml)
+        public static Conditional FromXML(XElement xml, Script baseScript)
         {
-            Conditional c = new Conditional();
+            Conditional c = new Conditional(baseScript);
             //TODO: HANDLE CONDITION
             if (xml.Element("Condition") != null)
             {
@@ -910,11 +910,11 @@ namespace Editor.Scripter.Conditions
             }
 
             //Handle Then
-            c.ThenStatement = Script.FromXML(xml.Element("Then").Element("Script"));
+            c.ThenStatement = Script.FromXML(xml.Element("Then").Element("Script"), baseScript);
             c.Contents[0] = c.ThenStatement;
 
             //Handle Else
-            c.ElseStatement = Script.FromXML(xml.Element("Else").Element("Script"));
+            c.ElseStatement = Script.FromXML(xml.Element("Else").Element("Script"), baseScript);
             c.Contents[1] = c.ElseStatement;
 
             return c;

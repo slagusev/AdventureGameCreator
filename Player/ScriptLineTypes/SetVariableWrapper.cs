@@ -34,7 +34,7 @@ namespace Player.ScriptLineTypes
             {
                 if (g.VarById.ContainsKey(line.TargetVar.LinkedVarId))
                 {
-                   
+                    rightVar = g.VarById[line.TargetVar.LinkedVarId];
                 }
                 else
                 {
@@ -93,6 +93,44 @@ namespace Player.ScriptLineTypes
                 if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentStringValue;
                 else right = line.StringValue;
                 left.CurrentStringValue = right;
+            }
+            else if (line.IsItem)
+            {
+
+                ItemInstance right = null;
+                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentItemValue;
+                else
+                {
+                    if (line.ItemValue != null && line.ItemValue.LinkedItem != null)
+                    {
+                        right = new ItemInstance(line.ItemValue.LinkedItem);
+                        left.CurrentItemValue = right;
+                    }
+                    else
+                    {
+                        MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!");
+                        return false;
+                    }
+                }
+
+                //if (rightVar == null)
+                //{
+                //    if (line.ItemValue != null && line.ItemValue.LinkedItem != null)
+                //    {
+                //        ItemInstance right = new ItemInstance(line.ItemValue.LinkedItem);
+                //        left.CurrentItemValue = right;
+                //    }
+                //    else
+                //    {
+                //        MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!");
+                //        return false;
+                //    }
+                //}
+                //else
+                //{
+                //    left.CurrentItemValue = rightVar.CurrentItemValue;
+                //}
+
             }
             return null;
         }

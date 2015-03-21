@@ -8,7 +8,9 @@
     <Menu IsMainMenu="True">
         <MenuItem Header="_File">
             <MenuItem Header="_Save" Name="menuSave" Click="menuSave_Click_1"/>
+            <MenuItem Header="Save and _Test Game" Name="menuTest" Click="menuTest_Click"></MenuItem>
             <MenuItem Header="E_xit" Name="menuExit" Click="menuExit_Click_1"/>
+            
         </MenuItem>
         <MenuItem Header="_New" >
             
@@ -17,6 +19,8 @@
 
             <MenuItem Header="_Interactable" Click="newInteractable_Click"></MenuItem>
             <MenuItem Header="_Variable" Click="MenuItem_Click_1"></MenuItem>
+            <MenuItem Header="Item _Class" Name="newItemClass" Click="newItemClass_Click"></MenuItem>
+            <MenuItem Header="I_tem" Name="newItem" Click="newItem_Click"></MenuItem>
         </MenuItem>
     </Menu>
 </UserControl>

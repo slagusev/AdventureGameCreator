@@ -101,8 +101,12 @@ namespace Editor.ObjectTypes
                 {
                     IsNumber = false;
                     IsDateTime = false;
+                    IsItem = false;
+                    
                 }
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
+
         }
 
 
@@ -133,7 +137,9 @@ namespace Editor.ObjectTypes
 
                 _defaultString = value;
                 RaisePropertyChanged(DefaultStringPropertyName);
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
+            
         }
 
         /// <summary>
@@ -167,7 +173,9 @@ namespace Editor.ObjectTypes
                 {
                     IsString = false;
                     IsNumber = false;
+                    IsItem = false;
                 }
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
         }
 
@@ -198,6 +206,7 @@ namespace Editor.ObjectTypes
 
                 _defaultDateTime = value;
                 RaisePropertyChanged(DefaultDateTimePropertyName);
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
         }
 
@@ -232,10 +241,46 @@ namespace Editor.ObjectTypes
                 {
                     IsString = false;
                     IsDateTime = false;
+                    IsItem = false;
                 }
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="IsItem" /> property's name.
+        /// </summary>
+        public const string IsItemPropertyName = "IsItem";
 
+        private bool _isItem = false;
+
+        /// <summary>
+        /// Sets and gets the IsItem property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsItem
+        {
+            get
+            {
+                return _isItem;
+            }
+
+            set
+            {
+                if (_isItem == value)
+                {
+                    return;
+                }
+
+                _isItem = value;
+                if (value)
+                {
+                    IsDateTime = false;
+                    IsNumber = false;
+                    IsString = false;
+                }
+                RaisePropertyChanged(IsItemPropertyName);
+            }
+        }
 
 
 
@@ -252,6 +297,11 @@ namespace Editor.ObjectTypes
             {
                 value = new XElement("Value", DefaultDateTime.ToString());
                 type = "DateTime";
+            }
+            else if (IsItem)
+            {
+                value = new XElement("Value", "");
+                type = "Item";
             }
             else
             {
@@ -280,6 +330,9 @@ namespace Editor.ObjectTypes
                     v.IsString = false;
                     v.IsDateTime = true;
                     v.DefaultDateTime = Convert.ToDateTime(xml.Element("Value").Value);
+                    break;
+                case "Item":
+                    v.IsItem = true;
                     break;
                 case "String":
                     v.IsNumber = false;
@@ -321,9 +374,29 @@ namespace Editor.ObjectTypes
 
                 _defaultNumber = value;
                 RaisePropertyChanged(DefaultNumberPropertyName);
+                RaisePropertyChanged(DefaultValuePropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="DefaultValue" /> property's name.
+        /// </summary>
+        public const string DefaultValuePropertyName = "DefaultValue";
 
+        private object _defaultValue = null;
+
+        /// <summary>
+        /// Sets and gets the DefaultValue property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public object DefaultValue
+        {
+            get
+            {
+                return GetDefaultValue();
+            }
+
+
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {
@@ -331,6 +404,23 @@ namespace Editor.ObjectTypes
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+        public object GetDefaultValue()
+        {
+            if (this.IsDateTime)
+            {
+                return this.DefaultDateTime;
+            }
+            else if (this.IsNumber)
+            {
+                return this.DefaultNumber;
+            }
+            else if (this.IsString)
+            {
+                return this.DefaultString;
+            }
+            
+            else return null;
         }
     }
 }

@@ -94,6 +94,48 @@ namespace Editor
                 }
                 else wv = existingWindows.First();
             }
+            if (mainTree.SelectedItem.GetType() == typeof(ItemClass))
+            {
+                ItemClass g = mainTree.SelectedItem as ItemClass;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as ItemClassEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Item Class - " + g.Name,
+                        Content = (UserControl)new ItemClassEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
+            if (mainTree.SelectedItem.GetType() == typeof(Item))
+            {
+                Item g = mainTree.SelectedItem as Item;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as ItemEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Item - " + g.ItemName,
+                        Content = (UserControl)new ItemEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
             if (wv != null)
                 MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(wv);
         }

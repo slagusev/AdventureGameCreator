@@ -1,8 +1,10 @@
 ﻿using Editor.Scripter;
 using Editor.Scripter.Conditions;
 using Editor.Scripter.Flow;
+using Editor.Scripter.ItemManagement;
 using Editor.Scripter.Misc;
 using Editor.Scripter.TextFunctions;
+using Player.ObjectTypesWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,40 +16,75 @@ namespace Player.ScriptLineTypes
     abstract class ScriptLineWrapper
     {
         public abstract bool? Execute();
-        public static ScriptLineWrapper GetScriptLineWrapper(ScriptLine line)
+        public static ScriptLineWrapper GetScriptLineWrapper(ScriptLine line, ScriptWrapper parent)
         {
             var lineType = line.GetType();
+            ScriptLineWrapper lineWrapper = null;
             if (lineType == typeof(Comment))
             {
-                var comment = new CommentWrapper((Comment)line);
-                return comment;
+                lineWrapper = new CommentWrapper((Comment)line);
+                //return comment;
             }
             if (lineType == typeof(Conditional))
             {
-                var conditional = new ConditionalWrapper((Conditional)line);
-                return conditional;
+                lineWrapper = new ConditionalWrapper((Conditional)line);
             }
             if (lineType == typeof(DisplayText))
             {
-                return new DisplayTextWrapper((DisplayText)line);
+                lineWrapper = new DisplayTextWrapper((DisplayText)line);
             }
             if (lineType == typeof(SetVariable))
             {
-                return new SetVariableWrapper((SetVariable)line);
+                lineWrapper = new SetVariableWrapper((SetVariable)line);
             }
             if (lineType == typeof(ReturnTrue))
             {
-                return new ReturnTrueWrapper();
+                lineWrapper = new ReturnTrueWrapper();
             }
             if (lineType == typeof(ReturnFalse))
             {
-                return new ReturnFalseWrapper();
+                lineWrapper = new ReturnFalseWrapper();
             }
             if (lineType == typeof(StopGame))
             {
-                return new StopGameWrapper();
+                lineWrapper = new StopGameWrapper();
             }
-            return null;
+            if (lineType == typeof(AddText))
+            {
+                lineWrapper = new AddTextWrapper((AddText)line);
+            }
+            if (lineType == typeof(AddItemToInventory))
+            {
+                lineWrapper = new AddItemWrapper((AddItemToInventory)line);
+            }
+            if (lineType == typeof(SetItemProperty))
+            {
+                lineWrapper = new SetItemPropertyWrapper((SetItemProperty)line);
+            }
+            if (lineType == typeof(GetItemProperty))
+            {
+                lineWrapper = new GetItemPropertyWrapper((GetItemProperty)line);
+            }
+            if (lineType == typeof(GetCurrentItem))
+            {
+                lineWrapper = new GetCurrentItemWrapper((GetCurrentItem)line);
+            }
+            if (lineType == typeof(RemoveItem))
+            {
+                lineWrapper = new RemoveItemWrapper((RemoveItem)line);
+            }
+            if (lineType == typeof(RemoveThisItem))
+            {
+                lineWrapper = new RemoveThisItemWrapper((RemoveThisItem)line);
+            }
+            if (lineWrapper != null)
+            {
+                lineWrapper.parent = parent;
+            }
+            return lineWrapper;
         }
+        public ScriptWrapper parent {get; set; }
+        
+        
     }
 }
