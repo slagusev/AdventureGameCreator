@@ -53,6 +53,12 @@ namespace Player.ObjectTypesWrappers
             }
         }
 
+        public bool IsVisible()
+        {
+            var visibility = new ScriptWrapper(ExitBase.ExitVisibility).Execute();
+            return (visibility != false);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {

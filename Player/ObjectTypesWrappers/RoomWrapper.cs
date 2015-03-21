@@ -95,6 +95,7 @@ namespace Player.ObjectTypeWrappers
             }
         }
 
+        
         /// <summary>
         /// The <see cref="RoomBase" /> property's name.
         /// </summary>

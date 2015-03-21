@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Scripter;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,18 @@ namespace Editor.ObjectTypes
     public enum ExitDirection { North, South, East, West, Other };
     public class Exit : INotifyPropertyChanged
     {
+        public Exit()
+        {
+            ExitVisibility.IsItemScript = false;
+            ExitVisibility.CanAddItem = false;
+            ExitVisibility.CanAddText = false;
+            ExitVisibility.CanComment = true;
+            ExitVisibility.CanConditional = true;
+            ExitVisibility.CanDisplayText = false;
+            ExitVisibility.CanReturn = true;
+            ExitVisibility.CanSetVariable = true;
+            ExitVisibility.CanStopGame = false;
+        }
         /// <summary>
         /// The <see cref="ZoneID" /> property's name.
         /// </summary>
@@ -202,7 +215,35 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(ExitNamePropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="ExitVisibility" /> property's name.
+        /// </summary>
+        public const string ExitVisibilityPropertyName = "ExitVisibility";
 
+        private Script _exitVisibility = new Script();
+
+        /// <summary>
+        /// Sets and gets the ExitVisibility property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public Script ExitVisibility
+        {
+            get
+            {
+                return _exitVisibility;
+            }
+
+            set
+            {
+                if (_exitVisibility == value)
+                {
+                    return;
+                }
+
+                _exitVisibility = value;
+                RaisePropertyChanged(ExitVisibilityPropertyName);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
         {
@@ -218,9 +259,10 @@ namespace Editor.ObjectTypes
                 new XElement("ZoneID", ZoneID),
                 new XElement("RoomID", RoomID),
                 new XElement("ExitName", ExitName),
+                new XElement("ExitVisibility", ExitVisibility.ToXML()),
                 new XElement("Direction", Direction.ToString()));
         }
-
+      
         public static Exit FromXML(XElement xml)
         {
             Exit exit = new Exit();
@@ -242,6 +284,11 @@ namespace Editor.ObjectTypes
                 Enum.TryParse<ExitDirection>(xml.Element("Direction").Value, out d);
                 exit.Direction = d;
             }
+            if (xml.Element("ExitVisibility") != null)
+            {
+                exit.ExitVisibility = Script.FromXML(xml.Element("ExitVisibility").Element("Script"), exit.ExitVisibility);
+            }
+
             return exit;
         }
     }

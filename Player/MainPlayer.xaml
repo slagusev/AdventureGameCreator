@@ -33,7 +33,7 @@
                     <!--Directions-->
             <StackPanel VerticalAlignment="Stretch">
                 <TextBlock Text="Directions:"></TextBlock>
-            <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Exits, Source={StaticResource MainViewModelStatic}}">
+            <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.VisibleExits, Source={StaticResource MainViewModelStatic}}">
                         <ListBox.ItemTemplate>
                     <DataTemplate>
                             <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding ExitBase.ExitName}" Command="{Binding UseExitCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding}"></Button>

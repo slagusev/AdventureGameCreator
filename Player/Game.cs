@@ -45,7 +45,46 @@ namespace Player
                 
                 _currentRoom = value;
                 value.RecalculateInteractableVisibility();
+                RefreshVisibleExits();
                 RaisePropertyChanged(CurrentRoomPropertyName);
+            }
+        }
+
+        public void RefreshVisibleExits()
+        {
+            if (CurrentRoom != null)
+            {
+                VisibleExits = new ObservableCollection<ExitWrapper>(CurrentRoom.Exits.Where(a => a.IsVisible()));
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="VisibleExits" /> property's name.
+        /// </summary>
+        public const string VisibleExitsPropertyName = "VisibleExits";
+
+        private ObservableCollection<ExitWrapper> _visibleExits = new ObservableCollection<ExitWrapper>();
+
+        /// <summary>
+        /// Sets and gets the VisibleExits property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<ExitWrapper> VisibleExits
+        {
+            get
+            {
+                return _visibleExits;
+            }
+
+            set
+            {
+                if (_visibleExits == value)
+                {
+                    return;
+                }
+
+                _visibleExits = value;
+                RaisePropertyChanged(VisibleExitsPropertyName);
             }
         }
 

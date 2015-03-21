@@ -36,7 +36,7 @@ namespace Editor.Scripter
             this.CanStopGame = s.CanStopGame;
             this.CanAddItem = s.CanAddItem;
             this.CanAddText = s.CanAddText;
-            this.IsVariableScript = s.IsVariableScript;
+            this.IsItemScript = s.IsItemScript;
             this.HasTextFunctionality = s.HasTextFunctionality;
 
         }
@@ -377,32 +377,32 @@ namespace Editor.Scripter
             }
         }
         /// <summary>
-        /// The <see cref="IsVariableScript" /> property's name.
+        /// The <see cref="IsItemScript" /> property's name.
         /// </summary>
-        public const string IsVariableScriptPropertyName = "IsVariableScript";
+        public const string IsItemScriptPropertyName = "IsItemScript";
 
-        private bool _isVariableScript = false;
+        private bool _IsItemScript = false;
 
         /// <summary>
-        /// Sets and gets the IsVariableScript property.
+        /// Sets and gets the IsItemScript property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public bool IsVariableScript
+        public bool IsItemScript
         {
             get
             {
-                return _isVariableScript;
+                return _IsItemScript;
             }
 
             set
             {
-                if (_isVariableScript == value)
+                if (_IsItemScript == value)
                 {
                     return;
                 }
 
-                _isVariableScript = value;
-                RaisePropertyChanged(IsVariableScriptPropertyName);
+                _IsItemScript = value;
+                RaisePropertyChanged(IsItemScriptPropertyName);
             }
         }
 

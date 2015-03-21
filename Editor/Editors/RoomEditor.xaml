@@ -35,49 +35,55 @@
                 </StackPanel>
             </Expander>
             <Expander Margin="0,20" Header="Exits">
-                <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <ListBox SelectedItem="{Binding SelectedExit}" Margin="20" MinHeight="300"  ItemsSource="{Binding Exits}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="ListBox_MouseDoubleClick_1">
-                
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <Run Text="{Binding Direction}"/><Run Text=" - "/><Run Text="{Binding ZoneLink.ZoneName}"/><Run Text=" - "/><Run Text="{Binding RoomLink.RoomName}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <StackPanel Margin="20" Grid.Column="1">
-                    <TextBlock>Direction:</TextBlock>
-                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.Direction}" ItemsSource="{Binding PossibleDirections}"></ComboBox>
-                    <TextBlock>Zone:</TextBlock>
-                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.ZoneLink}" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ZoneName}"></TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox SelectedItem="{Binding SelectedExit}" Margin="20" MinHeight="300"  ItemsSource="{Binding Exits}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="ListBox_MouseDoubleClick_1">
 
-                    <TextBlock>Room:</TextBlock>
-                    <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.RoomLink}" ItemsSource="{Binding SelectedExit.ZoneLink.Rooms}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                            <TextBlock Text="{Binding RoomName}"></TextBlock>
-                        </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                        <TextBlock>Exit Name:</TextBlock>
-                        <TextBox Margin="10" Text="{Binding SelectedExit.ExitName}"></TextBox>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                <Run Text="{Binding Direction}"/><Run Text=" - "/><Run Text="{Binding ZoneLink.ZoneName}"/><Run Text=" - "/><Run Text="{Binding RoomLink.RoomName}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Margin="20" Grid.Column="1">
+                            <TextBlock>Direction:</TextBlock>
+                            <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.Direction}" ItemsSource="{Binding PossibleDirections}"></ComboBox>
+                            <TextBlock>Zone:</TextBlock>
+                            <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.ZoneLink}" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ZoneName}"></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBlock>Room:</TextBlock>
+                            <ComboBox Margin="10" SelectedItem="{Binding SelectedExit.RoomLink}" ItemsSource="{Binding SelectedExit.ZoneLink.Rooms}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RoomName}"></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock>Exit Name:</TextBlock>
+                            <TextBox Margin="10" Text="{Binding SelectedExit.ExitName}"></TextBox>
                             <Button Margin="10" Command="{Binding NewExitCommand}">New Exit</Button>
-                    <Button Margin="10" Command="{Binding RemoveExitCommand}">Remove Selected Exit</Button>
-                    <Button Margin="10" Command="{Binding LinkExitCommand}" ToolTip="Quickly create a mirrored exit on the destination of this exit, back to this room.">Link Selected Exit</Button>
-                    <Button Margin="10" Command="{Binding OpenSelectedExitCommand}" ToolTip="Open the room the selected exit leadds to.">Open Selected Exit</Button>
+                            <Button Margin="10" Command="{Binding RemoveExitCommand}">Remove Selected Exit</Button>
+                            <Button Margin="10" Command="{Binding LinkExitCommand}" ToolTip="Quickly create a mirrored exit on the destination of this exit, back to this room.">Link Selected Exit</Button>
+                            <Button Margin="10" Command="{Binding OpenSelectedExitCommand}" ToolTip="Open the room the selected exit leadds to.">Open Selected Exit</Button>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock>Exit Visibility -- No script = Always visible</TextBlock>
+                    <Controls:ScriptControl Margin="20" DataContext="{Binding SelectedExit.ExitVisibility}" Height="200" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+
+                    </Controls:ScriptControl>
                 </StackPanel>
-        </Grid>
             </Expander>
             <Expander Header="Default Interactables" IsExpanded="False">
                 <Grid>

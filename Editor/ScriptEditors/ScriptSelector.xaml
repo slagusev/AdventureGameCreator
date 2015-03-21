@@ -46,10 +46,10 @@
                     <StackPanel >
                         <Button Content="Add Item..." x:Name="addItem" Click="addItem_Click" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}"/>
                         <Button Content="Remove Item..." x:Name="removeItem" Click="removeItem_Click" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}"/>
-                        <Button Content="Remove Current Item..." x:Name="removeCurrentItem" Click="removeCurrentItem_Click" Visibility="{Binding IsVariableScript, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Remove Current Item..." x:Name="removeCurrentItem" Click="removeCurrentItem_Click" Visibility="{Binding IsItemScript, Converter={StaticResource VisibilityConverter}}"/>
                         <Button Content="Get Item Property..." x:Name="getItemProperty" Click="getItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
                         <Button Content="Set Item Property..." x:Name="setItemProperty" Click="setItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
-                        <Button Content="Get Current Item..." x:Name="getCurrentItemProperty" Click="getCurrentItemClick" Visibility="{Binding IsVariableScript, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Get Current Item..." x:Name="getCurrentItemProperty" Click="getCurrentItemClick" Visibility="{Binding IsItemScript, Converter={StaticResource VisibilityConverter}}"/>
                         
                     </StackPanel>
                 </GroupBox>

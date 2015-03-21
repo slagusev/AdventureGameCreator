@@ -154,10 +154,16 @@ namespace Player
         public void ExamineObject(InteractableWrapper interactable)
         {
             interactable.Examine();
+            if (CurrentGame.CurrentRoom != null)
+                CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
+            CurrentGame.RefreshVisibleExits();
         }
         public void InteractObject(InteractableWrapper interactable)
         {
             interactable.Interact();
+            if (CurrentGame.CurrentRoom != null)
+                CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
+            CurrentGame.RefreshVisibleExits();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
@@ -177,6 +183,9 @@ namespace Player
         {
             ExploreMode = true;
             InventoryMode = false;
+            if (CurrentGame.CurrentRoom != null)
+                CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
+            CurrentGame.RefreshVisibleExits();
         }
         public void UseItem()
         {

@@ -26,10 +26,10 @@ namespace Editor.ObjectTypes
             Description.CanReturn = false;
             Description.CanStopGame = false;
             Description.CanAddText = true;
-            Description.IsVariableScript = true;
+            Description.IsItemScript = true;
             OnUse.CanReturn = false;
             OnUse.CanDisplayText = true;
-            OnUse.IsVariableScript = true;
+            OnUse.IsItemScript = true;
         }
         public void WireCommands()
         {
