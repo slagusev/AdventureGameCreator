@@ -1,0 +1,24 @@
+﻿<Window x:Class="Editor.ScriptEditors.GetEquipmentSlotEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor"
+        Title="Get Equipment Slot" Height="500" Width="500" DataContext="{Binding TestGetEquipmentSlot, Source={StaticResource TestDataStatic}}">
+
+    <Grid>
+        <StackPanel Margin="10,10,10,-10">
+            <TextBlock Margin="10"><Run Text="Choose which slot to retrieve:"/></TextBlock>
+            <ListBox ItemsSource="{Binding Settings.EquipmentSlots, Source={StaticResource MainViewModelStatic}}" Height="150" SelectedItem="{Binding Slot}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Margin="10"><Run Text="Choose which variable to store the item in:"/></TextBlock>
+            <Controls:VariableSelector Height="150" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="False" ShowItems="True" ShowString="False" ShowDateTime="False" />
+            <!--<CheckBox IsChecked="{Binding ThrowAwayItem}" Content="Remove the replaced item from the player's inventory after equipping."/>-->
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

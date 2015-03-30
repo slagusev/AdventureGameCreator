@@ -17,6 +17,14 @@ namespace Player.ObjectTypesWrappers
             else if (v.IsString) CurrentStringValue = v.DefaultString;
             else if (v.IsItem) CurrentItemValue = null;
         }
+        public override string ToString()
+        {
+            if (VariableBase.IsDateTime) return CurrentDateTimeValue.ToString();
+            if (VariableBase.IsNumber) return CurrentNumberValue.ToString();
+            if (VariableBase.IsString) return CurrentStringValue.ToString();
+            if (VariableBase.IsItem) return CurrentItemValue.ToString();
+            return "";
+        }
         public Variable VariableBase  { get; set; }
         public DateTime CurrentDateTimeValue { get; set; }
         public int CurrentNumberValue { get; set; }

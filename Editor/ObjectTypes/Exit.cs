@@ -23,6 +23,7 @@ namespace Editor.ObjectTypes
             ExitVisibility.CanReturn = true;
             ExitVisibility.CanSetVariable = true;
             ExitVisibility.CanStopGame = false;
+            ExitVisibility.AllowedCommonEventTypes.Add("True/False Script");
         }
         /// <summary>
         /// The <see cref="ZoneID" /> property's name.

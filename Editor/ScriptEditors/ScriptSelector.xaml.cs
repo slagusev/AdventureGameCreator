@@ -87,7 +87,7 @@ namespace Editor.ScriptEditors
                 script.ScriptLines = null;
                 script.ScriptLines = new System.Collections.ObjectModel.ObservableCollection<ScriptLine>();
                 script.ScriptLines = lines;
-                script.SelectedLine = newItem;
+                script.SelectedLine = script.ScriptLines[script.ScriptLines.IndexOf(newItem)+1];
             }
         }
 
@@ -279,6 +279,31 @@ namespace Editor.ScriptEditors
                 }
 
             }
+        }
+
+        private void runCommonEvent_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new RunCommonEventEditor(), new RunCommonEvent(this.DataContext as Script));
+        }
+
+        private void ReturnValue_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ReturnValueEditor(), new ReturnValue());
+        }
+
+        private void getEquippedItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new GetEquipmentSlotEditor(), new GetEquipmentSlot());
+        }
+
+        private void forceEquip_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ForceEquipEditor(), new ForceEquip());
+        }
+
+        private void forceUnequip_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ForceUnequipEditor(), new ForceUnequip());
         }
 
     }

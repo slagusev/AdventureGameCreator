@@ -21,6 +21,7 @@
             <MenuItem Header="_Variable" Click="MenuItem_Click_1"></MenuItem>
             <MenuItem Header="Item _Class" Name="newItemClass" Click="newItemClass_Click"></MenuItem>
             <MenuItem Header="I_tem" Name="newItem" Click="newItem_Click"></MenuItem>
+            <MenuItem Header="Common _Event" Name="newCommonEvent" Click="newCommonEvent_Click_1"></MenuItem>
         </MenuItem>
     </Menu>
 </UserControl>

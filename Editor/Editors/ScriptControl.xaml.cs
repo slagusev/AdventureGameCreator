@@ -19,6 +19,7 @@ using Editor.Scripter.Conditions;
 using Editor.Scripter.TextFunctions;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
+using System.Xml.Linq;
 
 namespace Editor.Editors
 {
@@ -40,6 +41,11 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(GetItemProperty), typeof(ScriptEditors.GetItemPropertyEditor));
             ScriptEditorsByScriptType.Add(typeof(SetItemProperty), typeof(ScriptEditors.SetItemPropertyEditor));
             ScriptEditorsByScriptType.Add(typeof(GetCurrentItem), typeof(ScriptEditors.GetCurrentItemEditor));
+            ScriptEditorsByScriptType.Add(typeof(RunCommonEvent), typeof(ScriptEditors.RunCommonEventEditor));
+            ScriptEditorsByScriptType.Add(typeof(ReturnValue), typeof(ScriptEditors.ReturnValueEditor));
+            ScriptEditorsByScriptType.Add(typeof(GetEquipmentSlot), typeof(ScriptEditors.GetEquipmentSlotEditor));
+            ScriptEditorsByScriptType.Add(typeof(ForceUnequip), typeof(ScriptEditors.ForceUnequipEditor));
+            ScriptEditorsByScriptType.Add(typeof(ForceEquip), typeof(ScriptEditors.ForceEquipEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)
@@ -102,6 +108,62 @@ namespace Editor.Editors
                 script.SelectedLine = selected;
             }
 
+        }
+
+        private void CopyStep_Click(object sender, RoutedEventArgs e)
+        {
+            var script = (this.DataContext as Script);
+            
+            if (script.SelectedLine != null && script.SelectedLine.GetType() != typeof(Editor.Scripter.Misc.Blank))
+            {
+                var selected = script.SelectedLine;
+                TextBox tb = new TextBox();
+                tb.Text = selected.ToXML().ToString().Replace("\r\n", "");
+                tb.SelectAll();
+                tb.Copy();
+            } 
+            //TextBox tb = new TextBox();
+            //tb.Text = 
+        }
+
+        private void CopyScript_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = new TextBox();
+            tb.Text = (this.DataContext as Script).ToXML().ToString().Replace("\r\n", "");
+            tb.SelectAll();
+            tb.Copy();
+        }
+
+        private void PasteStep_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var script = (this.DataContext as Script);
+                TextBox tb = new TextBox();
+                tb.Paste();
+                XElement xml = XElement.Parse(tb.Text);
+                Script s;
+                
+                if (xml.Name != "Script")
+                {
+                    xml = new XElement("Script", xml);
+                }
+                
+                s = Script.FromXML(xml, script);
+                
+                foreach (var line in s.ScriptLines)
+                {
+                    if (line.GetType() != typeof(Editor.Scripter.Misc.Blank))
+                    {
+                        script.AddBeforeSelected(line);
+                    }
+                }
+                
+            }
+            catch
+            {
+                MessageBox.Show("Clipboard does not contain valid XML.");
+            }
         }
 
 

@@ -19,7 +19,8 @@ namespace Editor.Scripter
         {
             ScriptType = ScriptTypes.None;
             this.ScriptLines.Add(new Blank());
-            
+            this.AllowedCommonEventTypes.Add("General");
+            this.AllowedCommonEventTypes.Add("Returned Value Script");
         }
 
         public Script(Script s)
@@ -35,10 +36,15 @@ namespace Editor.Scripter
             this.CanSetVariable = s.CanSetVariable;
             this.CanStopGame = s.CanStopGame;
             this.CanAddItem = s.CanAddItem;
+            this.CanReturnValue = s.CanReturnValue;
             this.CanAddText = s.CanAddText;
             this.IsItemScript = s.IsItemScript;
             this.HasTextFunctionality = s.HasTextFunctionality;
-
+            this.AllowedCommonEventTypes.Clear();
+            foreach (var ce in s.AllowedCommonEventTypes)
+            {
+                this.AllowedCommonEventTypes.Add(ce);
+            }
         }
         public ScriptTypes ScriptType { get; set; }
         public Script(ScriptTypes type)
@@ -181,6 +187,21 @@ namespace Editor.Scripter
                         break;
                     case "RemoveThisItem":
                         script.ScriptLines.Add(new RemoveThisItem());
+                        break;
+                    case "RunCommonEvent":
+                        script.ScriptLines.Add(Editor.Scripter.Flow.RunCommonEvent.FromXml(element, script));
+                        break;
+                    case "ReturnValue":
+                        script.ScriptLines.Add(Editor.Scripter.Flow.ReturnValue.FromXML(element));
+                        break;
+                    case "GetEquipmentSlot":
+                        script.ScriptLines.Add(GetEquipmentSlot.FromXML(element));
+                        break;
+                    case "ForceUnequip":
+                        script.ScriptLines.Add(ForceUnequip.FromXML(element));
+                        break;
+                    case "ForceEquip":
+                        script.ScriptLines.Add(ForceEquip.FromXML(element));
                         break;
                     default:
                         break;
@@ -348,6 +369,36 @@ namespace Editor.Scripter
         }
 
         /// <summary>
+        /// The <see cref="CanReturnValue" /> property's name.
+        /// </summary>
+        public const string CanReturnValuePropertyName = "CanReturnValue";
+
+        private bool _canReturnValue = false;
+
+        /// <summary>
+        /// Sets and gets the CanReturnValue property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool CanReturnValue
+        {
+            get
+            {
+                return _canReturnValue;
+            }
+
+            set
+            {
+                if (_canReturnValue == value)
+                {
+                    return;
+                }
+
+                _canReturnValue = value;
+                RaisePropertyChanged(CanReturnValuePropertyName);
+            }
+        }
+
+        /// <summary>
         /// The <see cref="CanStopGame" /> property's name.
         /// </summary>
         public const string CanStopGamePropertyName = "CanStopGame";
@@ -493,6 +544,8 @@ namespace Editor.Scripter
                 RaisePropertyChanged(CanAddItemPropertyName);
             }
         }
+
+        public List<string> AllowedCommonEventTypes = new List<string>();
         #endregion
     }
 }

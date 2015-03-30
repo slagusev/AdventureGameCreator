@@ -77,6 +77,26 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new RemoveThisItemWrapper((RemoveThisItem)line);
             }
+            if (lineType == typeof(RunCommonEvent))
+            {
+                lineWrapper = new RunCommonEventWrapper((RunCommonEvent)line);
+            }
+            if (lineType == typeof(ReturnValue))
+            {
+                lineWrapper = new ReturnValueWrapper((ReturnValue)line);
+            }
+            if (lineType == typeof(GetEquipmentSlot))
+            {
+                lineWrapper = new GetEquipmentSlotWrapper((GetEquipmentSlot)line);
+            }
+            if (lineType == typeof(ForceEquip))
+            {
+                lineWrapper = new ForceEquipWrapper((ForceEquip)line);
+            }
+            if (lineType == typeof(ForceUnequip))
+            {
+                lineWrapper = new ForceUnequipWrapper((ForceUnequip)line);
+            }
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;

@@ -21,6 +21,7 @@ namespace Editor.ObjectTypes
             OpenSelectedExitCommand = new RelayCommand(OpenSelectedExit);
 
             this.RoomDescriptionScript.CanReturn = false;
+            //this.RoomDescriptionScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeDescription);
         }
 
         /// <summary>

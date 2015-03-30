@@ -389,6 +389,36 @@ namespace Editor
         }
 
         /// <summary>
+        /// The <see cref="CommonEvents" /> property's name.
+        /// </summary>
+        public const string CommonEventsPropertyName = "CommonEvents";
+
+        private ObservableCollection<CommonEvent> _commonEvents = new ObservableCollection<CommonEvent>();
+
+        /// <summary>
+        /// Sets and gets the CommonEvents property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<CommonEvent> CommonEvents
+        {
+            get
+            {
+                return _commonEvents;
+            }
+
+            set
+            {
+                if (_commonEvents == value)
+                {
+                    return;
+                }
+
+                _commonEvents = value;
+                RaisePropertyChanged(CommonEventsPropertyName);
+            }
+        }
+
+        /// <summary>
         /// The <see cref="Variables" /> property's name.
         /// </summary>
         public const string VariablesPropertyName = "Variables";
@@ -436,6 +466,36 @@ namespace Editor
             }
         }
 
+        /// <summary>
+        /// The <see cref="Settings" /> property's name.
+        /// </summary>
+        public const string SettingsPropertyName = "Settings";
+
+        private PlayerSettings _settings = new PlayerSettings();
+
+        /// <summary>
+        /// Sets and gets the Settings property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public PlayerSettings Settings
+        {
+            get
+            {
+                return _settings;
+            }
+
+            set
+            {
+                if (_settings == value)
+                {
+                    return;
+                }
+
+                _settings = value;
+                RaisePropertyChanged(SettingsPropertyName);
+            }
+        }
+
         public XElement ToXML()
         {
             return new XElement("Game",
@@ -443,7 +503,9 @@ namespace Editor
                 new XElement("Interactables", from a in Interactables select a.ToXML()),
                 new XElement("Variables", from a in Variables select a.ToXml()),
                 new XElement("ItemClasses", from a in ItemClasses select a.ToXML()),
-                new XElement("Items", from a in Items select a.ToXml())
+                new XElement("Items", from a in Items select a.ToXml()),
+                new XElement("CommonEvents", from a in CommonEvents select a.ToXML()),
+                new XElement(Settings.ToXML())
                 );
         }
 
@@ -502,6 +564,11 @@ namespace Editor
                     mvm.ItemClasses.Add(ItemClass.FromXML(a));
                 } 
             }
+            XElement settings = xml.Element("PlayerSettings");
+            if (settings != null)
+            {
+                mvm.Settings = PlayerSettings.FromXML(settings);
+            }
             XElement items = xml.Element("Items");
             mvm.Items = new ObservableCollection<Item>();
             if (items != null)
@@ -511,6 +578,15 @@ namespace Editor
                     mvm.Items.Add(Item.FromXml(a));
                 }
             }
+            
+            XElement commonEvents = xml.Element("CommonEvents");
+            if (commonEvents != null)
+            {
+                foreach (var a in commonEvents.Elements("CommonEvent"))
+                {
+                    mvm.CommonEvents.Add(CommonEvent.FromXML(a));
+                }
+            }
             //Resolve all interactable references
             //foreach (var a in mvm.InteractableRefStack)
             //{
@@ -518,6 +594,10 @@ namespace Editor
             //    var list = a.Key;
             //    var interactable = mvm.Interactables.Where(i => i.InteractableID == guid).FirstOrDefault();
             //}
+
+
+
+            
             return mvm;
         }
         public List<KeyValuePair<ObservableCollection<Interactable>, Guid>> InteractableRefStack = new List<KeyValuePair<ObservableCollection<Interactable>, Guid>>();
@@ -564,6 +644,7 @@ namespace Editor
             {
                 this.OpenWindows.Remove(vw);
             }
+
         }
         
     }

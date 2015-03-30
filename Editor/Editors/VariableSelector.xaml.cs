@@ -42,6 +42,7 @@ namespace Editor.Editors
             set
             {
                 SetValue(SelectedItemProperty, value);
+                if (value != null && value.LinkedVariable != null) currentlySelected.Text = value.LinkedVariable.Name;
             }
         }
 

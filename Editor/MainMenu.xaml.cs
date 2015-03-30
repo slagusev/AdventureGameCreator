@@ -1,4 +1,5 @@
 ﻿using Editor.NewForms;
+using Editor.ObjectTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,6 +78,12 @@ namespace Editor
         private void newItem_Click(object sender, RoutedEventArgs e)
         {
             new NewItem().ShowDialog();
+        }
+
+        private void newCommonEvent_Click_1(object sender, RoutedEventArgs e)
+        {
+            var dialog = new NewCommonEvent() { DataContext = new CommonEvent() };
+            dialog.ShowDialog();
         }
     }
 }

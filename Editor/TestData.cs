@@ -29,6 +29,10 @@ namespace Editor
         public static AddItemToInventory TestAddItem { get; set; }
         public static GetItemProperty TestGetProperty { get; set; }
         public static SetItemProperty TestSetProperty { get; set; }
+        public static ForceEquip TestForceEquip { get; set; }
+        public static ForceUnequip TestForceUnequip { get; set; }
+        public static GetEquipmentSlot TestGetEquipmentSlot { get; set; }
+
         //Interactable samples
         public static Interactable TestInteractable { get; set; }
         public static InteractableGroup TestInteractableGroup { get; set; }
@@ -39,6 +43,13 @@ namespace Editor
         public static Variable TestNumberVariable { get; set; }
         public static ItemClass TestItemClass { get; set; }
         public static Item TestItem { get; set; }
+
+        //Settings Samples
+        public static PlayerSettings Settings1 { get; set; }
+        public static PlayerSettings Settings2 { get; set; }
+
+        //Common Event Samples
+        public static CommonEvent TestCommonEvent { get; set; }
 
         static TestData()
         {
@@ -139,6 +150,8 @@ namespace Editor
 
             TestItemClass.SelectedProperty = TestItemClass.ItemProperties.First();
             testItem2.ItemName = "BasicBracers";
+            testItem2.IsEquipment = true;
+            
             testItem2.SelectedProperty = testItem.ItemProperties.First();
             TestItem = testItem2;
 
@@ -148,6 +161,35 @@ namespace Editor
             TestGetProperty.SelectedProperty = TestGetProperty.SelectedItemClass.ItemProperties.First();
             TestSetProperty = new SetItemProperty { VarRef = new VarRef(TestStringVariable.Id), SelectedItemClass = TestItemClass };
             TestSetProperty.SelectedProperty = TestSetProperty.SelectedItemClass.ItemProperties.First();
+
+            Settings1 = new PlayerSettings();
+            Settings1.PlayerDescription.AddBeforeSelected(new AddText { Text = "You are a {{Age}} year old {{Gender}}" } );
+            PlayerStatistic testHunger = new PlayerStatistic { Label = "Hunger" };
+            testHunger.DisplayCondition.AddBeforeSelected(new ReturnFalse());
+            testHunger.AssociatedVariable = new VarRef(TestNumberVariable.Id);
+            testHunger.IsProgressBar = true;
+            testHunger.HighWarning = false;
+            testHunger.LowWarning = true;
+            testHunger.MaximumValueVariable = true;
+            testHunger.MaximumValueVariableValue = new VarRef(TestNumberVariable.Id);
+            PlayerStatistic testSpecies = new PlayerStatistic { Label = "Species" };
+            testSpecies.Label = "Species";
+            testSpecies.AssociatedVariable = new VarRef(TestNumberVariable.Id);
+            testSpecies.IsPlaintext = true;
+            
+            Settings1.PlayerStatistics.Add(testHunger);
+            Settings1.PlayerStatistics.Add(testSpecies);
+            Settings1.SelectedStatistic = testHunger;
+            Settings1.EquipmentSlots.Add(new EquipmentSlot { Name = "Body" });
+            Settings1.EquipmentSlots.Add(new EquipmentSlot { Name = "Legs" });
+            Settings1.EquipmentSlots.Add(new EquipmentSlot { Name = "Wrists" });
+            Settings1.EquipmentSlots.Add(new EquipmentSlot { Name = "Feet" });
+            Settings1.EquipmentSlots.Add(new EquipmentSlot { Name = "Head" });
+            Settings1.SelectedEquipmentSlot = Settings1.EquipmentSlots.First();
+            testItem2.EquipmentRef.OccupiesSlots.Add(Settings1.SelectedEquipmentSlot);
+            TestCommonEvent = new CommonEvent();
+            //TestCommonEvent.Name = "Test";
+            //TestCommonEvent.EventType = CommonEvent.CommonEventTypes.First();
         }
     }
 }

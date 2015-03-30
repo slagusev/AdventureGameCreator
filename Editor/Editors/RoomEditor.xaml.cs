@@ -46,7 +46,7 @@ namespace Editor.Editors
         private void btnRemoveInteractable_Click(object sender, RoutedEventArgs e)
         {
             var item = lstInteractables.SelectedItem;
-            if (item != null && item.GetType() == typeof(Interactable))
+            if (item != null && item.GetType() == typeof(InteractableRef))
             {
                 var interactable = item as Interactable;
                 var room = (Room)this.DataContext;

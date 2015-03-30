@@ -163,6 +163,7 @@ namespace Editor.Scripter.Conditions
                 if (value)
                 {
                     IsComparisonToVariable = false;
+                    ItemIsNotNull = false;
                 }
 
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -197,6 +198,7 @@ namespace Editor.Scripter.Conditions
                 if (value)
                 {
                     IsComparisonToConstant = false;
+                    ItemIsNotNull = false;
                 }
                 _isComparisonToVariable = value;
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -204,6 +206,40 @@ namespace Editor.Scripter.Conditions
             }
         }
 
+        /// <summary>
+        /// The <see cref="ItemIsNotNull" /> property's name.
+        /// </summary>
+        public const string ItemIsNotNullPropertyName = "ItemIsNotNull";
+
+        private bool _itemIsNotNull = false;
+
+        /// <summary>
+        /// Sets and gets the ItemIsNotNull property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool ItemIsNotNull
+        {
+            get
+            {
+                return _itemIsNotNull;
+            }
+
+            set
+            {
+                if (_itemIsNotNull == value)
+                {
+                    return;
+                }
+
+                _itemIsNotNull = value;
+                if (value)
+                {
+                    IsComparisonToVariable = false;
+                    IsComparisonToConstant = false;
+                }
+                RaisePropertyChanged(ItemIsNotNullPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="IsDateTime" /> property's name.
         /// </summary>
@@ -706,6 +742,10 @@ namespace Editor.Scripter.Conditions
                     }
                     sb.AppendLine();
                 }
+                else if (ItemIsNotNull)
+                {
+                    sb.AppendLine("if " + (this.SelectedVariable != null && this.SelectedVariable.LinkedVariable != null ? this.SelectedVariable.LinkedVariable.Name : "UNKNOWN") + " contains an item");
+                }
                 sb.AppendLine("{");
                 string[] ifLines = string.Join("\n", from a in this.Contents[0].ScriptLines where a.GetType() != typeof(Editor.Scripter.Misc.Blank) select a.Plaintext).Split('\n');
                 foreach (var line in ifLines)
@@ -819,6 +859,11 @@ namespace Editor.Scripter.Conditions
                     }
                 }
             }
+            if (ItemIsNotNull)
+            {
+                conditionXml.Add(new XElement("Type", "ItemIsNotNull"));
+                conditionXml.Add(new XElement("VarRef", this.SelectedVariable.LinkedVarId));
+            }
             return new XElement("If",conditionXml,
                                      new XElement("Then", ThenStatement.ToXML()),
                                      new XElement("Else", ElseStatement.ToXML()));    
@@ -840,6 +885,10 @@ namespace Editor.Scripter.Conditions
                     if (conditionXml.Element("Type").Value == "ComparisonToVariable")
                     {
                         c.IsComparisonToVariable = true;
+                    }
+                    if (conditionXml.Element("Type").Value == "ItemIsNotNull")
+                    {
+                        c.ItemIsNotNull = true;
                     }
                 }
                 if (c.IsComparison)
@@ -907,7 +956,12 @@ namespace Editor.Scripter.Conditions
                         }
                     }
                 }
+                if (c.ItemIsNotNull)
+                {
+                    c.SelectedVariable = new VarRef(Guid.Parse(conditionXml.Element("VarRef").Value));
+                }
             }
+            
 
             //Handle Then
             c.ThenStatement = Script.FromXML(xml.Element("Then").Element("Script"), baseScript);

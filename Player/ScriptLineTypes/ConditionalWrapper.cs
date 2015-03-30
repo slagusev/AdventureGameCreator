@@ -21,6 +21,18 @@ namespace Player.ScriptLineTypes
             
             if (line.IsComparison)
                 conditionResult = ComparisonCheck();
+            if (line.ItemIsNotNull)
+            {
+                if (line.SelectedVariable != null)
+                {
+                    var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
+                    if (vars.ContainsKey(line.SelectedVariable.LinkedVarId))
+                    {
+                        var v = vars[line.SelectedVariable.LinkedVarId];
+                        conditionResult = v.CurrentItemValue != null;
+                    }
+                }
+            }
             if (conditionResult == null)
                 return false;
             bool? result = null;

@@ -17,12 +17,16 @@ namespace Editor.ObjectTypes
             this.CanExamineScript.CanStopGame = false;
             this.CanExamineScript.HasTextFunctionality = false;
             this.CanExamineScript.CanAddItem = false;
+            this.CanExamineScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
             this.ExamineScript.CanReturn = false;
+            this.ExamineScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
             this.CanInteractScript.CanDisplayText = false;
             this.CanInteractScript.CanStopGame = false;
             this.CanInteractScript.HasTextFunctionality = false;
             this.CanInteractScript.CanAddItem = false;
+            this.CanInteractScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
             this.InteractScript.CanReturn = false;
+            this.InteractScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
         }
         /// <summary>
         /// The <see cref="InteractableName" /> property's name.

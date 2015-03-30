@@ -14,17 +14,18 @@
     <UserControl.DataContext>
         <Binding Path="TestItem" Source="{StaticResource TestDataStatic}"/>
     </UserControl.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel>
             <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Item: "/><Run Text="{Binding ItemName}"/></TextBlock>
             <TextBlock>ID:
         <Run Text="{Binding ItemID}"></Run></TextBlock>
             <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                 <TextBlock >Default Display Name:</TextBlock>
-                
+
                 <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultName}"></TextBox>
             </StackPanel>
             <CheckBox Margin="0,10,0,0" IsChecked="{Binding Removable}">This item can be thrown away by the player.</CheckBox>
+            <CheckBox Margin="0,10,0,0" IsChecked="{Binding IsEquipment}">This item can be equipped.</CheckBox>
             <Expander Header="Item Class" Margin="20,20,5,0">
                 <StackPanel HorizontalAlignment="Left">
                     <TextBlock Margin="20,20,0,0"><Run Text="Item Class: "/><Run Text="{Binding ItemClassParent.Name}"/></TextBlock>
@@ -41,13 +42,86 @@
                 </StackPanel>
             </Expander>
             <Expander Header="Description" Margin="20,0,5,0">
-                
+
                 <Controls:ScriptControl Height="200" DataContext="{Binding Description}"></Controls:ScriptControl>
             </Expander>
             <Expander Header="On Use" Margin="20,0,5,0">
                 <Controls:ScriptControl Height="200" DataContext="{Binding OnUse}"></Controls:ScriptControl>
             </Expander>
-                <Expander Header="Properties" Margin="20,0,0,0">
+            <Expander Header="Equipment Properties" Margin="20,0,0,0" Visibility="{Binding IsEquipment, Converter={StaticResource VisibilityConverter}}">
+                <StackPanel DataContext="{Binding EquipmentRef}" Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="10">
+                            <TextBlock>Available Equipment Slots:</TextBlock>
+                            <ListBox Height="200" Width="170" ItemsSource="{Binding Settings.EquipmentSlots, Source={StaticResource MainViewModelStatic}}" SelectedItem="{Binding SelectedToEquipSlot}" >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Margin="0, 0, 0, 10" Command="{Binding AddEquipSlot}">&gt;&gt;</Button>
+                            <Button Command="{Binding RemoveEquipSlot}">&lt;&lt;</Button>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                            <TextBlock>Equipment Slots:</TextBlock>
+                            <ListBox Height="200" Width="170" ItemsSource="{Binding OccupiesSlots}" SelectedItem="{Binding SelectedToRemoveEquipSlot}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                            <TextBlock>Available Slots to Cover:</TextBlock>
+                            <ListBox Height="200" Width="170" ItemsSource="{Binding Settings.EquipmentSlots, Source={StaticResource MainViewModelStatic}}" SelectedItem="{Binding SelectedToCoverSlot}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Margin="0, 0, 0, 10" Command="{Binding AddCoverSlot}">&gt;&gt;</Button>
+                            <Button Command="{Binding RemoveCoverSlot}">&lt;&lt;</Button>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                            <TextBlock>Slots Covered:</TextBlock>
+                            <ListBox Height="200" Width="170" SelectedItem="{Binding SelectedToUncoverSlot}" ItemsSource="{Binding CoversSlots}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                    <Expander Header="On Equip">
+                        <StackPanel>
+                            <TextBlock>Returning false will stop the item from being equipped.</TextBlock>
+                            <Controls:ScriptControl Height="200" DataContext="{Binding OnEquip}"></Controls:ScriptControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="On Unequip">
+                        <StackPanel>
+                            <TextBlock>Returning false will stop the item from being unequipped. This script will also be run whenever the user attempts to equip something that this covers.</TextBlock>
+                            <Controls:ScriptControl Height="200" DataContext="{Binding OnUnequip}"></Controls:ScriptControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="On Movement">
+                        <StackPanel>
+                            <TextBlock>This script runs whenever the player moves.</TextBlock>
+                            <Controls:ScriptControl Height="200" DataContext="{Binding OnMove}"></Controls:ScriptControl>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </Expander>
+            <Expander Header="Properties" Margin="20,0,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>

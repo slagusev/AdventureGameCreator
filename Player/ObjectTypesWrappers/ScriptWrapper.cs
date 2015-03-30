@@ -1,4 +1,5 @@
-﻿using Editor.Scripter;
+﻿using Editor.ObjectTypes;
+using Editor.Scripter;
 using Player.ScriptLineTypes;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace Player.ObjectTypesWrappers
         public ScriptWrapper(Script s)
         {
             ScriptBase = s;
+
+            VariableResult = null;
         }
         Script ScriptBase = null;
         public ItemInstance ItemBase = null;
         public string TextResult { get; set; }
+        public VarRef VariableResult { get; set; }
         public bool? Execute()
         {
             TextResult = "";

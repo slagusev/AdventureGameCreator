@@ -29,6 +29,8 @@
                         <Button x:Name="SetVariable" Click="SetVariable_Click" Content="Set Variable" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
                         <Button x:Name="ReturnTrue" Click="ReturnTrue_Click" Content="Return True" Visibility="{Binding CanReturn, Converter={StaticResource VisibilityConverter}}"/>
                         <Button x:Name="ReturnFalse" Click="ReturnFalse_Click" Content="Return False" Visibility="{Binding CanReturn, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="ReturnValue" Click="ReturnValue_Click_1"  Content="Return Value" Visibility="{Binding CanReturnValue, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="runCommonEvent" Click="runCommonEvent_Click_1" Content="Run Common Event..."/>
                         <Button x:Name="StopGame" Click="StopGame_Click" Content="Game Over" Visibility="{Binding CanStopGame, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                 </GroupBox>
@@ -50,7 +52,9 @@
                         <Button Content="Get Item Property..." x:Name="getItemProperty" Click="getItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
                         <Button Content="Set Item Property..." x:Name="setItemProperty" Click="setItemPropertyClick" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}"/>
                         <Button Content="Get Current Item..." x:Name="getCurrentItemProperty" Click="getCurrentItemClick" Visibility="{Binding IsItemScript, Converter={StaticResource VisibilityConverter}}"/>
-                        
+                        <Button Content="Get Equipped Item..." x:Name="getEquippedItem" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}" Click="getEquippedItem_Click"></Button>
+                        <Button Content="Force Equip..." x:Name="forceEquip" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}" Click="forceEquip_Click"></Button>
+                        <Button Content="Force Unequip..." x:Name="forceUnequip" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}" Click="forceUnequip_Click"></Button>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

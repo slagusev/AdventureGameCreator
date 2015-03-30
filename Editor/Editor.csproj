@@ -78,6 +78,9 @@
     <Compile Include="EditorMenu.xaml.cs">
       <DependentUpon>EditorMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\CommonEventEditor.xaml.cs">
+      <DependentUpon>CommonEventEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\ItemSelector.xaml.cs">
       <DependentUpon>ItemSelector.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,9 @@
     </Compile>
     <Compile Include="Editors\ItemEditor.xaml.cs">
       <DependentUpon>ItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\PlayerSettingsEditor.xaml.cs">
+      <DependentUpon>PlayerSettingsEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Editors\RoomEditor.xaml.cs">
       <DependentUpon>RoomEditor.xaml</DependentUpon>
@@ -115,6 +121,9 @@
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="NewForms\NewCommonEvent.xaml.cs">
+      <DependentUpon>NewCommonEvent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewInteractable.xaml.cs">
       <DependentUpon>NewInteractable.xaml</DependentUpon>
     </Compile>
@@ -136,6 +145,10 @@
     <Compile Include="NewForms\NewZone.xaml.cs">
       <DependentUpon>NewZone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ObjectTypes\CommonEvent.cs" />
+    <Compile Include="ObjectTypes\CommonEventRef.cs" />
+    <Compile Include="ObjectTypes\Equipment.cs" />
+    <Compile Include="ObjectTypes\EquipmentSlot.cs" />
     <Compile Include="ObjectTypes\Exit.cs" />
     <Compile Include="ObjectTypes\Interactable.cs" />
     <Compile Include="ObjectTypes\InteractableGroup.cs" />
@@ -144,6 +157,8 @@
     <Compile Include="ObjectTypes\ItemClass.cs" />
     <Compile Include="ObjectTypes\ItemProperty.cs" />
     <Compile Include="ObjectTypes\ItemRef.cs" />
+    <Compile Include="ObjectTypes\PlayerSettings.cs" />
+    <Compile Include="ObjectTypes\PlayerStatistic.cs" />
     <Compile Include="ObjectTypes\Room.cs" />
     <Compile Include="ObjectTypes\Variable.cs" />
     <Compile Include="ObjectTypes\VarRef.cs" />
@@ -164,14 +179,29 @@
     <Compile Include="ScriptEditors\DisplayTextEditor.xaml.cs">
       <DependentUpon>DisplayTextEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\ForceEquipEditor.xaml.cs">
+      <DependentUpon>ForceEquipEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\ForceUnequipEditor.xaml.cs">
+      <DependentUpon>ForceUnequipEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\GetCurrentItemEditor.xaml.cs">
       <DependentUpon>GetCurrentItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\GetEquipmentSlotEditor.xaml.cs">
+      <DependentUpon>GetEquipmentSlotEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\GetItemPropertyEditor.xaml.cs">
       <DependentUpon>GetItemPropertyEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\RemoveItemEditor.xaml.cs">
       <DependentUpon>RemoveItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\ReturnValueEditor.xaml.cs">
+      <DependentUpon>ReturnValueEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\RunCommonEventEditor.xaml.cs">
+      <DependentUpon>RunCommonEventEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\ScriptSelector.xaml.cs">
       <DependentUpon>ScriptSelector.xaml</DependentUpon>
@@ -187,9 +217,14 @@
     <Compile Include="Scripter\Conditions\Conditional.cs" />
     <Compile Include="Scripter\Flow\ReturnFalse.cs" />
     <Compile Include="Scripter\Flow\ReturnTrue.cs" />
+    <Compile Include="Scripter\Flow\ReturnValue.cs" />
+    <Compile Include="Scripter\Flow\RunCommonEvent.cs" />
     <Compile Include="Scripter\Flow\SetVariable.cs" />
     <Compile Include="Scripter\Flow\StopGame.cs" />
+    <Compile Include="Scripter\ItemManagement\ForceEquip.cs" />
+    <Compile Include="Scripter\ItemManagement\ForceUnequip.cs" />
     <Compile Include="Scripter\ItemManagement\GetCurrentItem.cs" />
+    <Compile Include="Scripter\ItemManagement\GetEquipmentSlot.cs" />
     <Compile Include="Scripter\ItemManagement\GetItemProperty.cs" />
     <Compile Include="Scripter\ItemManagement\AddItemToInventory.cs" />
     <Compile Include="Scripter\ItemManagement\RemoveItem.cs" />
@@ -212,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Editors\CommonEventEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Editors\ItemSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -229,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\PlayerSettingsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +323,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewForms\NewCommonEvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewInteractable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -336,7 +383,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\ForceEquipEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ForceUnequipEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\GetCurrentItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\GetEquipmentSlotEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -345,6 +404,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\RemoveItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ReturnValueEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\RunCommonEventEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

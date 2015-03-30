@@ -27,9 +27,11 @@ namespace Editor.ObjectTypes
             Description.CanStopGame = false;
             Description.CanAddText = true;
             Description.IsItemScript = true;
+            Description.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeDescription);
             OnUse.CanReturn = false;
             OnUse.CanDisplayText = true;
             OnUse.IsItemScript = true;
+            OnUse.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeItem);
         }
         public void WireCommands()
         {
@@ -440,7 +442,64 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(SelectedPropertyPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="IsEquipment" /> property's name.
+        /// </summary>
+        public const string IsEquipmentPropertyName = "IsEquipment";
 
+        private bool _isEquipment = false;
+
+        /// <summary>
+        /// Sets and gets the IsEquipment property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsEquipment
+        {
+            get
+            {
+                return _isEquipment;
+            }
+
+            set
+            {
+                if (_isEquipment == value)
+                {
+                    return;
+                }
+
+                _isEquipment = value;
+                RaisePropertyChanged(IsEquipmentPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="EquipmentRef" /> property's name.
+        /// </summary>
+        public const string EquipmentRefPropertyName = "EquipmentRef";
+
+        private Equipment _equipmentRef = new Equipment();
+
+        /// <summary>
+        /// Sets and gets the EquipmentRef property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public Equipment EquipmentRef
+        {
+            get
+            {
+                return _equipmentRef;
+            }
+
+            set
+            {
+                if (_equipmentRef == value)
+                {
+                    return;
+                }
+
+                _equipmentRef = value;
+                RaisePropertyChanged(EquipmentRefPropertyName);
+            }
+        }
         public XElement ToXml()
         {
             var props = ItemProperties.Where(a => !a.UseDefaultValue);
@@ -452,7 +511,9 @@ namespace Editor.ObjectTypes
                 new XElement("ItemClass", this.ItemClassParent.Name),
                 new XElement("Removable", this.Removable),
                 new XElement("Properties", from a in this.ItemProperties select a.ToXml()),
-                new XElement("OnUse", this.OnUse.ToXML()));
+                new XElement("OnUse", this.OnUse.ToXML()),
+                new XElement("IsEquipment", this.IsEquipment),
+                EquipmentRef.ToXML());
                                             
         }
         public static Item FromXml(XElement xml)
@@ -499,6 +560,14 @@ namespace Editor.ObjectTypes
                         match.Value = ip.Value;
                     }
                         
+                }
+            }
+            if (xml.Element("IsEquipment") != null)
+            {
+                i.IsEquipment = Convert.ToBoolean(xml.Element("IsEquipment").Value);
+                if (i.IsEquipment && xml.Element("Equipment") != null)
+                {
+                    i.EquipmentRef = Equipment.FromXML(xml.Element("Equipment"));
                 }
             }
             return i;

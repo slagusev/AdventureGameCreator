@@ -1,0 +1,21 @@
+﻿<Window x:Class="Editor.ScriptEditors.ReturnValueEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor"
+        Title="Return Value" Height="280" Width="500">
+    <Window.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Margin="10,10,10,-10">
+            
+            
+            <TextBlock>Select a variable to return to the parent script:</TextBlock>
+            <Controls:VariableSelector Height="150"  SelectedItem="{Binding SelectedVariable, Mode=TwoWay}" />
+            
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

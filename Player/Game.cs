@@ -1,4 +1,5 @@
-﻿using Player.ObjectTypesWrappers;
+﻿using Editor.ObjectTypes;
+using Player.ObjectTypesWrappers;
 using Player.ObjectTypeWrappers;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,17 @@ namespace Player
                 
                 _currentRoom = value;
                 value.RecalculateInteractableVisibility();
-                RefreshVisibleExits();
+                RefreshAll();
                 RaisePropertyChanged(CurrentRoomPropertyName);
             }
+        }
+
+        public void RefreshAll()
+        {
+            RefreshVisibleExits();
+            RefreshStatistics();
+            RefreshPlayerDescription();
+            RefreshCurrentlyEquippedText();
         }
 
         public void RefreshVisibleExits()
@@ -85,6 +94,36 @@ namespace Player
 
                 _visibleExits = value;
                 RaisePropertyChanged(VisibleExitsPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="EquippedItems" /> property's name.
+        /// </summary>
+        public const string EquippedItemsPropertyName = "EquippedItems";
+
+        private Dictionary<EquipmentSlot, ItemInstance> _equippedItems = new Dictionary<EquipmentSlot, ItemInstance>();
+
+        /// <summary>
+        /// Sets and gets the EquippedItems property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public Dictionary<EquipmentSlot, ItemInstance> EquippedItems
+        {
+            get
+            {
+                return _equippedItems;
+            }
+
+            set
+            {
+                if (_equippedItems == value)
+                {
+                    return;
+                }
+
+                _equippedItems = value;
+                RaisePropertyChanged(EquippedItemsPropertyName);
             }
         }
 
@@ -127,11 +166,12 @@ namespace Player
             }
         }
 
-
+        public Editor.ObjectTypes.PlayerSettings Settings;
         public static Game FromXml(XElement xml)
         {
             Game g = new Game();
             Editor.MainViewModel mvm = Editor.MainViewModel.FromXML(xml);
+            g.Settings = mvm.Settings;
             foreach (var zone in mvm.Zones)
             {
                 g.Zones.Add(zone.ZoneId, new ZoneWrapper(zone));
@@ -148,9 +188,94 @@ namespace Player
                 g.VarById[v.Id] = wrapper;
                 g.VarByName[v.Name] = wrapper;
             }
+            foreach (var stat in mvm.Settings.PlayerStatistics)
+            {
+                g.Statistics.Add(new PlayerStatisticWrapper(stat));
+            }
+            foreach (var a in mvm.Settings.EquipmentSlots)
+            {
+                g.EquippedItems.Add(a, null);
+            }
             return g;
 
         }
+        public void RefreshPlayerDescription()
+        {
+            var wrapper = new ScriptWrapper(Settings.PlayerDescription);
+            wrapper.Execute();
+            PlayerDescription = wrapper.TextResult;
+        }
+        public void RefreshCurrentlyEquippedText()
+        {
+            if (this.EquippedItems.Count() > 0)
+            {
+                CurrentlyEquippedText = "Equipped Items:";
+                CurrentlyEquippedText += "\n\n";
+                foreach (var a in this.EquippedItems)
+                {
+                    CurrentlyEquippedText += a.Key.Name + ": " + (a.Value != null ? a.Value.CurrentName : "Nothing") + "\n";
+                }
+            }
+        }
+        /// <summary>
+        /// The <see cref="CurrentlyEquippedText" /> property's name.
+        /// </summary>
+        public const string CurrentlyEquippedTextPropertyName = "CurrentlyEquippedText";
+
+        private string _currentlyEquippedText = "";
+
+        /// <summary>
+        /// Sets and gets the CurrentlyEquippedText property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string CurrentlyEquippedText
+        {
+            get
+            {
+                return _currentlyEquippedText;
+            }
+
+            set
+            {
+                if (_currentlyEquippedText == value)
+                {
+                    return;
+                }
+
+                _currentlyEquippedText = value;
+                RaisePropertyChanged(CurrentlyEquippedTextPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="PlayerDescription" /> property's name.
+        /// </summary>
+        public const string PlayerDescriptionPropertyName = "PlayerDescription";
+
+        private string _playerDescription = "Test";
+
+        /// <summary>
+        /// Sets and gets the PlayerDescription property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string PlayerDescription
+        {
+            get
+            {
+                return _playerDescription;
+            }
+
+            set
+            {
+                if (_playerDescription == value)
+                {
+                    return;
+                }
+
+                _playerDescription = value;
+                RaisePropertyChanged(PlayerDescriptionPropertyName);
+            }
+        }
+
         /// <summary>
         /// The <see cref="PlayerInventory" /> property's name.
         /// </summary>
@@ -179,6 +304,137 @@ namespace Player
                 _inventory = value;
                 RaisePropertyChanged(PlayerInventoryPropertyName);
             }
+        }
+        /// <summary>
+        /// The <see cref="Statistics" /> property's name.
+        /// </summary>
+        public const string StatisticsPropertyName = "Statistics";
+
+        private ObservableCollection<PlayerStatisticWrapper> _playerStatisticsWrapper = new ObservableCollection<PlayerStatisticWrapper>();
+
+        /// <summary>
+        /// Sets and gets the Statistics property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<PlayerStatisticWrapper> Statistics
+        {
+            get
+            {
+                return _playerStatisticsWrapper;
+            }
+
+            set
+            {
+                if (_playerStatisticsWrapper == value)
+                {
+                    return;
+                }
+
+                _playerStatisticsWrapper = value;
+                RaisePropertyChanged(StatisticsPropertyName);
+            }
+        }
+        public void RefreshStatistics()
+        {
+            foreach (var stat in this.Statistics)
+            {
+                stat.ResetValues();
+                
+            }
+        }
+
+        public List<ItemInstance> TryEquipItem(ItemInstance i, bool force = false)
+        {
+            List<ItemInstance> markedForRemoval = new List<ItemInstance>();
+            foreach (var a in EquippedItems.Where(b => b.Value != null).Select(b => b.Value).Distinct())
+            {
+                var equip = a.item.EquipmentRef;
+                foreach (var slot in i.item.EquipmentRef.OccupiesSlots)
+                {
+                    if (equip.OccupiesSlots.Contains(slot))
+                    {
+                        if (!force)
+                        {
+                            var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                            if (result != false)
+                                markedForRemoval.Add(a);
+                            else
+                            {
+                                MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " could not be removed!");
+                                return new List<ItemInstance>();
+                            }
+                        }
+                        else
+                        {
+                            markedForRemoval.Add(a);
+                        }
+                    }
+                    if (!force && equip.CoversSlots.Contains(slot))
+                    {
+                        var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                        if (result == false)
+                        {
+                            MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!");
+                            return new List<ItemInstance>();
+                        }
+                    }
+                }
+            }
+            foreach (var a in markedForRemoval)
+            {
+                foreach (var slot in a.item.EquipmentRef.OccupiesSlots)
+                {
+                    EquippedItems[slot] = null;
+                }
+            }
+            foreach (var slot in i.item.EquipmentRef.OccupiesSlots)
+            {
+                EquippedItems[slot] = i;
+            }
+            if (PlayerInventory.Contains(i)) PlayerInventory.Remove(i);
+            return markedForRemoval;
+        }
+        public bool TryUnequipItem(ItemInstance i, bool force = false)
+        {
+            if (EquippedItems.Where(a => a.Value == i).Count() == 0)
+            {
+                MainViewModel.WriteText("ERROR: Item not equipped!");
+            }
+            if (!force)
+            {
+                foreach (var slot in i.item.EquipmentRef.OccupiesSlots)
+                {
+                    foreach (var a in EquippedItems.Where(b => b.Value != null && b.Value != i).Select(b => b.Value).Distinct())
+                    {
+                        var equip = a.item.EquipmentRef;
+                        if (equip.CoversSlots.Contains(slot))
+                        {
+                            var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                            if (result == false)
+                            {
+                                MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!");
+                                return false;
+                            }
+                        }
+                    }
+                }
+                {
+                    var result = new ScriptWrapper(i.item.EquipmentRef.OnUnequip).Execute();
+                    if (result == false)
+                    {
+                        MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because it is currently unable to be removed!");
+                        return false;
+                    }
+                }
+            }
+            
+            List<EquipmentSlot> slots = EquippedItems.Where(a => a.Value == i).Select(a => a.Key).ToList();
+            foreach (var a in slots)
+            {
+                EquippedItems[a] = null;
+                
+            }
+            return true;
         }
     }
 }

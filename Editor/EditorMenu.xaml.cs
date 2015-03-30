@@ -136,8 +136,55 @@ namespace Editor
                 }
                 else wv = existingWindows.First();
             }
+            if (mainTree.SelectedItem.GetType() == typeof(CommonEvent))
+            {
+                CommonEvent g = mainTree.SelectedItem as CommonEvent;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as CommonEventEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Common Event - " + g.Name,
+                        Content = (UserControl)new CommonEventEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
             if (wv != null)
                 MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(wv);
+        }
+
+        private void gameSettings_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                   let b = a.Content as PlayerSettingsEditor
+                                   where b != null && b.DataContext == MainViewModel.MainViewModelStatic.Settings
+                                   select a);
+            WindowView wv;
+            if (existingWindows.Count() == 0)
+            {
+                wv = new WindowView
+                {
+                    TabName = "Game and Character Settings",
+                    Content = (UserControl)new PlayerSettingsEditor
+                    {
+                        DataContext = MainViewModel.MainViewModelStatic.Settings
+                    }
+                };
+                MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+            }
+            else
+            {
+                wv = existingWindows.First();
+            }
+            MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(wv);
         }
 
     }
