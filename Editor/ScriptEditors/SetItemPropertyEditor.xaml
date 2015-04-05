@@ -14,9 +14,9 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="10,10,10,-10">
                     <TextBlock Margin="10,0,0,0">Which variable is the source?</TextBlock>
-                    <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="True" ShowNumber="True" ShowString="True" ShowItems="True" SelectedItem="{Binding SourceVarRef, Mode=TwoWay}" Height="150" />
+            <Controls:VariableSelector ShowCommonEventRefs="False" Margin="10,10,10,0" ShowDateTime="True" ShowNumber="True" ShowString="True" ShowItems="True" SelectedItem="{Binding SourceVarRef, Mode=TwoWay}" Height="150" />
                     <TextBlock Margin="10,10,0,0">Item to set the property of:</TextBlock>
-                    <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
+            <Controls:VariableSelector ShowCommonEventRefs="False" Margin="10,10,10,0" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
                     <TextBlock Margin="10,0,0,0">Item Class:</TextBlock>
                     <ListBox  Margin="10" Height="100" SelectedItem="{Binding SelectedItemClass}" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
                         <ListBox.ItemTemplate>

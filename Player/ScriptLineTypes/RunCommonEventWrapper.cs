@@ -18,11 +18,41 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            if (line.SelectedEvent != null && line.SelectedEvent.LinkedCommonEvent != null)
+            
+            if ((line.SelectedEvent != null && line.SelectedEvent.LinkedCommonEvent != null) || (line.RunFromVariable && line.VarScript != null))
             {
-                var wrapper = new ScriptWrapper(line.SelectedEvent.LinkedCommonEvent.AssociatedScript);
-                var result = wrapper.Execute();
                 var game = MainViewModel.GetMainViewModelStatic().CurrentGame;
+                ScriptWrapper wrapper;
+                CommonEventRef cRef = null;
+                if (line.RunFromVariable)
+                {
+                    if (game.VarById.ContainsKey(line.VarScript.LinkedVarId))
+                    {
+                        CommonEventRef cer = game.VarById[line.VarScript.LinkedVarId].CurrentCommonEventValue;
+                        if (cer != null && cer.LinkedCommonEvent != null)
+                        {
+                            wrapper = new ScriptWrapper(cer.LinkedCommonEvent.AssociatedScript);
+                            cRef = cer;
+                        }
+                        else
+                        {
+                            MainViewModel.WriteText("Error: RunCommonEvent associated variable is null.");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        MainViewModel.WriteText("Error: RunCommonEvent missing associated variable for script.");
+                        return false;
+                    }
+                }
+                else
+                {
+                    wrapper = new ScriptWrapper(line.SelectedEvent.LinkedCommonEvent.AssociatedScript);
+                    cRef = line.SelectedEvent;
+                }
+                var result = wrapper.Execute();
+                
                 if (wrapper.VariableResult != null && line.VarRef != null && game.VarById.ContainsKey(wrapper.VariableResult.LinkedVarId) && game.VarById.ContainsKey(line.VarRef.LinkedVarId))
                 {
                     var source = game.VarById[wrapper.VariableResult.LinkedVarId];
@@ -32,7 +62,7 @@ namespace Player.ScriptLineTypes
                     dest.CurrentNumberValue = source.CurrentNumberValue;
                     dest.CurrentStringValue = source.CurrentStringValue;
                 }
-                if (line.SelectedEvent.LinkedCommonEvent.EventType.Item1 == CommonEvent.ScriptTypeTrueFalse)
+                if (cRef.LinkedCommonEvent.EventType.Item1 == CommonEvent.ScriptTypeTrueFalse)
                     return result;
                 else return null;
             }

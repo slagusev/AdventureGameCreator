@@ -50,6 +50,13 @@
                     </DataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
+            <TreeViewItem Header="Conversations" IsExpanded="False" ItemsSource="{Binding Conversations, Source={StaticResource MainViewModelStatic}}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
             <TreeViewItem Header="Common Events" IsExpanded="False" ItemsSource="{Binding CommonEvents, Source={StaticResource MainViewModelStatic}}">
                 <TreeViewItem.ItemTemplate>
                     <DataTemplate>

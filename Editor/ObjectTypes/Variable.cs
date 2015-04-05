@@ -174,6 +174,7 @@ namespace Editor.ObjectTypes
                     IsString = false;
                     IsNumber = false;
                     IsItem = false;
+                    IsCommonEventRef = false;
                 }
                 RaisePropertyChanged(DefaultValuePropertyName);
             }
@@ -242,6 +243,7 @@ namespace Editor.ObjectTypes
                     IsString = false;
                     IsDateTime = false;
                     IsItem = false;
+                    IsCommonEventRef = false;
                 }
                 RaisePropertyChanged(DefaultValuePropertyName);
             }
@@ -277,12 +279,47 @@ namespace Editor.ObjectTypes
                     IsDateTime = false;
                     IsNumber = false;
                     IsString = false;
+                    IsCommonEventRef = false;
                 }
                 RaisePropertyChanged(IsItemPropertyName);
             }
         }
 
+        /// <summary>
+        /// The <see cref="IsCommonEventRef" /> property's name.
+        /// </summary>
+        public const string IsCommonEventRefPropertyName = "IsCommonEventRef";
 
+        private bool _isCommonEventRef = false;
+
+        /// <summary>
+        /// Sets and gets the IsCommonEventRef property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsCommonEventRef
+        {
+            get
+            {
+                return _isCommonEventRef;
+            }
+
+            set
+            {
+                if (_isCommonEventRef == value)
+                {
+                    return;
+                }
+                if (value)
+                {
+                    IsDateTime = false;
+                    IsNumber = false;
+                    IsString = false;
+                    IsItem = false;
+                }
+                _isCommonEventRef = value;
+                RaisePropertyChanged(IsCommonEventRefPropertyName);
+            }
+        }
 
         public XElement ToXml()
         {
@@ -302,6 +339,11 @@ namespace Editor.ObjectTypes
             {
                 value = new XElement("Value", "");
                 type = "Item";
+            }
+            else if (IsCommonEventRef)
+            {
+                value = new XElement("Value", "");
+                type = "CommonEventRef";
             }
             else
             {
@@ -333,6 +375,9 @@ namespace Editor.ObjectTypes
                     break;
                 case "Item":
                     v.IsItem = true;
+                    break;
+                case "CommonEventRef":
+                    v.IsCommonEventRef = true;
                     break;
                 case "String":
                     v.IsNumber = false;

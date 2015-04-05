@@ -44,6 +44,9 @@ namespace Editor
         public static ItemClass TestItemClass { get; set; }
         public static Item TestItem { get; set; }
 
+        //Conversation Samples
+        public static Conversation TestConversation { get; set; }
+
         //Settings Samples
         public static PlayerSettings Settings1 { get; set; }
         public static PlayerSettings Settings2 { get; set; }
@@ -190,6 +193,31 @@ namespace Editor
             TestCommonEvent = new CommonEvent();
             //TestCommonEvent.Name = "Test";
             //TestCommonEvent.EventType = CommonEvent.CommonEventTypes.First();
+
+
+            TestConversation = new Conversation();
+            TestConversation.Name = "Test";
+            TestConversation.StartingStage = 10;
+            ConversationStage TestStage1 = new ConversationStage();
+            TestStage1.StageName = "Test Intro Point";
+            TestStage1.StageAction.AddBeforeSelected(new DisplayText { Text = "Test Stuff" });
+            TestStage1.StageId = 10;
+            TestStage1.Choices.Add(new ConversationChoice() { ChoiceText = "Choice 1", Target=20 });
+            TestStage1.Choices.Add(new ConversationChoice() { ChoiceText = "Choice 2", Target=30 });
+            ConversationStage TestStage2 = new ConversationStage();
+            TestStage2.StageName = "Stage #2";
+            ConversationStage TestStage3 = new ConversationStage();
+            TestStage3.StageName = "Stage #3";
+            TestStage2.StageId = 20;
+            TestStage3.StageId = 30;
+            
+            TestConversation.Stages.Add(TestStage1);
+            TestConversation.Stages.Add(TestStage2);
+            TestConversation.SelectedStage = TestStage1;
+            TestConversation.Stages.Add(TestStage3);
+            TestStage1.SelectedChoice = TestStage1.Choices.First();
+            TestStage1.SelectedChoice.ChoiceVisibility.AddBeforeSelected(new ReturnTrue());
+
         }
     }
 }

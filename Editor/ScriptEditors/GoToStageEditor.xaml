@@ -1,0 +1,22 @@
+﻿<Window x:Class="Editor.ScriptEditors.GoToStageEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor"
+        Title="Go To Stage" Height="150" Width="250">
+    <Window.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="TestAddItem" Source="{StaticResource TestDataStatic}"/>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel Margin="10,10,10,-10">
+            <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock ><Run Text="Go to stage::"/></TextBlock>
+            <TextBox Margin="5,0,0,0" Width="100" TextAlignment="Right" Text="{Binding Stage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </StackPanel>
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

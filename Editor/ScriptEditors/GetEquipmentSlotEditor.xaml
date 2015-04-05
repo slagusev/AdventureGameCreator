@@ -16,7 +16,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <TextBlock Margin="10"><Run Text="Choose which variable to store the item in:"/></TextBlock>
-            <Controls:VariableSelector Height="150" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="False" ShowItems="True" ShowString="False" ShowDateTime="False" />
+            <Controls:VariableSelector Height="150" ShowCommonEventRefs="False" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="False" ShowItems="True" ShowString="False" ShowDateTime="False" />
             <!--<CheckBox IsChecked="{Binding ThrowAwayItem}" Content="Remove the replaced item from the player's inventory after equipping."/>-->
             <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
         </StackPanel>

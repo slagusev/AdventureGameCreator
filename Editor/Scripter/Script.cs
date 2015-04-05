@@ -41,6 +41,8 @@ namespace Editor.Scripter
             this.IsItemScript = s.IsItemScript;
             this.HasTextFunctionality = s.HasTextFunctionality;
             this.AllowedCommonEventTypes.Clear();
+            this.IsInConversation = s.IsInConversation;
+            this.CanStartConversations = s.CanStartConversations;
             foreach (var ce in s.AllowedCommonEventTypes)
             {
                 this.AllowedCommonEventTypes.Add(ce);
@@ -202,6 +204,12 @@ namespace Editor.Scripter
                         break;
                     case "ForceEquip":
                         script.ScriptLines.Add(ForceEquip.FromXML(element));
+                        break;
+                    case "StartConversation":
+                        script.ScriptLines.Add(TextFunctions.StartConversation.FromXML(element));
+                        break;
+                    case "GoToStage":
+                        script.ScriptLines.Add(ConversationFlow.GoToStage.FromXML(element));
                         break;
                     default:
                         break;
@@ -513,6 +521,66 @@ namespace Editor.Scripter
 
                 _hasTextFunctionality = value;
                 RaisePropertyChanged(HasTextFunctionalityPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CanStartConversations" /> property's name.
+        /// </summary>
+        public const string CanStartConversationsPropertyName = "CanStartConversations";
+
+        private bool _canStartConversations = false;
+
+        /// <summary>
+        /// Sets and gets the CanStartConversations property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool CanStartConversations
+        {
+            get
+            {
+                return _canStartConversations;
+            }
+
+            set
+            {
+                if (_canStartConversations == value)
+                {
+                    return;
+                }
+
+                _canStartConversations = value;
+                RaisePropertyChanged(CanStartConversationsPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsInConversation" /> property's name.
+        /// </summary>
+        public const string IsInConversationPropertyName = "IsInConversation";
+
+        private bool _isInConversation = false;
+
+        /// <summary>
+        /// Sets and gets the IsInConversation property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsInConversation
+        {
+            get
+            {
+                return _isInConversation;
+            }
+
+            set
+            {
+                if (_isInConversation == value)
+                {
+                    return;
+                }
+
+                _isInConversation = value;
+                RaisePropertyChanged(IsInConversationPropertyName);
             }
         }
         /// <summary>

@@ -203,15 +203,25 @@ namespace Player
             ExploreMode = false;
             EquipmentMode = false;
             SelectedItem = null;
+            ConversationMode = false;
         }
         public void SetExploreMode()
         {
             ExploreMode = true;
             InventoryMode = false;
             EquipmentMode = false;
+            ConversationMode = false;
             if (CurrentGame.CurrentRoom != null)
                 CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
             CurrentGame.RefreshAll();
+        }
+        public void SetConversationMode()
+        {
+            InventoryMode = false;
+            ExploreMode = false;
+            EquipmentMode = false;
+            ConversationMode = true;
+            SelectedItem = null;
         }
         public void ViewEquipment()
         {
@@ -219,6 +229,7 @@ namespace Player
             ExploreMode = false;
             EquipmentMode = true;
             SelectedItem = null;
+            ConversationMode = false;
             RefreshEquippableItems();
         }
 
@@ -233,7 +244,8 @@ namespace Player
             {
                 WriteText("", true);
                 SelectedItem.UseItem();
-                SetExploreMode();
+                if (ConversationMode == false)
+                    SetExploreMode();
             }
         }
         public void DropItem()
@@ -535,6 +547,66 @@ namespace Player
                 RaisePropertyChanged(EquipmentModePropertyName);
             }
         }
+
+        /// <summary>
+        /// The <see cref="ConversationMode" /> property's name.
+        /// </summary>
+        public const string ConversationModePropertyName = "ConversationMode";
+
+        private bool _conversationMode = false;
+
+        /// <summary>
+        /// Sets and gets the ConversationMode property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool ConversationMode
+        {
+            get
+            {
+                return _conversationMode;
+            }
+
+            set
+            {
+                if (_conversationMode == value)
+                {
+                    return;
+                }
+
+                _conversationMode = value;
+                RaisePropertyChanged(ConversationModePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CurrentConversation" /> property's name.
+        /// </summary>
+        public const string CurrentConversationPropertyName = "CurrentConversation";
+
+        private ConversationWrapper _currentConversation = null;
+
+        /// <summary>
+        /// Sets and gets the CurrentConversation property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ConversationWrapper CurrentConversation
+        {
+            get
+            {
+                return _currentConversation;
+            }
+
+            set
+            {
+                if (_currentConversation == value)
+                {
+                    return;
+                }
+
+                _currentConversation = value;
+                RaisePropertyChanged(CurrentConversationPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="IsGameOver" /> property's name.
         /// </summary>
@@ -589,6 +661,8 @@ namespace Player
                 SelectedEquippedItem = null;
             }
         }
+
+
         
     }
 }

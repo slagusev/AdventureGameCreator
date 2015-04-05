@@ -11,13 +11,17 @@
     <Grid>
         <StackPanel Margin="10,10,10,-10">
             <TextBlock Margin="10"><Run Text="Please select a common event:"/></TextBlock>
-            <ListBox Margin="10" ItemsSource="{Binding AvaiableCommonEvents}" Height="100" SelectedItem="{Binding SelectedEvent}">
+            <CheckBox IsChecked="{Binding RunFromVariable}">Run Common Event From Variable</CheckBox>
+            <ListBox Margin="10" ItemsSource="{Binding AvaiableCommonEvents}" Height="100" SelectedItem="{Binding SelectedEvent}" Visibility="{Binding Path=RunFromVariable, Converter={StaticResource VisibilityConverter}, Mode=OneWay, ConverterParameter=Invert}" Loaded="ListBox_Loaded_1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding LinkedCommonEvent.Name}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Controls:VariableSelector Height="150" SelectedItem="{Binding VarScript, Mode=TwoWay}" ShowCommonEventRefs="True" ShowDateTime="False" ShowItems="False" ShowNumber="False" ShowString="False" Visibility="{Binding Path=RunFromVariable, Converter={StaticResource VisibilityConverter}}">
+                
+            </Controls:VariableSelector>
             <StackPanel Margin="10" Visibility="{Binding IsReturnVariable, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock>Select a variable to store the result in:</TextBlock>
                 <Controls:VariableSelector Height="150"  SelectedItem="{Binding VarRef, Mode=TwoWay}"/>

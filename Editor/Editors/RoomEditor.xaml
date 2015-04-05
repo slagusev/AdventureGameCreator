@@ -28,7 +28,7 @@
                     <TextBox Text="{Binding RoomName}" Margin="20,10,20,0"></TextBox>
                     <TextBlock Margin="10">Room Display Text:</TextBlock>
                     <CheckBox Margin="20" IsChecked="{Binding HasScriptDescription}">Use Script Description</CheckBox>
-                    <TextBox TextWrapping="Wrap"  IsEnabled="{Binding HasPlaintextDescription}" Margin="20,10,20,0" Height="100" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding Description}" AcceptsReturn="True" Visibility="{Binding HasPlaintextDescription, Converter={StaticResource VisibilityConverter}}"></TextBox>
+                    <TextBox TextWrapping="Wrap"  IsEnabled="{Binding HasPlaintextDescription}" Margin="20,10,20,0" Height="100" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Visibility="{Binding HasPlaintextDescription, Converter={StaticResource VisibilityConverter}}"></TextBox>
                     <Controls:ScriptControl Margin="20" DataContext="{Binding RoomDescriptionScript}" Height="400" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Visibility="{Binding DataContext.HasScriptDescription, Converter={StaticResource VisibilityConverter}, ElementName=userControl}">
                         
                     </Controls:ScriptControl>
@@ -72,7 +72,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <TextBlock>Exit Name:</TextBlock>
-                            <TextBox Margin="10" Text="{Binding SelectedExit.ExitName}"></TextBox>
+                            <TextBox Margin="10" Text="{Binding SelectedExit.ExitName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Button Margin="10" Command="{Binding NewExitCommand}">New Exit</Button>
                             <Button Margin="10" Command="{Binding RemoveExitCommand}">Remove Selected Exit</Button>
                             <Button Margin="10" Command="{Binding LinkExitCommand}" ToolTip="Quickly create a mirrored exit on the destination of this exit, back to this room.">Link Selected Exit</Button>

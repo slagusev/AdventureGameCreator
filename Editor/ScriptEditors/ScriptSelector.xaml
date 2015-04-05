@@ -40,6 +40,8 @@
                     <StackPanel >
                         <Button x:Name="displayText" Click="displayText_Click" Content="Display Text..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" />
                         <Button x:Name="addText" Click="addText_Click" Content="Add Text..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" />
+                        <Button x:Name="startConversation" Click="startConversation_Click" Content="Start Conversation..." Visibility="{Binding CanStartConversations, Converter={StaticResource VisibilityConverter}}" />
+                        <Button x:Name="goToStage" Click="goToStage_Click_1"  Content="Go to Conversation Stage..." Visibility="{Binding IsInConversation, Converter={StaticResource VisibilityConverter}}" />
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

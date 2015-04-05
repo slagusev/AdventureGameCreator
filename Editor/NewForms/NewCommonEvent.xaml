@@ -5,7 +5,7 @@
         Title="New Common Event" Height="327" Width="488" KeyDown="Window_KeyUp_1" DataContext="{Binding TestCommonEvent, Source={StaticResource TestDataStatic}}">
     <Grid>
         <TextBlock Margin="50,30">Please enter a name for the new Common Event:</TextBlock>
-        <TextBox Name="txtName" Height="25" Margin="50,70,50,190" Text="{Binding Name}"></TextBox>
+        <TextBox Name="txtName" Height="25" Margin="50,70,50,190" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBlock  Height="30" Margin="50,130,50,139">Please select the type (WARNING: This can not be changed!)</TextBlock>
         <ComboBox Name="cmbEventType" Height="20" Margin="50,140,50,103" ItemsSource="{Binding CommonEventTypes}" SelectedItem="{Binding EventType}">
             <ComboBox.ItemTemplate>

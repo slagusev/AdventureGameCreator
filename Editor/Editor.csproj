@@ -81,6 +81,12 @@
     <Compile Include="Editors\CommonEventEditor.xaml.cs">
       <DependentUpon>CommonEventEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\CommonEventSelector.xaml.cs">
+      <DependentUpon>CommonEventSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ConversationEditor.xaml.cs">
+      <DependentUpon>ConversationEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\ItemSelector.xaml.cs">
       <DependentUpon>ItemSelector.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,12 @@
     <Compile Include="NewForms\NewCommonEvent.xaml.cs">
       <DependentUpon>NewCommonEvent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewForms\NewConversation.xaml.cs">
+      <DependentUpon>NewConversation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewForms\NewConversationStage.xaml.cs">
+      <DependentUpon>NewConversationStage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewInteractable.xaml.cs">
       <DependentUpon>NewInteractable.xaml</DependentUpon>
     </Compile>
@@ -147,6 +159,10 @@
     </Compile>
     <Compile Include="ObjectTypes\CommonEvent.cs" />
     <Compile Include="ObjectTypes\CommonEventRef.cs" />
+    <Compile Include="ObjectTypes\Conversation.cs" />
+    <Compile Include="ObjectTypes\ConversationChoice.cs" />
+    <Compile Include="ObjectTypes\ConversationRef.cs" />
+    <Compile Include="ObjectTypes\ConversationStage.cs" />
     <Compile Include="ObjectTypes\Equipment.cs" />
     <Compile Include="ObjectTypes\EquipmentSlot.cs" />
     <Compile Include="ObjectTypes\Exit.cs" />
@@ -194,6 +210,9 @@
     <Compile Include="ScriptEditors\GetItemPropertyEditor.xaml.cs">
       <DependentUpon>GetItemPropertyEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\GoToStageEditor.xaml.cs">
+      <DependentUpon>GoToStageEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\RemoveItemEditor.xaml.cs">
       <DependentUpon>RemoveItemEditor.xaml</DependentUpon>
     </Compile>
@@ -212,9 +231,13 @@
     <Compile Include="ScriptEditors\SetVariableEditor.xaml.cs">
       <DependentUpon>SetVariableEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\StartConversationEditor.xaml.cs">
+      <DependentUpon>StartConversationEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scripter\Brancher.cs" />
     <Compile Include="Scripter\Conditions\Condition.cs" />
     <Compile Include="Scripter\Conditions\Conditional.cs" />
+    <Compile Include="Scripter\ConversationFlow\GoToStage.cs" />
     <Compile Include="Scripter\Flow\ReturnFalse.cs" />
     <Compile Include="Scripter\Flow\ReturnTrue.cs" />
     <Compile Include="Scripter\Flow\ReturnValue.cs" />
@@ -236,6 +259,7 @@
     <Compile Include="Scripter\ScriptLine.cs" />
     <Compile Include="Scripter\TextFunctions\AddText.cs" />
     <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
+    <Compile Include="Scripter\TextFunctions\StartConversation.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="VariableSelectorConverter.cs" />
     <Compile Include="VisibilityConverter.cs" />
@@ -248,6 +272,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\CommonEventEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\CommonEventSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ConversationEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -327,6 +359,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewForms\NewConversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewForms\NewConversationStage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewInteractable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +443,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\GoToStageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\RemoveItemEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -424,6 +468,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\SetVariableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\StartConversationEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

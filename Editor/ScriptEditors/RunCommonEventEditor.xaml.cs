@@ -29,5 +29,13 @@ namespace Editor.ScriptEditors
             this.DialogResult = true;
             this.Close();
         }
+
+        private void ListBox_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext as Editor.Scripter.Flow.RunCommonEvent != null)
+            {
+                (this.DataContext as Editor.Scripter.Flow.RunCommonEvent).RefreshValidEvents();
+            }
+        }
     }
 }

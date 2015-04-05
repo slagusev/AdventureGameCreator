@@ -20,6 +20,7 @@ using Editor.Scripter.TextFunctions;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
 using System.Xml.Linq;
+using Editor.Scripter.ConversationFlow;
 
 namespace Editor.Editors
 {
@@ -46,6 +47,8 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(GetEquipmentSlot), typeof(ScriptEditors.GetEquipmentSlotEditor));
             ScriptEditorsByScriptType.Add(typeof(ForceUnequip), typeof(ScriptEditors.ForceUnequipEditor));
             ScriptEditorsByScriptType.Add(typeof(ForceEquip), typeof(ScriptEditors.ForceEquipEditor));
+            ScriptEditorsByScriptType.Add(typeof(StartConversation), typeof(ScriptEditors.StartConversationEditor));
+            ScriptEditorsByScriptType.Add(typeof(GoToStage), typeof(ScriptEditors.GoToStageEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

@@ -136,6 +136,27 @@ namespace Editor
                 }
                 else wv = existingWindows.First();
             }
+            if (mainTree.SelectedItem.GetType() == typeof(Conversation))
+            {
+                Conversation g = mainTree.SelectedItem as Conversation;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as ConversationEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Conversation - " + g.Name,
+                        Content = (UserControl)new ConversationEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
             if (mainTree.SelectedItem.GetType() == typeof(CommonEvent))
             {
                 CommonEvent g = mainTree.SelectedItem as CommonEvent;

@@ -1,4 +1,5 @@
-﻿using Editor.Scripter.Flow;
+﻿using Editor.ObjectTypes;
+using Editor.Scripter.Flow;
 using Player.ObjectTypesWrappers;
 using System;
 using System.Collections.Generic;
@@ -131,6 +132,16 @@ namespace Player.ScriptLineTypes
                 //    left.CurrentItemValue = rightVar.CurrentItemValue;
                 //}
 
+            }
+            else if (line.IsCommonEventRef)
+            {
+                CommonEventRef right = null;
+                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentCommonEventValue;
+                else
+                {
+                    right = line.CommonEventValue;
+                }
+                left.CurrentCommonEventValue = right;
             }
             return null;
         }

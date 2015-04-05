@@ -23,7 +23,7 @@ namespace Editor.ObjectTypes
             OnEquip.CanReturnValue = false;
             OnEquip.CanSetVariable = true;
             OnEquip.CanStopGame = true;
-            
+            OnEquip.CanStartConversations = true;
             OnEquip.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeItem);
             OnEquip.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
 
@@ -38,6 +38,7 @@ namespace Editor.ObjectTypes
             OnMove.CanReturnValue = false;
             OnMove.CanSetVariable = true;
             OnMove.CanStopGame = true;
+            OnMove.CanStartConversations = true;
 
             OnMove.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeItem);
             OnMove.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);

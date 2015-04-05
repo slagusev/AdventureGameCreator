@@ -36,6 +36,8 @@ namespace Editor.ObjectTypes
             AllSituationsScript.CanStopGame = false;
             AllSituationsScript.HasTextFunctionality = false;
             AllSituationsScript.IsItemScript = false;
+            AllSituationsScript.IsInConversation = false;
+            AllSituationsScript.CanStartConversations = false;
             
             AddCommonEventType("General", "A common event that can be used in any situation. Its functionality is limited to setting variables and checking conditions.", AllSituationsScript);
 
@@ -50,6 +52,8 @@ namespace Editor.ObjectTypes
             MovementScript.CanStopGame = true;
             MovementScript.HasTextFunctionality = true;
             MovementScript.IsItemScript = false;
+            MovementScript.IsInConversation = false;
+            MovementScript.CanStartConversations = true;
             MovementScript.AllowedCommonEventTypes.Add(ScriptTypeMovementAndInteractable);
             AddCommonEventType("Movement & Interactable Script", "A common event that is used when transitioning from one room to another, or when used by an interactable.", MovementScript);
 
@@ -64,6 +68,8 @@ namespace Editor.ObjectTypes
             ItemScript.CanStopGame = false;
             ItemScript.HasTextFunctionality = true;
             ItemScript.IsItemScript = true;
+            ItemScript.IsInConversation = true;
+            ItemScript.CanStartConversations = false;
             AllSituationsScript.AllowedCommonEventTypes.Add(ScriptTypeItem);
             AddCommonEventType("Item Script", "A common event that can be used on item usage.", ItemScript);
 
@@ -78,6 +84,8 @@ namespace Editor.ObjectTypes
             DescriptionScript.CanStopGame = false;
             DescriptionScript.HasTextFunctionality = true;
             DescriptionScript.IsItemScript = false;
+            DescriptionScript.IsInConversation = false;
+            DescriptionScript.CanStartConversations = false;
             DescriptionScript.AllowedCommonEventTypes.Add(ScriptTypeDescription);
             AddCommonEventType("Description Script", "A common event that can be used for item descriptions, conversations, and player descriptions.", DescriptionScript);
 
@@ -93,6 +101,8 @@ namespace Editor.ObjectTypes
             TrueFalseScript.HasTextFunctionality = true;
             TrueFalseScript.IsItemScript = false;
             TrueFalseScript.AllowedCommonEventTypes.Add(ScriptTypeTrueFalse);
+            TrueFalseScript.IsInConversation = false;
+            TrueFalseScript.CanStartConversations = false;
             AddCommonEventType("True/False Script", "A common event that returns a True or False value to the parent, typically used in determining visibility. Limited functionality.", TrueFalseScript);
 
             Script ReturnedValueScript = new Script();
@@ -107,6 +117,8 @@ namespace Editor.ObjectTypes
             ReturnedValueScript.HasTextFunctionality = true;
             ReturnedValueScript.IsItemScript = false;
             ReturnedValueScript.CanReturnValue = true;
+            TrueFalseScript.IsInConversation = false;
+            TrueFalseScript.CanStartConversations = false;
             ReturnedValueScript.AllowedCommonEventTypes.Add(ScriptTypeReturnedValue);
             AddCommonEventType("Returned Value Script", "A common event that returns a value to the parent script. Limited functionality.", ReturnedValueScript);
 

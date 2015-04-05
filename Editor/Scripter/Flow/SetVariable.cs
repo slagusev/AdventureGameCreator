@@ -44,6 +44,7 @@ namespace Editor.Scripter.Flow
                     this.IsNumber = false;
                     this.IsString = false;
                     this.IsItem = false;
+                    this.IsCommonEventRef = false;
                     if (SelectedVariable.LinkedVariable.IsDateTime)
                         this.IsDateTime = true;
                     else if (SelectedVariable.LinkedVariable.IsNumber)
@@ -52,6 +53,8 @@ namespace Editor.Scripter.Flow
                         this.IsString = true;
                     else if (SelectedVariable.LinkedVariable.IsItem)
                         this.IsItem = true;
+                    else if (SelectedVariable.LinkedVariable.IsCommonEventRef)
+                        this.IsCommonEventRef = true;
                     //SelectedVariable.PropertyChanged += this.PropertyChanged;
                 }
                 
@@ -132,6 +135,35 @@ namespace Editor.Scripter.Flow
             }
         }
         /// <summary>
+        /// The <see cref="IsCommonEventRef" /> property's name.
+        /// </summary>
+        public const string IsCommonEventRefPropertyName = "IsCommonEventRef";
+
+        private bool _isCommonEventRef = false;
+
+        /// <summary>
+        /// Sets and gets the IsCommonEventRef property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsCommonEventRef
+        {
+            get
+            {
+                return _isCommonEventRef;
+            }
+
+            set
+            {
+                if (_isCommonEventRef == value)
+                {
+                    return;
+                }
+
+                _isCommonEventRef = value;
+                RaisePropertyChanged(IsCommonEventRefPropertyName);
+            }
+        }
+        /// <summary>
         /// The <see cref="ItemValue" /> property's name.
         /// </summary>
         public const string ItemValuePropertyName = "ItemValue";
@@ -158,6 +190,36 @@ namespace Editor.Scripter.Flow
 
                 _itemValue = value;
                 RaisePropertyChanged(ItemValuePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CommonEventValue" /> property's name.
+        /// </summary>
+        public const string CommonEventValuePropertyName = "CommonEventValue";
+
+        private CommonEventRef _commonEventValue = null;
+
+        /// <summary>
+        /// Sets and gets the CommonEventValue property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public CommonEventRef CommonEventValue
+        {
+            get
+            {
+                return _commonEventValue;
+            }
+
+            set
+            {
+                if (_commonEventValue == value)
+                {
+                    return;
+                }
+
+                _commonEventValue = value;
+                RaisePropertyChanged(CommonEventValuePropertyName);
             }
         }
         /// <summary>
@@ -897,6 +959,8 @@ namespace Editor.Scripter.Flow
                 type = "String";
             if (IsItem)
                 type = "Item";
+            if (IsCommonEventRef)
+                type = "CommonEventRef";
             xml.Add(new XElement("Type", type));
             string action = "";
             if (IsSet)
@@ -936,6 +1000,9 @@ namespace Editor.Scripter.Flow
                     xml.Add(new XElement("Value", StringValue));
                 else if (IsItem)
                     xml.Add(new XElement("Value", ItemValue != null && ItemValue.LinkedItemId != null ? ItemValue.LinkedItemId : Guid.Empty));
+                else if (IsCommonEventRef)
+                    xml.Add(new XElement("Value", CommonEventValue != null && CommonEventValue.LinkedCommonEventId != null ? CommonEventValue.LinkedCommonEventId: Guid.Empty));
+
             }
             
 
@@ -964,6 +1031,9 @@ namespace Editor.Scripter.Flow
                         break;
                     case "Item":
                         sv.IsItem = true;
+                        break;
+                    case "CommonEventRef":
+                        sv.IsCommonEventRef = true;
                         break;
                 }
             }
@@ -1046,6 +1116,13 @@ namespace Editor.Scripter.Flow
                             sv.ItemValue = new ItemRef(Guid.Parse(xml.Element("Value").Value));
                         }
                     }
+                    else if (sv.IsCommonEventRef)
+                    {
+                        if (xml.Element("Value") != null)
+                        {
+                            sv.CommonEventValue = new CommonEventRef(Guid.Parse(xml.Element("Value").Value));
+                        }
+                    }
                 }
             }
 
@@ -1104,6 +1181,10 @@ namespace Editor.Scripter.Flow
                     else if (IsItem)
                     {
                         sb.Append("a new instance of " + ((ItemValue != null && ItemValue.LinkedItem != null) ? ItemValue.LinkedItem.ItemName : "UNKNOWN"));
+                    }
+                    else if (IsCommonEventRef)
+                    {
+                        sb.Append("a reference to the " + ((CommonEventValue != null && CommonEventValue.LinkedCommonEvent != null) ? CommonEventValue.LinkedCommonEvent.Name : "UNKNOWN") + " common event.");
                     }
                     else
                     {

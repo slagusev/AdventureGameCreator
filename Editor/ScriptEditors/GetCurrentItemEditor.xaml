@@ -7,7 +7,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="10,10,10,-10">
             <TextBlock>Which variable do you want to set?</TextBlock>
-            <Controls:VariableSelector Margin="10,10,10,0" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
+            <Controls:VariableSelector Margin="10,10,10,0" ShowCommonEventRefs="False" ShowDateTime="False" ShowNumber="False" ShowString="False" ShowItems="True" SelectedItem="{Binding VarRef, Mode=TwoWay}" Height="150" />
             <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1"  Content="OK"/>
         </StackPanel>
     </ScrollViewer>

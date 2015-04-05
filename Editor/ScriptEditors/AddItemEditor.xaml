@@ -15,7 +15,7 @@
             <TextBlock Margin="10"><Run Text="Please select an item to add:"/></TextBlock>
             <CheckBox IsChecked="{Binding FromVariable}" Content="Add an item from a variable"/>
             <Controls:ItemSelector Height="150" Visibility="{Binding FromVariable, ConverterParameter=Invert, Converter={StaticResource VisibilityConverter}}" SelectedItem="{Binding ItemReference, Mode=TwoWay}" />
-            <Controls:VariableSelector Height="150" Visibility="{Binding FromVariable, Converter={StaticResource VisibilityConverter}}" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="False" ShowItems="True" ShowString="False" ShowDateTime="False" />
+            <Controls:VariableSelector Height="150" Visibility="{Binding FromVariable, Converter={StaticResource VisibilityConverter}}" ShowCommonEventRefs="False" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="False" ShowItems="True" ShowString="False" ShowDateTime="False" />
             <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
         </StackPanel>
     </Grid>

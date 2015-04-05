@@ -31,6 +31,8 @@ namespace Editor.ObjectTypes
             OnUse.CanReturn = false;
             OnUse.CanDisplayText = true;
             OnUse.IsItemScript = true;
+            OnUse.IsInConversation = false;
+            OnUse.CanStartConversations = true;
             OnUse.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeItem);
         }
         public void WireCommands()

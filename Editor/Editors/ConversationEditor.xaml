@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Editor.Editors.ConversationEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:Editor="clr-namespace:Editor"
+             xmlns:Controls="clr-namespace:Editor.Editors"
+             xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Path="TestConversation" Source="{StaticResource TestDataStatic}"/>
+    </UserControl.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" ><Run Text="Conversation: "/><Run Text="{Binding Name}"/></TextBlock>
+            <TextBlock>ID:
+        <Run Text="{Binding Id}"></Run></TextBlock>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                
+                    <TextBlock>Starting Stage:</TextBlock>
+                <TextBox Margin="5,0,0,0" Width="100" TextAlignment="Right" Text="{Binding StartingStage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                
+                
+            </StackPanel>
+            <TextBlock>Stages:</TextBlock>
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                <ListBox ItemsSource="{Binding Stages}" SelectedItem="{Binding SelectedStage}" Height="400" Width="200" HorizontalAlignment="Left">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock><Run Text="{Binding StageId}"/><Run Text=": "/><Run Text="{Binding StageName}"></Run></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                    <Button Margin="10" Command="{Binding NewStageCommand}">New Stage</Button>
+                    <Button Margin="10" Command="{Binding RemoveStageCommand}">Remove Stage</Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="20" Visibility="{Binding SelectedStage, Converter={StaticResource VisibilityConverter}}" >
+                    <StackPanel DataContext="{Binding SelectedStage}">
+                        <TextBlock>Selected Stage: <Run Text="{Binding StageId}"/></TextBlock>
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center">Friendly Name:</TextBlock>
+                            <TextBox Margin="5,0,0,0" Text="{Binding StageName, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
+                        </StackPanel>
+                        <TextBlock>Conversation Action:</TextBlock>
+                        <Controls:ScriptControl Height="200" DataContext="{Binding StageAction}"></Controls:ScriptControl>
+                        <TextBlock>Choices:</TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                            <ListBox Width="200" Height="100" ItemsSource="{Binding Choices}" SelectedItem="{Binding SelectedChoice}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock><Run Text="{Binding Target}"/><Run Text=": "/><Run Text="{Binding ChoiceText}"/></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                                <Button Margin="10" Command="{Binding AddChoiceCommand}">New Choice</Button>
+                                <Button Margin="10" Command="{Binding RemoveChoiceCommand}">Remove Choice</Button>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="20" Visibility="{Binding SelectedChoice, Converter={StaticResource VisibilityConverter}}" >
+                                <StackPanel DataContext="{Binding SelectedChoice}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center">Target Stage:</TextBlock>
+                                        <TextBox Text="{Binding Target}" Width="100" TextAlignment="Right" Margin="5,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                        <TextBlock VerticalAlignment="Center">Button Text:</TextBlock>
+                                        <TextBox Text="{Binding ChoiceText}" Width="300" Margin="5,0"/>
+                                    </StackPanel>
+                                    <TextBlock>Visibility:</TextBlock>
+                                    <Controls:ScriptControl Height="200" DataContext="{Binding ChoiceVisibility}">
+                                        
+                                    </Controls:ScriptControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

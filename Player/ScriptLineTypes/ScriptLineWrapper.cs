@@ -1,5 +1,6 @@
 ﻿using Editor.Scripter;
 using Editor.Scripter.Conditions;
+using Editor.Scripter.ConversationFlow;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
 using Editor.Scripter.Misc;
@@ -97,6 +98,15 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new ForceUnequipWrapper((ForceUnequip)line);
             }
+            if (lineType == typeof(StartConversation))
+            {
+                lineWrapper = new StartConversationWrapper((StartConversation)line);
+            }
+            if (lineType == typeof(GoToStage))
+            {
+                lineWrapper = new GoToStageWrapper((GoToStage)line);
+            }
+            
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;
@@ -104,7 +114,6 @@ namespace Player.ScriptLineTypes
             return lineWrapper;
         }
         public ScriptWrapper parent {get; set; }
-        
         
     }
 }

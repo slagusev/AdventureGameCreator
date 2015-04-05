@@ -67,7 +67,7 @@ namespace Editor.Scripter
                 if (SelectedItemClass != null)
                 {
                     var prop = SelectedItemClass.ItemProperties.Where(a => a.Name == SelectedPropertyName).FirstOrDefault();
-                    if (prop != null)
+                    if (prop != null && prop != _selectedProperty)
                     {
                         SelectedProperty = prop;
                     }
@@ -78,6 +78,7 @@ namespace Editor.Scripter
 
             set
             {
+                if (value != null) SelectedPropertyName = value.Name;
                 if (_selectedProperty == value)
                 {
                     return;
@@ -85,7 +86,7 @@ namespace Editor.Scripter
 
                 _selectedProperty = value;
                 RaisePropertyChanged(SelectedPropertyPropertyName);
-                if (value != null) SelectedPropertyName = SelectedProperty.Name;
+                //if (value != null) SelectedPropertyName = SelectedProperty.Name;
             }
         }
 

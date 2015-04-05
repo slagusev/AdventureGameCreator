@@ -30,6 +30,8 @@ namespace Editor.ObjectTypes
             MovementScript.CanReturnValue = false;
             MovementScript.CanSetVariable = true;
             MovementScript.CanStopGame = true;
+            MovementScript.IsInConversation = false;
+            MovementScript.CanStartConversations = true;
             MovementScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
             MovementScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
             WireCommands();

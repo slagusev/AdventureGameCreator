@@ -85,5 +85,15 @@ namespace Editor
             var dialog = new NewCommonEvent() { DataContext = new CommonEvent() };
             dialog.ShowDialog();
         }
+
+        private void newConversation_Click_1(object sender, RoutedEventArgs e)
+        {
+            new NewConversation().ShowDialog();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Focus();
+        }
     }
 }

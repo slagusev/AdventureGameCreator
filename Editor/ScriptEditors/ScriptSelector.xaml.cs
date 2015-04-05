@@ -1,6 +1,8 @@
 ﻿using Editor.Scripter;
+using Editor.Scripter.ConversationFlow;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
+using Editor.Scripter.TextFunctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -304,6 +306,16 @@ namespace Editor.ScriptEditors
         private void forceUnequip_Click(object sender, RoutedEventArgs e)
         {
             LoadWindow(new ForceUnequipEditor(), new ForceUnequip());
+        }
+
+        private void startConversation_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new StartConversationEditor(), new StartConversation());
+        }
+
+        private void goToStage_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new GoToStageEditor(), new GoToStage());
         }
 
     }

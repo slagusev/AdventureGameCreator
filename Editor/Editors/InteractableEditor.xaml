@@ -22,11 +22,11 @@
         <Run Text="{Binding InteractableID}"></Run></TextBlock>
             <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                 <TextBlock >Default Display Name:</TextBlock>
-                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultDisplayName}"></TextBox>
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultDisplayName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
             <StackPanel ToolTip="Define a sorting group for the " Margin="0,20,0,0" Orientation="Horizontal">
                 <TextBlock>Group:</TextBlock>
-                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding GroupName}"></TextBox>
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding GroupName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
             <Expander Margin="0,20,0,0" Header="Examine" IsExpanded="False">
                 <StackPanel Margin="10">

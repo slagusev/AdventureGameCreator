@@ -287,6 +287,36 @@ namespace Editor
                 RaisePropertyChanged(ItemsPropertyName);
             }
         }
+
+        /// <summary>
+        /// The <see cref="Conversations" /> property's name.
+        /// </summary>
+        public const string ConversationsPropertyName = "Conversations";
+
+        private ObservableCollection<Conversation> _conversations = new ObservableCollection<Conversation>();
+
+        /// <summary>
+        /// Sets and gets the Conversations property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<Conversation> Conversations
+        {
+            get
+            {
+                return _conversations;
+            }
+
+            set
+            {
+                if (_conversations == value)
+                {
+                    return;
+                }
+
+                _conversations = value;
+                RaisePropertyChanged(ConversationsPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="OpenWindows" /> property's name.
         /// </summary>
@@ -504,6 +534,7 @@ namespace Editor
                 new XElement("Variables", from a in Variables select a.ToXml()),
                 new XElement("ItemClasses", from a in ItemClasses select a.ToXML()),
                 new XElement("Items", from a in Items select a.ToXml()),
+                new XElement("Conversations", from a in Conversations select a.ToXML()),
                 new XElement("CommonEvents", from a in CommonEvents select a.ToXML()),
                 new XElement(Settings.ToXML())
                 );
@@ -585,6 +616,14 @@ namespace Editor
                 foreach (var a in commonEvents.Elements("CommonEvent"))
                 {
                     mvm.CommonEvents.Add(CommonEvent.FromXML(a));
+                }
+            }
+            XElement conversations = xml.Element("Conversations");
+            if (conversations != null)
+            {
+                foreach (var a in conversations.Elements("Conversation"))
+                {
+                    mvm.Conversations.Add(Conversation.FromXML(a));
                 }
             }
             //Resolve all interactable references

@@ -151,7 +151,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="300" Margin="10" Text="{Binding CurrentItemDescription}"/>
+                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="300" Margin="10" Text="{Binding CurrentItemDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 <StackPanel>
                     <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Use Item" Command="{Binding UseItemCommand}" />
                     <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Drop Item" IsEnabled="{Binding SelectedItem.CanBeDropped}" Command="{Binding DropItemCommand}" />
@@ -173,7 +173,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 </StackPanel>
-                <TextBox IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="150" Margin="10" Text="{Binding CurrentItemDescription}"/>
+                <TextBox IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="150" Margin="10" Text="{Binding CurrentItemDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 <StackPanel VerticalAlignment="Stretch">
                     <TextBlock>Equippable Items:</TextBlock>
 
@@ -192,5 +192,41 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" Visibility="{Binding ConversationMode, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type ListBox}">
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                        </Style.Resources>
+                    </Style>
+                </StackPanel.Resources>
+                <StackPanel.Visibility>
+                    <Binding ConverterParameter="Invert" Converter="{StaticResource BooleanToVisibilityConverter}" Path="IsGameOver"/>
+                </StackPanel.Visibility>
+                <ListBox Width="200" ItemsSource="{Binding CurrentConversation.ChoicesColumn1}" BorderBrush="{x:Null}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding Value, Mode=OneWay}" Command="{Binding CurrentConversation.GoToStageCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding Key, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox Width="200" ItemsSource="{Binding CurrentConversation.ChoicesColumn2}" BorderBrush="{x:Null}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding Value, Mode=OneWay}" Command="{Binding CurrentConversation.GoToStageCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding Key, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox Width="200" ItemsSource="{Binding CurrentConversation.ChoicesColumn3}" BorderBrush="{x:Null}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding Value, Mode=OneWay}" Command="{Binding CurrentConversation.GoToStageCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding Key, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

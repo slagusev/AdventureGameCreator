@@ -6,7 +6,7 @@
     <Grid>
         <StackPanel Margin="-10,10,10,-10">
             <TextBlock Margin="10">Please enter the text for your comment:</TextBlock>
-            <TextBox Margin="10" Text="{Binding CommentText}"></TextBox>
+            <TextBox Margin="10" Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button HorizontalAlignment="Center" Width="100" Click="Button_Click_1">OK</Button>
         </StackPanel>
     </Grid>

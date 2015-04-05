@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DenormalizerConverter.cs" />
+    <Compile Include="ObjectTypesWrappers\ConversationWrapper.cs" />
     <Compile Include="ObjectTypesWrappers\InteractableWrapper.cs" />
     <Compile Include="ObjectTypesWrappers\ItemInstance.cs" />
     <Compile Include="ObjectTypesWrappers\PlayerStatisticWrapper.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="ScriptLineTypes\GetCurrentItemWrapper.cs" />
     <Compile Include="ScriptLineTypes\GetEquipmentSlotWrapper.cs" />
     <Compile Include="ScriptLineTypes\GetItemPropertyWrapper.cs" />
+    <Compile Include="ScriptLineTypes\GoToStageWrapper.cs" />
     <Compile Include="ScriptLineTypes\RemoveItemWrapper.cs" />
     <Compile Include="ScriptLineTypes\RemoveThisItemWrapper.cs" />
     <Compile Include="ScriptLineTypes\ReturnFalseWrapper.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="ScriptLineTypes\ScriptLineWrapper.cs" />
     <Compile Include="ScriptLineTypes\SetItemPropertyWrapper.cs" />
     <Compile Include="ScriptLineTypes\SetVariableWrapper.cs" />
+    <Compile Include="ScriptLineTypes\StartConversationWrapper.cs" />
     <Compile Include="ScriptLineTypes\StopGameWrapper.cs" />
     <Page Include="MainPlayer.xaml">
       <SubType>Designer</SubType>

@@ -19,6 +19,7 @@ namespace Editor.ObjectTypes
             this.CanExamineScript.CanAddItem = false;
             this.CanExamineScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
             this.ExamineScript.CanReturn = false;
+            this.ExamineScript.CanStartConversations = true;
             this.ExamineScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
             this.CanInteractScript.CanDisplayText = false;
             this.CanInteractScript.CanStopGame = false;
@@ -26,6 +27,7 @@ namespace Editor.ObjectTypes
             this.CanInteractScript.CanAddItem = false;
             this.CanInteractScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
             this.InteractScript.CanReturn = false;
+            this.InteractScript.CanStartConversations = true;
             this.InteractScript.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
         }
         /// <summary>

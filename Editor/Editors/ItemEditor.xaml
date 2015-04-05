@@ -22,7 +22,7 @@
             <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                 <TextBlock >Default Display Name:</TextBlock>
 
-                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultName}"></TextBox>
+                <TextBox Width="200" Margin="20,0,0,0" Text="{Binding DefaultName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
             <CheckBox Margin="0,10,0,0" IsChecked="{Binding Removable}">This item can be thrown away by the player.</CheckBox>
             <CheckBox Margin="0,10,0,0" IsChecked="{Binding IsEquipment}">This item can be equipped.</CheckBox>
@@ -138,8 +138,8 @@
                         <TextBlock Margin="20">Property: <Run Text="{Binding SelectedProperty.Name, Mode=OneWay}"/></TextBlock>
                         <CheckBox Margin="20" IsChecked="{Binding SelectedProperty.UseDefaultValue}">Use Item Class Default Value?</CheckBox>
                         <TextBlock Margin="20">Default Value:</TextBlock>
-                        <TextBox Margin="25,5,25,5" IsEnabled="False" Text="{Binding SelectedProperty.BaseVariable.DefaultValue, Mode=OneWay}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}}"></TextBox>
-                        <TextBox Margin="25,5,25,5" Text="{Binding SelectedProperty.Value}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"></TextBox>
+                        <TextBox Margin="25,5,25,5" IsEnabled="False" Text="{Binding SelectedProperty.BaseVariable.DefaultValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}}"></TextBox>
+                        <TextBox Margin="25,5,25,5" Text="{Binding SelectedProperty.Value, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedProperty.UseDefaultValue, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"></TextBox>
                     </StackPanel>
                 </Grid>
             </Expander>
