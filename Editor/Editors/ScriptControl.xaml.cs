@@ -49,6 +49,8 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(ForceEquip), typeof(ScriptEditors.ForceEquipEditor));
             ScriptEditorsByScriptType.Add(typeof(StartConversation), typeof(ScriptEditors.StartConversationEditor));
             ScriptEditorsByScriptType.Add(typeof(GoToStage), typeof(ScriptEditors.GoToStageEditor));
+            ScriptEditorsByScriptType.Add(typeof(ChangeRoom), typeof(ScriptEditors.ChangeRoomEditor));
+            ScriptEditorsByScriptType.Add(typeof(CreateEvent), typeof(ScriptEditors.CreateEventEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

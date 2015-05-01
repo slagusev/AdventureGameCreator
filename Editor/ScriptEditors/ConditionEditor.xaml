@@ -30,6 +30,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding ItemIsNotNull, Mode=TwoWay}" Content="Item is Nonempty"/>
+                            <CheckBox IsChecked="{Binding ItemIsClass, Mode=TwoWay}" Content="Item is of Type"/>
                             
                         </StackPanel>
                         <StackPanel Visibility="{Binding IsComparison, Converter={StaticResource VisibilityConverter}}">
@@ -59,6 +60,17 @@
                         </StackPanel>
                         <StackPanel Visibility="{Binding ItemIsNotNull, Converter={StaticResource VisibilityConverter}}">
                             <Controls:VariableSelector ShowCommonEventRefs="False" SelectedItem="{Binding SelectedVariable, Mode=TwoWay}" ShowItems="True" ShowNumber="False" ShowDateTime="False" ShowString="False" Height="150"/>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding ItemIsClass, Converter={StaticResource VisibilityConverter}}">
+                            <Controls:VariableSelector ShowCommonEventRefs="False" SelectedItem="{Binding SelectedVariable, Mode=TwoWay}" ShowItems="True" ShowNumber="False" ShowDateTime="False" ShowString="False" Height="150"/>
+                            <TextBlock>is of class:</TextBlock>
+                            <ListBox SelectedItem="{Binding SelectedClass}" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

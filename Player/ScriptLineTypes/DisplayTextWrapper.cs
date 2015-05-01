@@ -18,7 +18,7 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            MainViewModel.WriteText(line.Text);
+            MainViewModel.WriteText(line.Text, this.parent);
             return null;
         }
     }

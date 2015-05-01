@@ -17,10 +17,10 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
-            if (vars.ContainsKey(line.VarRef.LinkedVarId))
+            var v = parent.GetVarById(line.VarRef.LinkedVarId);
+            if (v != null)
             {
-                vars[line.VarRef.LinkedVarId].CurrentItemValue = this.parent.ItemBase;
+                v.CurrentItemValue = this.parent.ItemBase;
             }
             return null;
         }

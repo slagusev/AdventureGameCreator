@@ -21,9 +21,46 @@ namespace Player.ObjectTypesWrappers
         public ItemInstance ItemBase = null;
         public string TextResult { get; set; }
         public VarRef VariableResult { get; set; }
+        public bool IsRootScript = false;
+        public Dictionary<Guid, VariableWrapper> localVars = new Dictionary<Guid,VariableWrapper>();
+        public Dictionary<string, VariableWrapper> localVarsByName = new Dictionary<string, VariableWrapper>();
+        public void DupeVars(ScriptWrapper s)
+        {
+            ScriptWrapper parent = s;
+            while (parent != null && parent.localVars.Count() == 0)
+            {
+                parent = parent.parent;
+            }
+            if (parent != null)
+            {
+                foreach (var a in parent.localVars)
+                {
+                    VariableWrapper vw = new VariableWrapper(a.Value.VariableBase);
+                    vw.CurrentCommonEventValue = a.Value.CurrentCommonEventValue;
+                    vw.CurrentDateTimeValue = a.Value.CurrentDateTimeValue;
+                    vw.CurrentItemValue = a.Value.CurrentItemValue;
+                    vw.CurrentNumberValue = a.Value.CurrentNumberValue;
+                    vw.CurrentStringValue = a.Value.CurrentStringValue;
+                    localVars.Add(a.Key, vw);
+                    localVarsByName.Add(a.Value.VariableBase.Name, vw);
+                }
+            }
+        }
         public bool? Execute()
         {
             TextResult = "";
+            if (parent == null)
+            {
+                foreach (var a in MainViewModel.GetMainViewModelStatic().CurrentGame.VarById.Where(a => a.Value.VariableBase.Name.StartsWith("_")))
+                {
+                    var wrapper = new VariableWrapper(a.Value.VariableBase);
+                    if (!localVars.ContainsKey(a.Key))
+                    {
+                        localVars.Add(a.Key, wrapper);
+                        localVarsByName.Add(a.Value.VariableBase.Name, a.Value);
+                    }
+                }
+            }
             foreach (var line in ScriptBase.ScriptLines)
             {
                 ScriptLineWrapper currentLine = ScriptLineWrapper.GetScriptLineWrapper(line, this);
@@ -47,6 +84,57 @@ namespace Player.ObjectTypesWrappers
                 lastParent = lastParent.parent;
             }
             return lastParent;
+        }
+        public ScriptWrapper GetRoot()
+        {
+            if (this.IsRootScript)
+                return this;
+            else if (this.parent == null)
+                return this;
+            else return this.parent.GetRoot();
+        }
+        public VariableWrapper GetVarById(Guid id)
+        {
+            if (localVars.ContainsKey(id))
+            {
+                return localVars[id];
+            }
+            else if (parent != null)
+            {
+                return parent.GetVarById(id);
+            }
+            else
+            {
+                if (MainViewModel.GetMainViewModelStatic().CurrentGame.VarById.ContainsKey(id))
+                    return MainViewModel.GetMainViewModelStatic().CurrentGame.VarById[id];
+                else return null;
+            }
+        }
+        private void RebuildVarsByName()
+        {
+            localVarsByName = new Dictionary<string, VariableWrapper>();
+            foreach (var a in localVars)
+            {
+                localVarsByName.Add(a.Value.VariableBase.Name, a.Value);
+            }
+        }
+        public VariableWrapper GetVarByName(string name)
+        {
+            RebuildVarsByName();
+            if (localVarsByName.ContainsKey(name))
+            {
+                return localVarsByName[name];
+            }
+            else if (parent != null)
+            {
+                return parent.GetVarByName(name);
+            }
+            else
+            {
+                if (MainViewModel.GetMainViewModelStatic().CurrentGame.VarByName.ContainsKey(name))
+                    return MainViewModel.GetMainViewModelStatic().CurrentGame.VarByName[name];
+                else return null;
+            }
         }
     }
 }

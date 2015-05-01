@@ -94,16 +94,16 @@ namespace Player
 
         }
 
-        public static void WriteText(string line, bool includeBar = false)
+        public static void WriteText(string line, ScriptWrapper script, bool includeBar = false )
         {
             if (includeBar)
             {
-                WriteText("-------------------------------------------");
+                WriteText("-------------------------------------------", null);
             }
             if (!string.IsNullOrWhiteSpace(line))
             {
                 var mvm = (MainViewModel)Player.App.Current.Resources["MainViewModelStatic"];
-                line = FormatText(line);
+                line = FormatText(line, script);
 
 
                 mvm.FeedbackText += line + "\n\n";
@@ -111,21 +111,33 @@ namespace Player
         }
 
         
-        public static string FormatText(string line)
+        public static string FormatText(string line, ScriptWrapper script)
         {
             return Regex.Replace(line, "\\{\\{(?<VarName>.*?)\\}\\}", a =>
             {
                 var mvm = MainViewModel.GetMainViewModelStatic();
                 var varName = a.Groups["VarName"].Value;
                 string res = "INVALID VARIABLE NAME";
-                if (mvm.CurrentGame.VarByName.ContainsKey(varName))
+                VariableWrapper v = null;
+                if (script != null)
                 {
-                    var v = mvm.CurrentGame.VarByName[varName];
+                    v = script.GetVarByName(varName);
+                }
+                else if (mvm.CurrentGame.VarByName.ContainsKey(varName))
+                {
+                    v = mvm.CurrentGame.VarByName[varName];
+                    
+                    
+                }
+
+                if (v != null)
+                {
                     if (v.VariableBase.IsDateTime) return v.CurrentDateTimeValue.ToString();
                     if (v.VariableBase.IsNumber) return v.CurrentNumberValue.ToString();
                     if (v.VariableBase.IsString) return v.CurrentStringValue.ToString();
                     if (v.VariableBase.IsItem) return (v.CurrentItemValue != null ? v.CurrentItemValue.CurrentName : "NULL ITEM");
                 }
+                
                 return res;
             });
         }
@@ -158,7 +170,7 @@ namespace Player
         public Editor.RelayCommand UnequipItemCommand { get; private set; }
         public void UseExit(ExitWrapper exit)
         {
-            WriteText("-------------------------------------------");
+            WriteText("-------------------------------------------", null);
             var movementResult = new ScriptWrapper(CurrentGame.Settings.MovementScript).Execute();
             bool result = true;
             foreach (var a in CurrentGame.EquippedItems.Select(a => a.Value).Where(a => a != null).Distinct())
@@ -174,6 +186,7 @@ namespace Player
             }
             
             OutputCurrentRoomDescription();
+            MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
         }
         public void ExamineObject(InteractableWrapper interactable)
         {
@@ -181,6 +194,7 @@ namespace Player
             if (CurrentGame.CurrentRoom != null)
                 CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
             CurrentGame.RefreshAll();
+            MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
         }
         public void InteractObject(InteractableWrapper interactable)
         {
@@ -188,6 +202,7 @@ namespace Player
             if (CurrentGame.CurrentRoom != null)
                 CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
             CurrentGame.RefreshAll();
+            MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(String propertyName = "")
@@ -214,6 +229,7 @@ namespace Player
             if (CurrentGame.CurrentRoom != null)
                 CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
             CurrentGame.RefreshAll();
+            MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
         }
         public void SetConversationMode()
         {
@@ -242,10 +258,13 @@ namespace Player
         {
             if (SelectedItem != null)
             {
-                WriteText("", true);
+                WriteText("", null, true);
                 SelectedItem.UseItem();
                 if (ConversationMode == false)
+                {
                     SetExploreMode();
+                    MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
+                }
             }
         }
         public void DropItem()
@@ -644,8 +663,10 @@ namespace Player
                 CurrentGame.TryEquipItem(SelectedEquippableItem);
                 
                 CurrentGame.RefreshAll();
+                RefreshEquippableItems();
                 ViewEquipment();
                 SelectedEquippableItem = null;
+                MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
             }
         }
         public void UnequipItem()
@@ -657,8 +678,10 @@ namespace Player
                     CurrentGame.PlayerInventory.Add(SelectedEquippedItem);
                 }
                 CurrentGame.RefreshAll();
+                RefreshEquippableItems();
                 ViewEquipment();
                 SelectedEquippedItem = null;
+                MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
             }
         }
 

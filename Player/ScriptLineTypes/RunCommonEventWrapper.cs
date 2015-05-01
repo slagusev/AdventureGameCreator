@@ -26,9 +26,9 @@ namespace Player.ScriptLineTypes
                 CommonEventRef cRef = null;
                 if (line.RunFromVariable)
                 {
-                    if (game.VarById.ContainsKey(line.VarScript.LinkedVarId))
+                    if (parent.GetVarById(line.VarScript.LinkedVarId) != null)
                     {
-                        CommonEventRef cer = game.VarById[line.VarScript.LinkedVarId].CurrentCommonEventValue;
+                        CommonEventRef cer = parent.GetVarById(line.VarScript.LinkedVarId).CurrentCommonEventValue;
                         if (cer != null && cer.LinkedCommonEvent != null)
                         {
                             wrapper = new ScriptWrapper(cer.LinkedCommonEvent.AssociatedScript);
@@ -36,13 +36,13 @@ namespace Player.ScriptLineTypes
                         }
                         else
                         {
-                            MainViewModel.WriteText("Error: RunCommonEvent associated variable is null.");
+                            MainViewModel.WriteText("Error: RunCommonEvent associated variable is null.", this.parent);
                             return false;
                         }
                     }
                     else
                     {
-                        MainViewModel.WriteText("Error: RunCommonEvent missing associated variable for script.");
+                        MainViewModel.WriteText("Error: RunCommonEvent missing associated variable for script.", this.parent);
                         return false;
                     }
                 }
@@ -51,22 +51,27 @@ namespace Player.ScriptLineTypes
                     wrapper = new ScriptWrapper(line.SelectedEvent.LinkedCommonEvent.AssociatedScript);
                     cRef = line.SelectedEvent;
                 }
+                wrapper.parent = this.parent;
+                wrapper.DupeVars(this.parent);
+                wrapper.IsRootScript = true;
                 var result = wrapper.Execute();
-                
-                if (wrapper.VariableResult != null && line.VarRef != null && game.VarById.ContainsKey(wrapper.VariableResult.LinkedVarId) && game.VarById.ContainsKey(line.VarRef.LinkedVarId))
+
+                if (wrapper.VariableResult != null && line.VarRef != null && parent.GetVarById(wrapper.VariableResult.LinkedVarId) != null && parent.GetVarById(line.VarRef.LinkedVarId) != null)
                 {
-                    var source = game.VarById[wrapper.VariableResult.LinkedVarId];
-                    var dest = game.VarById[line.VarRef.LinkedVarId];
+                    var source = wrapper.GetVarById(wrapper.VariableResult.LinkedVarId);
+                    var dest = parent.GetVarById(line.VarRef.LinkedVarId);
                     dest.CurrentDateTimeValue = source.CurrentDateTimeValue;
                     dest.CurrentItemValue = source.CurrentItemValue;
                     dest.CurrentNumberValue = source.CurrentNumberValue;
                     dest.CurrentStringValue = source.CurrentStringValue;
+                    dest.CurrentCommonEventValue = source.CurrentCommonEventValue;
                 }
+                
                 if (cRef.LinkedCommonEvent.EventType.Item1 == CommonEvent.ScriptTypeTrueFalse)
                     return result;
                 else return null;
             }
-            MainViewModel.WriteText("Error: RunCommonEvent missing associated script.");
+            MainViewModel.WriteText("Error: RunCommonEvent missing associated script.", this.parent);
             return false;
         }
     }

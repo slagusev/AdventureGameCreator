@@ -31,6 +31,7 @@
                         <Button x:Name="ReturnFalse" Click="ReturnFalse_Click" Content="Return False" Visibility="{Binding CanReturn, Converter={StaticResource VisibilityConverter}}"/>
                         <Button x:Name="ReturnValue" Click="ReturnValue_Click_1"  Content="Return Value" Visibility="{Binding CanReturnValue, Converter={StaticResource VisibilityConverter}}"/>
                         <Button x:Name="runCommonEvent" Click="runCommonEvent_Click_1" Content="Run Common Event..."/>
+                        <Button x:Name="addEvent" Click="addEvent_Click_1"  Content="Add Triggered Event..."/>
                         <Button x:Name="StopGame" Click="StopGame_Click" Content="Game Over" Visibility="{Binding CanStopGame, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                 </GroupBox>
@@ -62,9 +63,12 @@
             </ScrollViewer>
             <ScrollViewer>
                 <GroupBox Header="Miscellaneous">
+                    
                     <StackPanel >
                         <Button Content="Add Comment..." x:Name="addComment" Click="addComment_Click" Visibility="{Binding CanComment, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button Content="Change Room" x:Name="changeRoom" Click="changeRoom_Click_1" Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
+                    
                 </GroupBox>
             </ScrollViewer>
             

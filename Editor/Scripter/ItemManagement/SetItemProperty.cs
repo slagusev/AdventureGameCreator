@@ -139,6 +139,7 @@ namespace Editor.Scripter.ItemManagement
                 }
 
                 _selectedProperty = value;
+                if (value != null) _selectedPropertyName = value.Name;
                 RaisePropertyChanged(SelectedPropertyPropertyName);
                 if (value != null) SelectedPropertyName = SelectedProperty.Name;
             }

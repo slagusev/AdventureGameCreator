@@ -279,6 +279,7 @@ namespace Editor.Scripter.Flow
             }
             if (xml.Element("VarRef") != null)
             {
+                rce.IsReturnVariable = true;
                 rce.VarRef = new VarRef(Guid.Parse(xml.Element("VarRef").Value));
             }
             rce.RefreshValidEvents();

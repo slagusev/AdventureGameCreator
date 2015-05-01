@@ -16,10 +16,10 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
-            if (line.VarRef != null && vars.ContainsKey(line.VarRef.LinkedVarId))
+            //var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
+            if (line.VarRef != null && parent.GetVarById(line.VarRef.LinkedVarId) != null)
             {
-                var value = vars[line.VarRef.LinkedVarId].CurrentItemValue;
+                var value = parent.GetVarById(line.VarRef.LinkedVarId).CurrentItemValue;
                 var items = MainViewModel.GetMainViewModelStatic().CurrentGame.TryEquipItem(value, true);
                 if (!line.ThrowAwayItem)
                 {

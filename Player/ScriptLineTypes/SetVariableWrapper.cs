@@ -21,32 +21,32 @@ namespace Player.ScriptLineTypes
         {
             Game g = MainViewModel.GetMainViewModelStatic().CurrentGame;
             VariableWrapper left = null;
-            if (g.VarById.ContainsKey(line.SelectedVariable.LinkedVarId))
+            if (parent.GetVarById(line.SelectedVariable.LinkedVarId) != null)
             {
-                left = g.VarById[line.SelectedVariable.LinkedVarId];
+                left = parent.GetVarById(line.SelectedVariable.LinkedVarId);
             }
             else
             {
-                MainViewModel.WriteText("ERROR: Can not find variable with ID " + line.SelectedVariable.LinkedVarId + ". Terminating script.");
+                MainViewModel.WriteText("ERROR: Can not find variable with ID " + line.SelectedVariable.LinkedVarId + ". Terminating script.", this.parent);
                 return false;
             }
             VariableWrapper rightVar = null;
             if (line.IsVariable)
             {
-                if (g.VarById.ContainsKey(line.TargetVar.LinkedVarId))
+                if (parent.GetVarById(line.TargetVar.LinkedVarId) != null)
                 {
-                    rightVar = g.VarById[line.TargetVar.LinkedVarId];
+                    rightVar = parent.GetVarById(line.TargetVar.LinkedVarId);
                 }
                 else
                 {
-                    MainViewModel.WriteText("ERROR: Can not find variable with ID " + line.SelectedVariable.LinkedVarId + ". Terminating script.");
+                    MainViewModel.WriteText("ERROR: Can not find variable with ID " + line.SelectedVariable.LinkedVarId + ". Terminating script.", this.parent);
                     return false;
                 }
             }
             if (line.IsDateTime)
             {
                 DateTime right = DateTime.MinValue;
-                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentDateTimeValue;
+                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentDateTimeValue;
                 else
                 {
                     right = new DateTime(new TimeSpan(line.Days, line.Hours, line.Minutes, line.Seconds).Ticks);
@@ -71,7 +71,7 @@ namespace Player.ScriptLineTypes
             else if (line.IsNumber)
             {
                 int right = 0;
-                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentNumberValue;
+                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentNumberValue;
                 else right = line.NumberValue;
                 if (line.IsSet)
                     left.CurrentNumberValue = right;
@@ -91,7 +91,7 @@ namespace Player.ScriptLineTypes
             else if (line.IsString)
             {
                 string right = "";
-                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentStringValue;
+                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentStringValue;
                 else right = line.StringValue;
                 left.CurrentStringValue = right;
             }
@@ -99,7 +99,7 @@ namespace Player.ScriptLineTypes
             {
 
                 ItemInstance right = null;
-                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentItemValue;
+                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentItemValue;
                 else
                 {
                     if (line.ItemValue != null && line.ItemValue.LinkedItem != null)
@@ -109,7 +109,7 @@ namespace Player.ScriptLineTypes
                     }
                     else
                     {
-                        MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!");
+                        MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!", this.parent);
                         return false;
                     }
                 }
@@ -136,7 +136,7 @@ namespace Player.ScriptLineTypes
             else if (line.IsCommonEventRef)
             {
                 CommonEventRef right = null;
-                if (rightVar != null) right = g.VarById[line.TargetVar.LinkedVarId].CurrentCommonEventValue;
+                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentCommonEventValue;
                 else
                 {
                     right = line.CommonEventValue;

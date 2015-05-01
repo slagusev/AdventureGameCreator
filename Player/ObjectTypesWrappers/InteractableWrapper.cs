@@ -67,13 +67,13 @@ namespace Player.ObjectTypesWrappers
         }
         public void Examine()
         {
-            MainViewModel.WriteText("-------------------------------------------");
+            MainViewModel.WriteText("-------------------------------------------", null);
             new ScriptWrapper(InteractableBase.ExamineScript).Execute();
             MainViewModel.GetMainViewModelStatic().CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
         }
         public void Interact()
         {
-            MainViewModel.WriteText("-------------------------------------------");
+            MainViewModel.WriteText("-------------------------------------------", null);
             new ScriptWrapper(InteractableBase.InteractScript).Execute();
             MainViewModel.GetMainViewModelStatic().CurrentGame.CurrentRoom.RecalculateInteractableVisibility();
         }

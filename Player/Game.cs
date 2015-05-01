@@ -19,6 +19,7 @@ namespace Player
         public Dictionary<Guid, ZoneWrapper> Zones = new Dictionary<Guid, ZoneWrapper>();
         public Dictionary<Guid, VariableWrapper> VarById = new Dictionary<Guid, VariableWrapper>();
         public Dictionary<string, VariableWrapper> VarByName = new Dictionary<string, VariableWrapper>();
+        public List<ActiveEvent> ActiveEvents = new List<ActiveEvent>();
         /// <summary>
         /// The <see cref="CurrentRoom" /> property's name.
         /// </summary>
@@ -54,8 +55,9 @@ namespace Player
         public void RefreshAll()
         {
             RefreshVisibleExits();
-            RefreshStatistics();
+            
             RefreshPlayerDescription();
+            RefreshStatistics();
             RefreshCurrentlyEquippedText();
         }
 
@@ -360,7 +362,7 @@ namespace Player
                                 markedForRemoval.Add(a);
                             else
                             {
-                                MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " could not be removed!");
+                                MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " could not be removed!", null);
                                 return new List<ItemInstance>();
                             }
                         }
@@ -374,7 +376,7 @@ namespace Player
                         var result = new ScriptWrapper(equip.OnUnequip).Execute();
                         if (result == false)
                         {
-                            MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!");
+                            MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!", null);
                             return new List<ItemInstance>();
                         }
                     }
@@ -398,7 +400,7 @@ namespace Player
         {
             if (EquippedItems.Where(a => a.Value == i).Count() == 0)
             {
-                MainViewModel.WriteText("ERROR: Item not equipped!");
+                MainViewModel.WriteText("ERROR: Item not equipped!", null);
             }
             if (!force)
             {
@@ -412,7 +414,7 @@ namespace Player
                             var result = new ScriptWrapper(equip.OnUnequip).Execute();
                             if (result == false)
                             {
-                                MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!");
+                                MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!", null);
                                 return false;
                             }
                         }
@@ -422,7 +424,7 @@ namespace Player
                     var result = new ScriptWrapper(i.item.EquipmentRef.OnUnequip).Execute();
                     if (result == false)
                     {
-                        MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because it is currently unable to be removed!");
+                        MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because it is currently unable to be removed!", null);
                         return false;
                     }
                 }
@@ -435,6 +437,36 @@ namespace Player
                 
             }
             return true;
+        }
+        public void RunActiveEvents()
+        {
+            List<ActiveEvent> events = new List<ActiveEvent>();
+            foreach (var a in ActiveEvents)
+            {
+                events.Add(a);
+            }
+            foreach (var a in events)
+            {
+                a.Execute();
+            }
+            ////Compare lists to see if this needs to be run again.
+            //if (ActiveEvents.Count() != events.Count())
+            //{
+            //    RunActiveEvents();
+            //}
+            //else
+            //{
+                
+            //    for (int i = 0; i < ActiveEvents.Count; i++)
+            //    {
+            //        if (ActiveEvents[i] != events[i])
+            //        {
+            //            RunActiveEvents();
+            //            break;
+            //        }
+            //    }
+            //}
+            RefreshAll();
         }
     }
 }

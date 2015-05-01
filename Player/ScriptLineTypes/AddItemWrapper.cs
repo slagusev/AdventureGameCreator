@@ -24,7 +24,7 @@ namespace Player.ScriptLineTypes
             }
             else
             {
-                var item = game.VarById[AddItemLine.VarRef.LinkedVarId].CurrentItemValue;
+                var item = parent.GetVarById(AddItemLine.VarRef.LinkedVarId).CurrentItemValue;
                 if (item != null && !game.PlayerInventory.Contains(item))
                 {
                     //Don't re-add the item if it already is in the inventory

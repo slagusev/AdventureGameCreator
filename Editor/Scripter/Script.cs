@@ -211,6 +211,12 @@ namespace Editor.Scripter
                     case "GoToStage":
                         script.ScriptLines.Add(ConversationFlow.GoToStage.FromXML(element));
                         break;
+                    case "ChangeRoom":
+                        script.ScriptLines.Add(Misc.ChangeRoom.FromXML(element));
+                        break;
+                    case "CreateEvent":
+                        script.ScriptLines.Add(Editor.Scripter.Flow.CreateEvent.FromXML(element));
+                        break;
                     default:
                         break;
                 }

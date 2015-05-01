@@ -106,6 +106,14 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new GoToStageWrapper((GoToStage)line);
             }
+            if (lineType == typeof(ChangeRoom))
+            {
+                lineWrapper = new ChangeRoomWrapper((ChangeRoom)line);
+            }
+            if (lineType == typeof(CreateEvent))
+            {
+                lineWrapper = new CreateEventWrapper((CreateEvent)line);
+            }
             
             if (lineWrapper != null)
             {

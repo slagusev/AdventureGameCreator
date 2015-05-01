@@ -138,7 +138,7 @@ namespace Player.ObjectTypeWrappers
         {
             if (RoomBase.HasPlaintextDescription)
             {
-                MainViewModel.WriteText(RoomBase.Description);
+                MainViewModel.WriteText(RoomBase.Description, null);
             }
             else
             {

@@ -54,5 +54,36 @@ namespace Editor
             else
                 MainViewModel.MainViewModelStatic.SelectedTab = -1;
         }
+
+        private void StackPanel_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
+            {
+                var sp = (StackPanel)sender;
+                var textblock = sp.Children.OfType<TextBlock>().FirstOrDefault();
+                if (textblock != null)
+                {
+                    WindowView currentSelectedTab = null;
+                    int oldIndex = -1;
+                    if (MainViewModel.MainViewModelStatic.SelectedTab >= 0)
+                    {
+                        currentSelectedTab = MainViewModel.MainViewModelStatic.OpenWindows[MainViewModel.MainViewModelStatic.SelectedTab];
+                        oldIndex = MainViewModel.MainViewModelStatic.SelectedTab;
+                    }
+                    MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(MainViewModel.MainViewModelStatic.OpenWindows.Where(a => a.TabName == textblock.Text).FirstOrDefault());
+                    Image_MouseLeftButtonUp_1(sender, e);
+                    MainViewModel.MainViewModelStatic.SelectedTab = MainViewModel.MainViewModelStatic.OpenWindows.IndexOf(currentSelectedTab);
+                    if (MainViewModel.MainViewModelStatic.SelectedTab == -1)
+                    {
+                        if (MainViewModel.MainViewModelStatic.OpenWindows.Count() > 0)
+                        {
+                            MainViewModel.MainViewModelStatic.SelectedTab = oldIndex-1;
+                            if (MainViewModel.MainViewModelStatic.SelectedTab == -1)
+                                MainViewModel.MainViewModelStatic.SelectedTab = 0;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -25,11 +25,36 @@ namespace Player.ScriptLineTypes
             {
                 if (line.SelectedVariable != null)
                 {
-                    var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
-                    if (vars.ContainsKey(line.SelectedVariable.LinkedVarId))
+                    var v = parent.GetVarById(line.SelectedVariable.LinkedVarId);
+                    if (v != null)
                     {
-                        var v = vars[line.SelectedVariable.LinkedVarId];
                         conditionResult = v.CurrentItemValue != null;
+                    }
+                }
+            }
+            if (line.ItemIsClass)
+            {
+                if (line.SelectedVariable == null)
+                    conditionResult = false;
+                else
+                {
+                    var variable = parent.GetVarById(line.SelectedVariable.LinkedVarId);
+                    if (variable.CurrentItemValue == null)
+                    {
+                        conditionResult = false;
+                    }
+                    else
+                    {
+                        conditionResult = false;
+                        var parentClass = variable.CurrentItemValue.item.ItemClassParent;
+                        while (parentClass != null && conditionResult == false)
+                        {
+                            if (parentClass.Name == line.SelectedClassName)
+                            {
+                                conditionResult = true;
+                            }
+                            parentClass = parentClass.ParentClass;
+                        }
                     }
                 }
             }
@@ -59,14 +84,14 @@ namespace Player.ScriptLineTypes
         public bool? ComparisonCheck()
         {
             var game = MainViewModel.GetMainViewModelStatic().CurrentGame;
-            var leftVar = game.VarById[line.SelectedVariable.LinkedVarId];
+            var leftVar = parent.GetVarById(line.SelectedVariable.LinkedVarId);
             if (line.IsDateTime)
             {
                 DateTime left = leftVar.CurrentDateTimeValue;
                 DateTime right;
                 if (line.IsComparisonToVariable)
                 {
-                    var rightVar = game.VarById[line.VariableToCompare.LinkedVarId];
+                    var rightVar = parent.GetVarById(line.VariableToCompare.LinkedVarId);
                     right = rightVar.CurrentDateTimeValue;
                 }
                 else
@@ -93,7 +118,7 @@ namespace Player.ScriptLineTypes
                 int right;
                 if (line.IsComparisonToVariable)
                 {
-                    var rightVar = game.VarById[line.VariableToCompare.LinkedVarId];
+                    var rightVar = parent.GetVarById(line.VariableToCompare.LinkedVarId);
                     right = rightVar.CurrentNumberValue;
                 }
                 else
@@ -119,7 +144,7 @@ namespace Player.ScriptLineTypes
                 string right;
                 if (line.IsComparisonToVariable)
                 {
-                    var rightVar = game.VarById[line.VariableToCompare.LinkedVarId];
+                    var rightVar = parent.GetVarById(line.VariableToCompare.LinkedVarId);
                     right = rightVar.CurrentStringValue;
                 }
                 else

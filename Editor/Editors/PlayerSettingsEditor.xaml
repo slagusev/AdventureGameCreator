@@ -57,7 +57,7 @@
                             </TextBlock>
                             <TextBox Margin="10" Width="100" HorizontalAlignment="Left" Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Expander Header="Display Condition (Blank == Always show)" Margin="10">
-                                <Controls:ScriptControl DataContext="{Binding DisplayCondition}" Height="200" Width="300"></Controls:ScriptControl>
+                                <Controls:ScriptControl DataContext="{Binding DisplayCondition}" Height="200" Width="400"></Controls:ScriptControl>
                             </Expander>
                             <TextBlock>Associated Variable:</TextBlock>
                             <Controls:VariableSelector Margin="10" Height="150" HorizontalAlignment="Left" Width="200" SelectedItem="{Binding AssociatedVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowItems="False"/>

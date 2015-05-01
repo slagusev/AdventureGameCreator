@@ -218,6 +218,12 @@ namespace Editor
             TestStage1.SelectedChoice = TestStage1.Choices.First();
             TestStage1.SelectedChoice.ChoiceVisibility.AddBeforeSelected(new ReturnTrue());
 
+
+            //var tempRooms = new System.Collections.ObjectModel.ObservableCollection<Room>();
+            //tempRooms.Add(TestData.TestRoom);
+            //MainViewModel.MainViewModelStatic.Zones.Add(new Zone { ZoneName = "Test", Rooms = tempRooms });
+
+
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Editor.ObjectTypes
         public static string ScriptTypeGeneral = "General";
         public static string ScriptTypeMovementAndInteractable = "Movement & Interactable Script";
         public static string ScriptTypeItem = "Item Script";
-        public static string ScriptTypeDescription = "Description";
+        public static string ScriptTypeDescription = "Description Script";
         public static string ScriptTypeTrueFalse = "True/False Script";
         public static string ScriptTypeReturnedValue = "Returned Value Script";
 
@@ -94,8 +94,8 @@ namespace Editor.ObjectTypes
             TrueFalseScript.CanAddText = false;
             TrueFalseScript.CanComment = true;
             TrueFalseScript.CanConditional = true;
-            TrueFalseScript.CanDisplayText = false;
-            TrueFalseScript.CanReturn = false;
+            TrueFalseScript.CanDisplayText = true;
+            TrueFalseScript.CanReturn = true;
             TrueFalseScript.CanSetVariable = true;
             TrueFalseScript.CanStopGame = false;
             TrueFalseScript.HasTextFunctionality = true;

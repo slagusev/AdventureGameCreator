@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DenormalizerConverter.cs" />
+    <Compile Include="ObjectTypesWrappers\ActiveEvent.cs" />
     <Compile Include="ObjectTypesWrappers\ConversationWrapper.cs" />
     <Compile Include="ObjectTypesWrappers\InteractableWrapper.cs" />
     <Compile Include="ObjectTypesWrappers\ItemInstance.cs" />
@@ -63,8 +64,10 @@
     <Compile Include="RandNums.cs" />
     <Compile Include="ScriptLineTypes\AddItemWrapper.cs" />
     <Compile Include="ScriptLineTypes\AddTextWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ChangeRoomWrapper.cs" />
     <Compile Include="ScriptLineTypes\CommentWrapper.cs" />
     <Compile Include="ScriptLineTypes\ConditionalWrapper.cs" />
+    <Compile Include="ScriptLineTypes\CreateEventWrapper.cs" />
     <Compile Include="ScriptLineTypes\DisplayTextWrapper.cs" />
     <Compile Include="ScriptLineTypes\ForceEquipWrapper.cs" />
     <Compile Include="ScriptLineTypes\ForceUnequipWrapper.cs" />

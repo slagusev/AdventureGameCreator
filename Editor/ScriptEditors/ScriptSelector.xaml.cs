@@ -318,5 +318,15 @@ namespace Editor.ScriptEditors
             LoadWindow(new GoToStageEditor(), new GoToStage());
         }
 
+        private void changeRoom_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ChangeRoomEditor(), new Editor.Scripter.Misc.ChangeRoom());
+        }
+
+        private void addEvent_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new CreateEventEditor(), new CreateEvent());
+        }
+
     }
 }

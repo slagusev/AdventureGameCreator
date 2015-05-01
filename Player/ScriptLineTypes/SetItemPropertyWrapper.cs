@@ -16,11 +16,11 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
-            if (vars.ContainsKey(line.SourceVarRef.LinkedVarId) && vars.ContainsKey(line.VarRef.LinkedVarId))
+            //var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
+            if (parent.GetVarById(line.SourceVarRef.LinkedVarId) != null && parent.GetVarById(line.VarRef.LinkedVarId) != null)
             {
-                var sourceVar = vars[line.SourceVarRef.LinkedVarId];
-                var destItem = vars[line.VarRef.LinkedVarId].CurrentItemValue;
+                var sourceVar = parent.GetVarById(line.SourceVarRef.LinkedVarId);
+                var destItem = parent.GetVarById(line.VarRef.LinkedVarId).CurrentItemValue;
                     var propName = line.SelectedItemClassName + ":" + line.SelectedPropertyName;
                     if (destItem.Properties.ContainsKey(propName))
                     {
@@ -32,14 +32,14 @@ namespace Player.ScriptLineTypes
                     }
                     else
                     {
-                        MainViewModel.WriteText("ERROR: In SetItemProperty, " + propName + " not defined!", true);
+                        MainViewModel.WriteText("ERROR: In SetItemProperty, " + propName + " not defined!", this.parent, true);
                         return false;
                     }
                 
             }
             else
             {
-                MainViewModel.WriteText("ERROR: In SetItemProperty, variables not defined!", true);
+                MainViewModel.WriteText("ERROR: In SetItemProperty, variables not defined!", this.parent, true);
                 return false;
             }
             return null;

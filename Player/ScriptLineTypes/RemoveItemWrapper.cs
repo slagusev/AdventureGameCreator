@@ -18,10 +18,12 @@ namespace Player.ScriptLineTypes
 
         public override bool? Execute()
         {
+            
             var game = MainViewModel.GetMainViewModelStatic().CurrentGame;
-            if (line.VarRef != null && line.VarRef.LinkedVariable != null && game.VarById.ContainsKey(line.VarRef.LinkedVarId))
+
+            if (line.VarRef != null && line.VarRef.LinkedVariable != null && parent.GetVarById(line.VarRef.LinkedVarId) != null)
             {
-                var v = game.VarById[line.VarRef.LinkedVarId];
+                var v = parent.GetVarById(line.VarRef.LinkedVarId);
                 if (v != null && v.CurrentItemValue != null)
                 {
                     if (game.PlayerInventory.Contains(v.CurrentItemValue))
@@ -29,13 +31,13 @@ namespace Player.ScriptLineTypes
                 }
                 else
                 {
-                    MainViewModel.WriteText("ERROR: Variable for RemoveItem has never been set.");
+                    MainViewModel.WriteText("ERROR: Variable for RemoveItem has never been set.", this.parent);
                     return false;
                 }
             }
             else
             {
-                MainViewModel.WriteText("ERROR: Could not find variable for RemoveItem.");
+                MainViewModel.WriteText("ERROR: Could not find variable for RemoveItem.", this.parent);
                 return false;
             }
             return null;

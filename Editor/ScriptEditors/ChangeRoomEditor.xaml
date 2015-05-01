@@ -1,0 +1,24 @@
+﻿<Window x:Class="Editor.ScriptEditors.ChangeRoomEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Title="Change Room" Height="300" Width="500" DataContext="{Binding TestAddText, Source={StaticResource TestDataStatic}}">
+    <Grid>
+        <StackPanel Margin="-10,10,10,-10">
+            <TextBlock Margin="10">Move the player to the following room:</TextBlock>
+            <TreeView Height="150" Margin="20" ItemsSource="{Binding Zones, Source={StaticResource MainViewModelStatic}}" SelectedItemChanged="TreeView_SelectedItemChanged_1">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Rooms}">
+                        <TextBlock Text="{Binding ZoneName}"></TextBlock>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RoomName}"></TextBlock>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            
+            <Button HorizontalAlignment="Center" Width="100" Click="Button_Click_1">OK</Button>
+        </StackPanel>
+    </Grid>
+</Window>

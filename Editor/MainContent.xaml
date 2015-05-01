@@ -41,7 +41,7 @@
         </TabControl.ContentTemplate>
         <TabControl.ItemTemplate>
             <DataTemplate>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" MouseDown="StackPanel_MouseDown_1">
                     <TextBlock Text="{Binding TabName}" VerticalAlignment="Center"></TextBlock>
                     <Image Margin="5,0,0,0" VerticalAlignment="Center" Source="Resources/x.png" Visibility="{Binding CloseVisibility}" Width="10" Height="10" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" ></Image>
                 </StackPanel>

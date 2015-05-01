@@ -51,7 +51,7 @@
                             <TextBox Margin="5,0,0,0" Text="{Binding StageName, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
                         </StackPanel>
                         <TextBlock>Conversation Action:</TextBlock>
-                        <Controls:ScriptControl Height="200" DataContext="{Binding StageAction}"></Controls:ScriptControl>
+                        <Controls:ScriptControl Width="720" HorizontalAlignment="Left" Height="200" DataContext="{Binding StageAction}"></Controls:ScriptControl>
                         <TextBlock>Choices:</TextBlock>
                         <Grid>
                             <Grid.ColumnDefinitions>

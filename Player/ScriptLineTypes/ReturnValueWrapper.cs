@@ -16,7 +16,7 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            this.parent.GetTopParent().VariableResult = line.SelectedVariable;
+            this.parent.GetRoot().VariableResult = line.SelectedVariable;
             return true;
         }
     }

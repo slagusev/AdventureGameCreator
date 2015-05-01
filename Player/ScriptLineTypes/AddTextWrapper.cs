@@ -19,7 +19,7 @@ namespace Player.ScriptLineTypes
 
         public override bool? Execute()
         {
-            parent.GetTopParent().TextResult += MainViewModel.FormatText(line.Text) + "\n\n";
+            parent.GetTopParent().TextResult += MainViewModel.FormatText(line.Text, this.parent) + "\n\n";
             return null;
         }
     }

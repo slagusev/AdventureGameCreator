@@ -16,11 +16,14 @@ namespace Player.ScriptLineTypes
         }
         public override bool? Execute()
         {
-            var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
-            if (vars.ContainsKey(line.SourceVarRef.LinkedVarId) && vars.ContainsKey(line.VarRef.LinkedVarId))
+            //var vars = MainViewModel.GetMainViewModelStatic().CurrentGame.VarById;
+            //if (vars.ContainsKey(line.SourceVarRef.LinkedVarId) && vars.ContainsKey(line.VarRef.LinkedVarId))
+            var sourceVar = parent.GetVarById(line.SourceVarRef.LinkedVarId);
+            var destVar = parent.GetVarById(line.VarRef.LinkedVarId);
+            if (sourceVar != null && destVar != null)
             {
-                var sourceItem = vars[line.SourceVarRef.LinkedVarId].CurrentItemValue;
-                var destVar = vars[line.VarRef.LinkedVarId];
+                var sourceItem = sourceVar.CurrentItemValue;
+                
                     var propName = line.SelectedItemClassName + ":" + line.SelectedPropertyName;
                     if (sourceItem.Properties.ContainsKey(propName))
                     {
@@ -32,14 +35,14 @@ namespace Player.ScriptLineTypes
                     }
                     else
                     {
-                        MainViewModel.WriteText("ERROR: In GetItemProperty, " + propName + " not defined!", true);
+                        MainViewModel.WriteText("ERROR: In GetItemProperty, " + propName + " not defined!", this.parent, true);
                         return false;
                     }
                 
             }
             else
             {
-                MainViewModel.WriteText("ERROR: In GetItemProperty, variables not defined!", true);
+                MainViewModel.WriteText("ERROR: In GetItemProperty, variables not defined!", this.parent, true);
                 return false;
             }
             return null;

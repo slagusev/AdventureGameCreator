@@ -164,6 +164,7 @@ namespace Editor.Scripter.Conditions
                 {
                     IsComparisonToVariable = false;
                     ItemIsNotNull = false;
+                    ItemIsClass = false;
                 }
 
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -199,6 +200,7 @@ namespace Editor.Scripter.Conditions
                 {
                     IsComparisonToConstant = false;
                     ItemIsNotNull = false;
+                    ItemIsClass = false;
                 }
                 _isComparisonToVariable = value;
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -236,8 +238,44 @@ namespace Editor.Scripter.Conditions
                 {
                     IsComparisonToVariable = false;
                     IsComparisonToConstant = false;
+                    ItemIsClass = false;
                 }
                 RaisePropertyChanged(ItemIsNotNullPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ItemIsClass" /> property's name.
+        /// </summary>
+        public const string ItemIsClassPropertyName = "ItemIsClass";
+
+        private bool _itemIsClass = false;
+
+        /// <summary>
+        /// Sets and gets the ItemIsClass property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool ItemIsClass
+        {
+            get
+            {
+                return _itemIsClass;
+            }
+
+            set
+            {
+                if (_itemIsClass == value)
+                {
+                    return;
+                }
+                if (value)
+                {
+                    IsComparisonToVariable = false;
+                    IsComparisonToConstant = false;
+                    ItemIsNotNull = false;
+                }
+                _itemIsClass = value;
+                RaisePropertyChanged(ItemIsClassPropertyName);
             }
         }
         /// <summary>
@@ -643,7 +681,80 @@ namespace Editor.Scripter.Conditions
                 RaisePropertyChanged(NumberToCompareToPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="SelectedClass" /> property's name.
+        /// </summary>
+        public const string SelectedClassPropertyName = "SelectedClass";
 
+        private ItemClass _selectedClass = null;
+
+        /// <summary>
+        /// Sets and gets the SelectedClass property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ItemClass SelectedClass
+        {
+            get
+            {
+                if (_selectedClass == null)
+                {
+                    var c = MainViewModel.MainViewModelStatic.ItemClasses.Where(a => a.Name == SelectedClassName).FirstOrDefault();
+                    if (c != null)
+                    {
+                        SelectedClass = c;
+                    }
+                }
+                return _selectedClass;
+            }
+
+            set
+            {
+                if (_selectedClass == value)
+                {
+                    return;
+                }
+
+                _selectedClass = value;
+                if (value != null)
+                    _selectedClassName = value.Name;
+                RaisePropertyChanged(SelectedClassPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedClassName" /> property's name.
+        /// </summary>
+        public const string SelectedClassNamePropertyName = "SelectedClassName";
+
+        private string _selectedClassName = "";
+
+        /// <summary>
+        /// Sets and gets the SelectedClassName property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string SelectedClassName
+        {
+            get
+            {
+                return _selectedClassName;
+            }
+
+            set
+            {
+                if (_selectedClassName == value)
+                {
+                    return;
+                }
+
+                _selectedClassName = value;
+                RaisePropertyChanged(SelectedClassNamePropertyName);
+                var c = MainViewModel.MainViewModelStatic.ItemClasses.Where(a => a.Name == value).FirstOrDefault();
+                if (c != null)
+                {
+                    SelectedClass = c;
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="StringToCompareTo" /> property's name.
         /// </summary>
@@ -745,6 +856,10 @@ namespace Editor.Scripter.Conditions
                 else if (ItemIsNotNull)
                 {
                     sb.AppendLine("if " + (this.SelectedVariable != null && this.SelectedVariable.LinkedVariable != null ? this.SelectedVariable.LinkedVariable.Name : "UNKNOWN") + " contains an item");
+                }
+                else if (ItemIsClass)
+                {
+                    sb.AppendLine("if " + (this.SelectedVariable != null && this.SelectedVariable.LinkedVariable != null ? this.SelectedVariable.LinkedVariable.Name : "UNKNOWN") + " is of class " + (this.SelectedClass != null ? this.SelectedClass.Name : "UNKNOWN"));
                 }
                 sb.AppendLine("{");
                 string[] ifLines = string.Join("\n", from a in this.Contents[0].ScriptLines where a.GetType() != typeof(Editor.Scripter.Misc.Blank) select a.Plaintext).Split('\n');
@@ -864,6 +979,12 @@ namespace Editor.Scripter.Conditions
                 conditionXml.Add(new XElement("Type", "ItemIsNotNull"));
                 conditionXml.Add(new XElement("VarRef", this.SelectedVariable.LinkedVarId));
             }
+            if (ItemIsClass)
+            {
+                conditionXml.Add(new XElement("Type", "ItemIsClass"));
+                conditionXml.Add(new XElement("VarRef", this.SelectedVariable.LinkedVarId));
+                conditionXml.Add(new XElement("ClassName", this.SelectedClassName));
+            }
             return new XElement("If",conditionXml,
                                      new XElement("Then", ThenStatement.ToXML()),
                                      new XElement("Else", ElseStatement.ToXML()));    
@@ -889,6 +1010,10 @@ namespace Editor.Scripter.Conditions
                     if (conditionXml.Element("Type").Value == "ItemIsNotNull")
                     {
                         c.ItemIsNotNull = true;
+                    }
+                    if (conditionXml.Element("Type").Value == "ItemIsClass")
+                    {
+                        c.ItemIsClass = true;
                     }
                 }
                 if (c.IsComparison)
@@ -959,6 +1084,11 @@ namespace Editor.Scripter.Conditions
                 if (c.ItemIsNotNull)
                 {
                     c.SelectedVariable = new VarRef(Guid.Parse(conditionXml.Element("VarRef").Value));
+                }
+                if (c.ItemIsClass)
+                {
+                    c.SelectedVariable = new VarRef(Guid.Parse(conditionXml.Element("VarRef").Value));
+                    c.SelectedClassName = conditionXml.Element("ClassName").Value;
                 }
             }
             

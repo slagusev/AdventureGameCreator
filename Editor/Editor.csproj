@@ -166,6 +166,7 @@
     <Compile Include="ObjectTypes\Equipment.cs" />
     <Compile Include="ObjectTypes\EquipmentSlot.cs" />
     <Compile Include="ObjectTypes\Exit.cs" />
+    <Compile Include="ObjectTypes\GenericRef.cs" />
     <Compile Include="ObjectTypes\Interactable.cs" />
     <Compile Include="ObjectTypes\InteractableGroup.cs" />
     <Compile Include="ObjectTypes\InteractableRef.cs" />
@@ -186,11 +187,17 @@
     <Compile Include="ScriptEditors\AddTextEditor.xaml.cs">
       <DependentUpon>AddTextEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\ChangeRoomEditor.xaml.cs">
+      <DependentUpon>ChangeRoomEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\CommentEditor.xaml.cs">
       <DependentUpon>CommentEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\ConditionEditor.xaml.cs">
       <DependentUpon>ConditionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\CreateEventEditor.xaml.cs">
+      <DependentUpon>CreateEventEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\DisplayTextEditor.xaml.cs">
       <DependentUpon>DisplayTextEditor.xaml</DependentUpon>
@@ -238,6 +245,7 @@
     <Compile Include="Scripter\Conditions\Condition.cs" />
     <Compile Include="Scripter\Conditions\Conditional.cs" />
     <Compile Include="Scripter\ConversationFlow\GoToStage.cs" />
+    <Compile Include="Scripter\Flow\CreateEvent.cs" />
     <Compile Include="Scripter\Flow\ReturnFalse.cs" />
     <Compile Include="Scripter\Flow\ReturnTrue.cs" />
     <Compile Include="Scripter\Flow\ReturnValue.cs" />
@@ -254,6 +262,7 @@
     <Compile Include="Scripter\ItemManagement\RemoveThisItem.cs" />
     <Compile Include="Scripter\ItemManagement\SetItemProperty.cs" />
     <Compile Include="Scripter\Misc\Blank.cs" />
+    <Compile Include="Scripter\Misc\ChangeRoom.cs" />
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />
     <Compile Include="Scripter\ScriptLine.cs" />
@@ -411,11 +420,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\ChangeRoomEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\CommentEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\ConditionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\CreateEventEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
