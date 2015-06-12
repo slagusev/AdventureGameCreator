@@ -256,9 +256,43 @@ namespace Editor.ObjectTypes
             }
         }
 
+        /// <summary>
+        /// The <see cref="Group" /> property's name.
+        /// </summary>
+        public const string GroupPropertyName = "Group";
+
+        private string _group = "Default";
+
+        /// <summary>
+        /// Sets and gets the Group property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string Group
+        {
+            get
+            {
+                return _group;
+            }
+
+            set
+            {
+                if (_group == value)
+                {
+                    return;
+                }
+
+                _group = value;
+                RaisePropertyChanged(GroupPropertyName);
+                if (MainViewModel.MainViewModelStatic != null)
+                {
+                    MainViewModel.MainViewModelStatic.CommonEventGroups.RefreshInList(this);
+                }
+            }
+        }
+
         public XElement ToXML()
         {
-            return new XElement("CommonEvent", new XElement("Name", Name), new XElement("Type", EventType.Item1), new XElement("AssociatedScript", AssociatedScript.ToXML()), new XElement("Id", Id));
+            return new XElement("CommonEvent", new XElement("Name", Name), new XElement("Type", EventType.Item1), new XElement("AssociatedScript", AssociatedScript.ToXML()), new XElement("Id", Id), new XElement("Group", Group));
         }
 
         public static CommonEvent FromXML(XElement xml)
@@ -268,6 +302,10 @@ namespace Editor.ObjectTypes
             ce.EventType = Tuple.Create<string, string, Script>(xml.Element("Type").Value, "", GetCommonEventBase(xml.Element("Type").Value));
             ce.AssociatedScript = Script.FromXML(xml.Element("AssociatedScript").Element("Script"), ce.EventType.Item3);
             ce.Id = Guid.Parse(xml.Element("Id").Value);
+            if (xml.Element("Group") != null)
+            {
+                ce.Group = xml.Element("Group").Value;
+            }
             return ce;
         }
 

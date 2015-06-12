@@ -15,6 +15,10 @@
         <Run Text="{Binding Id}"></Run></TextBlock>
             <TextBlock>Type:
         <Run Text="{Binding EventType.Item1, Mode=OneWay}"></Run></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Group:</TextBlock>
+                <TextBox Margin="5,0,0,0" Text="{Binding Group, Mode=TwoWay}" Width="200"></TextBox>
+            </StackPanel>
             <Controls:ScriptControl Margin="10" Height="600" DataContext="{Binding AssociatedScript}"></Controls:ScriptControl>
         </StackPanel>
     </ScrollViewer>

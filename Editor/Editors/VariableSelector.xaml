@@ -14,12 +14,25 @@
         </Grid.RowDefinitions>
         <TextBox Margin="0,0,0,5" Grid.Row="0" Name="searchText" TextChanged="searchText_TextChanged"></TextBox>
         <TextBlock Grid.Row="2" TextWrapping="Wrap" Height="35" Margin="0">Currently Selected: <Run Name="currentlySelected"/></TextBlock>
-        <ListBox Grid.Row="1" Name="lstItems" SelectionChanged="lstItems_SelectionChanged">
+        <TreeView Grid.Row="1" Name="treeItems"  SelectedItemChanged="treeItems_SelectedItemChanged_1" Margin="0,0,10,0">
+            <!--ItemsSource="{Binding CommonEventGroups.Groups, Source={StaticResource MainViewModelStatic}}"-->
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Item2}">
+                    <TextBlock Text="{Binding Item1}"></TextBlock>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding LinkedVariable.Name}"/>
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <!--<ListBox Grid.Row="1" Name="lstItems" SelectionChanged="lstItems_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding LinkedVariable.Name}"></TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
     </Grid>
 </UserControl>

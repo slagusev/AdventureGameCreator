@@ -23,7 +23,7 @@ namespace Editor.Editors
     public partial class CommonEventSelector : UserControl
     {
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(CommonEventRef), typeof(CommonEventSelector), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, SelectedItemChanged));
-
+        public static readonly DependencyProperty OverridesProperty = DependencyProperty.Register("Overrides", typeof(ObservableCollection<CommonEventRef>), typeof(CommonEventSelector), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OverrideChanged));
 
         public CommonEventRef SelectedItem
         {
@@ -36,25 +36,41 @@ namespace Editor.Editors
                 SetValue(SelectedItemProperty, value);
             }
         }
-
+        public ObservableCollection<CommonEventRef> Overrides
+        {
+            get
+            {
+                return (ObservableCollection<CommonEventRef>)GetValue(OverridesProperty);
+            }
+            set
+            {
+                SetValue(OverridesProperty, value);
+            }
+        }
         private static void PropertiesChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             (source as CommonEventSelector).RefreshListBox();
         }
+        private static void OverrideChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            //overrides = e.NewValue as ObservableCollection<CommonEventRef>;
+            (source as CommonEventSelector).RefreshListBox();
+        }
+        
         private static void SelectedItemChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue != e.NewValue && e.NewValue != null)
             {
                 CommonEventSelector vsSource = source as CommonEventSelector;
-                VarRef newRef = e.NewValue as VarRef;
-                foreach (var a in vsSource.lstItems.Items)
-                {
-                    VarRef srcRef = a as VarRef;
-                    if (newRef != null && srcRef != null && newRef.LinkedVarId == srcRef.LinkedVarId)
-                    {
-                        vsSource.lstItems.SelectedItem = srcRef;
-                    }
-                }
+                //VarRef newRef = e.NewValue as VarRef;
+                //foreach (var a in vsSource.lstItems.Items)
+                //{
+                //    VarRef srcRef = a as VarRef;
+                //    if (newRef != null && srcRef != null && newRef.LinkedVarId == srcRef.LinkedVarId)
+                //    {
+                //        vsSource.lstItems.SelectedItem = srcRef;
+                //    }
+                //}
             }
                 //(source as VariableSelector).lstItems.SelectedItem = (source as VariableSelector).lstItems.Items.where ((VarRef)a).LinkedVarId == ((VarRef)e.NewValue).LinkedVarId select a).FirstOrDefault();
         }
@@ -66,7 +82,7 @@ namespace Editor.Editors
             InitializeComponent();
             RefreshListBox();
         }
-        ObservableCollection<CommonEventRef> vars = new ObservableCollection<CommonEventRef>();
+        ObservableCollection<Tuple<string, ObservableCollection<CommonEventRef>>> vars = new ObservableCollection<Tuple<string,ObservableCollection<CommonEventRef>>>();
         private void searchText_TextChanged(object sender, TextChangedEventArgs e)
         {
             RefreshListBox();
@@ -74,22 +90,63 @@ namespace Editor.Editors
 
         public void RefreshListBox()
         {
-            vars = new ObservableCollection<CommonEventRef>(MainViewModel.MainViewModelStatic.CommonEvents.Where(a => a.Name.ToLower().Contains(searchText.Text.ToLower())).Select(a => new CommonEventRef(a.Id)));
-
+            //vars = new ObservableCollection<CommonEventRef>(MainViewModel.MainViewModelStatic.CommonEvents.Where(a => a.Name.ToLower().Contains(searchText.Text.ToLower())).Select(a => new CommonEventRef(a.Id)));
+            vars = new ObservableCollection<Tuple<string, ObservableCollection<CommonEventRef>>>();
+            foreach (var a in MainViewModel.MainViewModelStatic.CommonEventGroups.Groups)
+            {
+                bool included = false;
+                ObservableCollection<CommonEventRef> Events = new ObservableCollection<CommonEventRef>();
+                foreach (var b in a.Item2)
+                {
+                    if (b.Name.ToLower().Contains(searchText.Text.ToLower()) && (Overrides == null || Overrides.Where(c => c.LinkedCommonEventId == b.Id).Count() > 0))
+                    {
+                        included = true;
+                        Events.Add(new CommonEventRef(b.Id));
+                    }
+                }
+                if (included)
+                {
+                    vars.Add(Tuple.Create<string, ObservableCollection<CommonEventRef>>(a.Item1, Events));
+                }
+            }
+            this.treeItems.ItemsSource = vars;
+            //vars[0].Item2[0].LinkedCommonEvent.Name
+            ExpandAll(treeItems, true);
 
     
-            this.lstItems.ItemsSource = vars;
-            if (SelectedItem != null && lstItems.Items.Contains(SelectedItem))
+            //this.lstItems.ItemsSource = vars;
+            //if (SelectedItem != null && lstItems.Items.Contains(SelectedItem))
+            //{
+            //    lstItems.SelectedItem = SelectedItem;
+            //}
+        }
+        private void ExpandAll(ItemsControl items, bool expand)
+        {
+            foreach (object obj in items.Items)
             {
-                lstItems.SelectedItem = SelectedItem;
+                ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
+                if (childControl != null)
+                {
+                    ExpandAll(childControl, expand);
+                }
+                TreeViewItem item = childControl as TreeViewItem;
+                if (item != null)
+                    item.IsExpanded = true;
             }
         }
+        //private void lstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (lstItems.SelectedItem as CommonEventRef != null)
+        //    {
+        //        SelectedItem = lstItems.SelectedItem as CommonEventRef;
+        //    }
+        //}
 
-        private void lstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void treeItems_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (lstItems.SelectedItem as CommonEventRef != null)
+            if (treeItems.SelectedItem as CommonEventRef != null)
             {
-                SelectedItem = lstItems.SelectedItem as CommonEventRef;
+                SelectedItem = treeItems.SelectedItem as CommonEventRef;
             }
         }
     }

@@ -351,7 +351,7 @@ namespace Editor.ObjectTypes
                 type = "String";
             }
 
-            return new XElement("Variable", new XElement("Name", Name), new XElement("Type", type), value, new XElement("Id", Id));
+            return new XElement("Variable", new XElement("Name", Name), new XElement("Type", type), value, new XElement("Id", Id), new XElement("Group", Group));
 
         }
 
@@ -386,8 +386,13 @@ namespace Editor.ObjectTypes
                     v.DefaultString = xml.Element("Value").Value;
                     break;
             }
+            
             v.Name = xml.Element("Name").Value;
             v.Id = Guid.Parse(xml.Element("Id").Value);
+            if (xml.Element("Group")!= null)
+            {
+                v.Group = xml.Element("Group").Value;
+            }
             return v;
         }
 
@@ -420,6 +425,39 @@ namespace Editor.ObjectTypes
                 _defaultNumber = value;
                 RaisePropertyChanged(DefaultNumberPropertyName);
                 RaisePropertyChanged(DefaultValuePropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="Group" /> property's name.
+        /// </summary>
+        public const string GroupPropertyName = "Group";
+
+        private string _group = "Default";
+
+        /// <summary>
+        /// Sets and gets the Group property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string Group
+        {
+            get
+            {
+                return _group;
+            }
+
+            set
+            {
+                if (_group == value)
+                {
+                    return;
+                }
+
+                _group = value;
+                RaisePropertyChanged(GroupPropertyName);
+                if (MainViewModel.MainViewModelStatic != null)
+                {
+                    MainViewModel.MainViewModelStatic.VariableGroups.RefreshInList(this);
+                }
             }
         }
         /// <summary>

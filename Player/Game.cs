@@ -66,7 +66,25 @@ namespace Player
             if (CurrentRoom != null)
             {
                 VisibleExits = new ObservableCollection<ExitWrapper>(CurrentRoom.Exits.Where(a => a.IsVisible()));
+                ReorderExits();
             }
+        }
+        public void ReorderExits()
+        {
+            var exits = new ObservableCollection<ExitWrapper>();
+            var exit = VisibleExits.Where(a => a.ExitBase.Direction == ExitDirection.North).FirstOrDefault();
+            if (exit != null) exits.Add(exit);
+            exit = VisibleExits.Where(a => a.ExitBase.Direction == ExitDirection.South).FirstOrDefault();
+            if (exit != null) exits.Add(exit);
+            exit = VisibleExits.Where(a => a.ExitBase.Direction == ExitDirection.East).FirstOrDefault();
+            if (exit != null) exits.Add(exit);
+            exit = VisibleExits.Where(a => a.ExitBase.Direction == ExitDirection.West).FirstOrDefault();
+            if (exit != null) exits.Add(exit);
+            foreach (var a in VisibleExits.Where(b => b.ExitBase.Direction == ExitDirection.Other))
+            {
+                exits.Add(a);
+            }
+            VisibleExits = exits;
         }
 
         /// <summary>

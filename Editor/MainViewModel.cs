@@ -16,7 +16,7 @@ namespace Editor
     public class MainViewModel : INotifyPropertyChanged
     {
         public static MainViewModel MainViewModelStatic;
-
+        
         public MainViewModel()
         {
             /*
@@ -86,6 +86,8 @@ namespace Editor
             
 
             MainViewModelStatic = this;
+            CommonEventGroups = new GenericGroup<CommonEvent>(CommonEvents, a => a.Group, a => a.Name);
+            VariableGroups = new GenericGroup<Variable>(Variables, a => a.Group, a => a.Name);
             //this.OpenWindows.Add(new WindowView { Content = new Editor.Editors.InteractableEditor() });
             #region More debug data
             /*
@@ -445,6 +447,7 @@ namespace Editor
 
                 _commonEvents = value;
                 RaisePropertyChanged(CommonEventsPropertyName);
+                RecalculateCommonEventGroups();
             }
         }
 
@@ -493,9 +496,70 @@ namespace Editor
 
                 _variables = value;
                 RaisePropertyChanged(VariablesPropertyName);
+                RecalculateVariableGroups();
             }
         }
 
+
+        /// <summary>
+        /// The <see cref="CommonEventGroups" /> property's name.
+        /// </summary>
+        public const string CommonEventGroupsPropertyName = "CommonEventGroups";
+
+        private GenericGroup<CommonEvent> _commonEventGroups = null;
+
+        /// <summary>
+        /// Sets and gets the CommonEventGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public GenericGroup<CommonEvent> CommonEventGroups
+        {
+            get
+            {
+                return _commonEventGroups;
+            }
+
+            set
+            {
+                if (_commonEventGroups == value)
+                {
+                    return;
+                }
+
+                _commonEventGroups = value;
+                RaisePropertyChanged(CommonEventGroupsPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="VariableGroups" /> property's name.
+        /// </summary>
+        public const string VariableGroupsPropertyName = "VariableGroups";
+
+        private GenericGroup<Variable> _variableGroups = null;
+
+        /// <summary>
+        /// Sets and gets the VariableGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public GenericGroup<Variable> VariableGroups
+        {
+            get
+            {
+                return _variableGroups;
+            }
+
+            set
+            {
+                if (_variableGroups == value)
+                {
+                    return;
+                }
+
+                _variableGroups = value;
+                RaisePropertyChanged(VariableGroupsPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="Settings" /> property's name.
         /// </summary>
@@ -685,6 +749,15 @@ namespace Editor
             }
 
         }
-        
+
+
+        internal void RecalculateCommonEventGroups()
+        {
+            CommonEventGroups = new GenericGroup<CommonEvent>(this.CommonEvents, a => a.Group, a => a.Name);            
+        }
+        internal void RecalculateVariableGroups()
+        {
+            VariableGroups = new GenericGroup<Variable>(this.Variables, a => a.Group, a => a.Name);
+        }
     }
 }

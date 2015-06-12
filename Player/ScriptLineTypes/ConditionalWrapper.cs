@@ -58,6 +58,23 @@ namespace Player.ScriptLineTypes
                     }
                 }
             }
+            if (line.PlayerHasItem)
+            {
+                if (line.SelectedItem != null && line.SelectedItem.LinkedItemId != null)
+                {
+                    if (MainViewModel.GetMainViewModelStatic().CurrentGame.PlayerInventory.Where(a => a.item.ItemID == line.SelectedItem.LinkedItemId).Count() > 0)
+                    {
+                        conditionResult = true;
+                    }
+                    else conditionResult = false;
+                    
+                }
+                else
+                {
+
+                    return false;
+                }
+            }
             if (conditionResult == null)
                 return false;
             bool? result = null;

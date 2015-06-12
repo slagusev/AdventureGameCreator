@@ -16,7 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="263"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -99,7 +99,7 @@
                 <!--Directions-->
                 <StackPanel VerticalAlignment="Stretch">
                     <TextBlock Text="Directions:"/>
-                    <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.VisibleExits, Source={StaticResource MainViewModelStatic}}">
+                    <ListBox Width="200" Height="214" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.VisibleExits, Source={StaticResource MainViewModelStatic}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding ExitBase.ExitName}" Command="{Binding UseExitCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding}"/>
@@ -111,7 +111,7 @@
                 <!--Examinables-->
                 <StackPanel VerticalAlignment="Stretch" Margin="10,0,0,0">
                     <TextBlock Text="Examine:"/>
-                    <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Interactables, Source={StaticResource MainViewModelStatic}}">
+                    <ListBox Width="200" Height="214" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Interactables, Source={StaticResource MainViewModelStatic}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Button Visibility="{Binding IsExaminable, Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding InteractableName}" Command="{Binding ExamineCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding}"/>
@@ -122,7 +122,7 @@
                 </StackPanel>
                 <StackPanel VerticalAlignment="Stretch" Margin="10,0,0,0">
                     <TextBlock Text="Interact:"/>
-                    <ListBox Width="200" Height="160" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Interactables, Source={StaticResource MainViewModelStatic}}">
+                    <ListBox Width="200" Height="214" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderBrush="{x:Null}" ItemsSource="{Binding CurrentGame.CurrentRoom.Interactables, Source={StaticResource MainViewModelStatic}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Button Visibility="{Binding IsInteractable, Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="{Binding InteractableName}" Command="{Binding InteractCommand, Source={StaticResource MainViewModelStatic}}" CommandParameter="{Binding}"/>

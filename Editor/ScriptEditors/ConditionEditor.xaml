@@ -31,6 +31,7 @@
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding ItemIsNotNull, Mode=TwoWay}" Content="Item is Nonempty"/>
                             <CheckBox IsChecked="{Binding ItemIsClass, Mode=TwoWay}" Content="Item is of Type"/>
+                            <CheckBox IsChecked="{Binding PlayerHasItem, Mode=TwoWay}" Content="Player Has Item"/>
                             
                         </StackPanel>
                         <StackPanel Visibility="{Binding IsComparison, Converter={StaticResource VisibilityConverter}}">
@@ -71,6 +72,9 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding PlayerHasItem, Converter={StaticResource VisibilityConverter}}">
+                            <Controls:ItemSelector SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Height="150"/>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

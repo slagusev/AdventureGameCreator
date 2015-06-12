@@ -660,12 +660,18 @@ namespace Player
         {
             if (SelectedEquippableItem != null)
             {
-                CurrentGame.TryEquipItem(SelectedEquippableItem);
+                var unequipped = CurrentGame.TryEquipItem(SelectedEquippableItem);
                 
                 CurrentGame.RefreshAll();
+                foreach (var a in unequipped)
+                {
+                    CurrentGame.PlayerInventory.Add(a);
+                }
                 RefreshEquippableItems();
                 ViewEquipment();
                 SelectedEquippableItem = null;
+                
+                
                 MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
             }
         }
@@ -673,9 +679,10 @@ namespace Player
         {
             if (SelectedEquippedItem != null)
             {
+                var i = SelectedEquippedItem;
                 if (CurrentGame.TryUnequipItem(SelectedEquippedItem))
                 {
-                    CurrentGame.PlayerInventory.Add(SelectedEquippedItem);
+                    CurrentGame.PlayerInventory.Add(i);
                 }
                 CurrentGame.RefreshAll();
                 RefreshEquippableItems();

@@ -26,5 +26,12 @@ namespace Player
             //e.Args is the string[] of command line argruments
             base.OnStartup(e);
         }
+
+        private void Application_DispatcherUnhandledException_1(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MainViewModel.WriteText("UNHANDLED EXCEPTION OCCURRED:\n\n" + e.Exception.Message, null);
+            e.Handled = true;
+        }
+        
     }
 }

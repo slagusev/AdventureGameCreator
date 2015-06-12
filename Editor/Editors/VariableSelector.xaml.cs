@@ -57,12 +57,12 @@ namespace Editor.Editors
             {
                 VariableSelector vsSource = source as VariableSelector;
                 VarRef newRef = e.NewValue as VarRef;
-                foreach (var a in vsSource.lstItems.Items)
+                foreach (var a in vsSource.treeItems.Items)
                 {
                     VarRef srcRef = a as VarRef;
                     if (newRef != null && srcRef != null && newRef.LinkedVarId == srcRef.LinkedVarId)
                     {
-                        vsSource.lstItems.SelectedItem = srcRef;
+                        //vsSource.treeItems.SelectedItem = srcRef;
                     }
                 }
             }
@@ -80,68 +80,120 @@ namespace Editor.Editors
             InitializeComponent();
             RefreshListBox();
         }
-        ObservableCollection<VarRef> vars = new ObservableCollection<VarRef>();
+        ObservableCollection<Tuple<string, ObservableCollection<VarRef>>> vars = new ObservableCollection<Tuple<string, ObservableCollection<VarRef>>>();
         private void searchText_TextChanged(object sender, TextChangedEventArgs e)
         {
             RefreshListBox();
         }
-
+        private void ExpandAll(ItemsControl items, bool expand)
+        {
+            foreach (object obj in items.Items)
+            {
+                ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
+                if (childControl != null)
+                {
+                    ExpandAll(childControl, expand);
+                }
+                TreeViewItem item = childControl as TreeViewItem;
+                if (item != null)
+                    item.IsExpanded = true;
+            }
+        }
         public void RefreshListBox()
         {
-            vars = new ObservableCollection<VarRef>(MainViewModel.MainViewModelStatic.Variables.Where(a => a.Name.ToLower().Contains(searchText.Text.ToLower())).Select(a => new VarRef(a.Id)));
-            var DateTimeVars = vars.Where(a => a.LinkedVariable.IsDateTime);
-            var StringVars = vars.Where(a => a.LinkedVariable.IsString);
-            var NumberVars = vars.Where(a => a.LinkedVariable.IsNumber);
-            var ItemVars = vars.Where(a => a.LinkedVariable.IsItem);
-            var CommonEventRefVars = vars.Where(a => a.LinkedVariable.IsCommonEventRef);
-            vars = new ObservableCollection<VarRef>();
-            if (ShowDateTime)
+            vars = new ObservableCollection<Tuple<string, ObservableCollection<VarRef>>>();
+            foreach (var a in MainViewModel.MainViewModelStatic.VariableGroups.Groups)
             {
-                foreach (var a in DateTimeVars)
+                bool included = false;
+                ObservableCollection<VarRef> Vars = new ObservableCollection<VarRef>();
+                foreach (var b in a.Item2)
                 {
-                    vars.Add(a);
+                    if (b.Name.ToLower().Contains(searchText.Text.ToLower()))
+                    {
+                        if ((b.IsCommonEventRef && ShowCommonEventRefs) ||
+                            (b.IsDateTime && ShowDateTime) ||
+                            (b.IsNumber && ShowNumber) ||
+                            (b.IsString && ShowString) ||
+                            (b.IsItem && ShowItems))
+                        {
+                            included = true;
+                            Vars.Add(new VarRef(b.Id));
+                        }
+                        else
+                        {
+                            // :\
+                        }
+                    }
+                }
+                if (included)
+                {
+                    vars.Add(Tuple.Create<string, ObservableCollection<VarRef>>(a.Item1, Vars));
                 }
             }
-            if (ShowNumber)
-            {
-                foreach (var a in NumberVars)
-                {
-                    vars.Add(a);
-                }
-            }
-            if (ShowString)
-            {
-                foreach (var a in StringVars)
-                {
-                    vars.Add(a);
-                }
-            }
-            if (ShowItems)
-            {
-                foreach (var a in ItemVars)
-                {
-                    vars.Add(a);
-                }
-            }
-            if (ShowCommonEventRefs)
-            {
-                foreach (var a in CommonEventRefVars)
-                {
-                    vars.Add(a);
-                }
-            }
-            this.lstItems.ItemsSource = vars.OrderBy(a => a.LinkedVariable.Name);
-            if (SelectedItem != null && lstItems.Items.Contains(SelectedItem))
-            {
-                lstItems.SelectedItem = SelectedItem;
-            }
+            this.treeItems.ItemsSource = vars;
+            //vars[0].Item2[0].LinkedCommonEvent.Name
+            ExpandAll(treeItems, true);
+            //var DateTimeVars = vars.Where(a => a.LinkedVariable.IsDateTime);
+            //var StringVars = vars.Where(a => a.LinkedVariable.IsString);
+            //var NumberVars = vars.Where(a => a.LinkedVariable.IsNumber);
+            //var ItemVars = vars.Where(a => a.LinkedVariable.IsItem);
+            //var CommonEventRefVars = vars.Where(a => a.LinkedVariable.IsCommonEventRef);
+            //vars = new ObservableCollection<VarRef>();
+            //if (ShowDateTime)
+            //{
+            //    foreach (var a in DateTimeVars)
+            //    {
+            //        vars.Add(a);
+            //    }
+            //}
+            //if (ShowNumber)
+            //{
+            //    foreach (var a in NumberVars)
+            //    {
+            //        vars.Add(a);
+            //    }
+            //}
+            //if (ShowString)
+            //{
+            //    foreach (var a in StringVars)
+            //    {
+            //        vars.Add(a);
+            //    }
+            //}
+            //if (ShowItems)
+            //{
+            //    foreach (var a in ItemVars)
+            //    {
+            //        vars.Add(a);
+            //    }
+            //}
+            //if (ShowCommonEventRefs)
+            //{
+            //    foreach (var a in CommonEventRefVars)
+            //    {
+            //        vars.Add(a);
+            //    }
+            //}
+            //this.lstItems.ItemsSource = vars.OrderBy(a => a.LinkedVariable.Name);
+            //if (SelectedItem != null && lstItems.Items.Contains(SelectedItem))
+            //{
+            //    lstItems.SelectedItem = SelectedItem;
+            //}
         }
 
         private void lstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lstItems.SelectedItem as VarRef != null)
+            //if (lstItems.SelectedItem as VarRef != null)
+            //{
+            //    SelectedItem = lstItems.SelectedItem as VarRef;
+            //}
+        }
+
+        private void treeItems_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeItems.SelectedItem as VarRef != null)
             {
-                SelectedItem = lstItems.SelectedItem as VarRef;
+                SelectedItem = treeItems.SelectedItem as VarRef;
             }
         }
     }

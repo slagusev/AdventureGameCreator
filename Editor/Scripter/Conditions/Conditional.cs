@@ -165,6 +165,7 @@ namespace Editor.Scripter.Conditions
                     IsComparisonToVariable = false;
                     ItemIsNotNull = false;
                     ItemIsClass = false;
+                    PlayerHasItem = false;
                 }
 
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -201,6 +202,7 @@ namespace Editor.Scripter.Conditions
                     IsComparisonToConstant = false;
                     ItemIsNotNull = false;
                     ItemIsClass = false;
+                    PlayerHasItem = false;
                 }
                 _isComparisonToVariable = value;
                 IsComparison = (IsComparisonToConstant || IsComparisonToVariable);
@@ -239,6 +241,7 @@ namespace Editor.Scripter.Conditions
                     IsComparisonToVariable = false;
                     IsComparisonToConstant = false;
                     ItemIsClass = false;
+                    PlayerHasItem = false;
                 }
                 RaisePropertyChanged(ItemIsNotNullPropertyName);
             }
@@ -273,9 +276,47 @@ namespace Editor.Scripter.Conditions
                     IsComparisonToVariable = false;
                     IsComparisonToConstant = false;
                     ItemIsNotNull = false;
+                    PlayerHasItem = false;
                 }
                 _itemIsClass = value;
                 RaisePropertyChanged(ItemIsClassPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PlayerHasItem" /> property's name.
+        /// </summary>
+        public const string PlayerHasItemPropertyName = "PlayerHasItem";
+
+        private bool _playerHasItem = false;
+
+        /// <summary>
+        /// Sets and gets the PlayerHasItem property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool PlayerHasItem
+        {
+            get
+            {
+                return _playerHasItem;
+            }
+
+            set
+            {
+                if (_playerHasItem == value)
+                {
+                    return;
+                }
+
+                _playerHasItem = value;
+                if (value)
+                {
+                    IsComparisonToVariable = false;
+                    ItemIsNotNull = false;
+                    ItemIsClass = false;
+                    IsComparisonToConstant = false;
+                }
+                RaisePropertyChanged(PlayerHasItemPropertyName);
             }
         }
         /// <summary>
@@ -720,7 +761,35 @@ namespace Editor.Scripter.Conditions
                 RaisePropertyChanged(SelectedClassPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="SelectedItem" /> property's name.
+        /// </summary>
+        public const string SelectedItemPropertyName = "SelectedItem";
 
+        private ItemRef _selectedItem = null;
+
+        /// <summary>
+        /// Sets and gets the SelectedItem property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ItemRef SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+
+            set
+            {
+                if (_selectedItem == value)
+                {
+                    return;
+                }
+
+                _selectedItem = value;
+                RaisePropertyChanged(SelectedItemPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="SelectedClassName" /> property's name.
         /// </summary>
@@ -861,6 +930,10 @@ namespace Editor.Scripter.Conditions
                 {
                     sb.AppendLine("if " + (this.SelectedVariable != null && this.SelectedVariable.LinkedVariable != null ? this.SelectedVariable.LinkedVariable.Name : "UNKNOWN") + " is of class " + (this.SelectedClass != null ? this.SelectedClass.Name : "UNKNOWN"));
                 }
+                else if (PlayerHasItem)
+                {
+                    sb.AppendLine("if the player's inventory contains " + (this.SelectedItem != null && this.SelectedItem.LinkedItem != null ? this.SelectedItem.LinkedItem.DefaultName : ""));
+                }
                 sb.AppendLine("{");
                 string[] ifLines = string.Join("\n", from a in this.Contents[0].ScriptLines where a.GetType() != typeof(Editor.Scripter.Misc.Blank) select a.Plaintext).Split('\n');
                 foreach (var line in ifLines)
@@ -985,6 +1058,11 @@ namespace Editor.Scripter.Conditions
                 conditionXml.Add(new XElement("VarRef", this.SelectedVariable.LinkedVarId));
                 conditionXml.Add(new XElement("ClassName", this.SelectedClassName));
             }
+            if (PlayerHasItem)
+            {
+                conditionXml.Add(new XElement("Type", "PlayerHasItem"));
+                conditionXml.Add(new XElement("ItemRef", this.SelectedItem.LinkedItemId));
+            }
             return new XElement("If",conditionXml,
                                      new XElement("Then", ThenStatement.ToXML()),
                                      new XElement("Else", ElseStatement.ToXML()));    
@@ -1015,6 +1093,11 @@ namespace Editor.Scripter.Conditions
                     {
                         c.ItemIsClass = true;
                     }
+                    if (conditionXml.Element("Type").Value == "PlayerHasItem")
+                    {
+                        c.PlayerHasItem = true;
+                    }
+
                 }
                 if (c.IsComparison)
                 {
@@ -1090,6 +1173,11 @@ namespace Editor.Scripter.Conditions
                     c.SelectedVariable = new VarRef(Guid.Parse(conditionXml.Element("VarRef").Value));
                     c.SelectedClassName = conditionXml.Element("ClassName").Value;
                 }
+                if (c.PlayerHasItem)
+                {
+                    c.SelectedItem = new ItemRef(Guid.Parse(conditionXml.Element("ItemRef").Value));
+                }
+                
             }
             
 

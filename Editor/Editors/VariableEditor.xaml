@@ -20,6 +20,10 @@
             <TextBlock>ID:
         <Run Text="{Binding Id}"></Run>
             </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
+                <TextBlock >Group:</TextBlock>
+                <TextBox Text="{Binding Group}" Margin="5,0,0,0" Width="200"></TextBox>
+            </StackPanel>
             <TextBlock Margin="20">
                 Type:
             </TextBlock>

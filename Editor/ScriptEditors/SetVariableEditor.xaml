@@ -105,7 +105,7 @@
             <Editors:VariableSelector  SelectedItem="{Binding TargetVar, Mode=TwoWay}" Height="150" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" ShowItems="{Binding IsItem}" ShowCommonEventRefs="{Binding IsCommonEventRef}" Visibility="{Binding IsVariable, Converter={StaticResource VisibilityConverter}}"/>
             <Grid Visibility="{Binding IsStatic, Converter={StaticResource VisibilityConverter}}">
             <Editors:ItemSelector SelectedItem="{Binding ItemValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"></Editors:ItemSelector>
-            <Editors:CommonEventSelector SelectedItem="{Binding CommonEventValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsCommonEventRef, Converter={StaticResource VisibilityConverter}}"/>
+            <Editors:CommonEventSelector Margin="10,0,0,0" SelectedItem="{Binding CommonEventValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsCommonEventRef, Converter={StaticResource VisibilityConverter}}"/>
             </Grid>
             <Button HorizontalAlignment="Center" Width="100" Content="OK" Click="Button_Click_1"/>
         </StackPanel>
