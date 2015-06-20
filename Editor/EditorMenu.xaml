@@ -52,11 +52,16 @@
                     </DataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
-            <TreeViewItem Header="Items" IsExpanded="False" ItemsSource="{Binding Items, Source={StaticResource MainViewModelStatic}}">
+            <TreeViewItem Header="Items" IsExpanded="False" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
                 <TreeViewItem.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding ItemName}"></TextBlock>
-                    </DataTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Items}">
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ItemName}"></TextBlock>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
             <TreeViewItem Header="Conversations" IsExpanded="False" ItemsSource="{Binding Conversations, Source={StaticResource MainViewModelStatic}}">
