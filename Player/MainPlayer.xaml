@@ -7,7 +7,7 @@
     <Window.Resources>
         <local:DenormalizerConverter x:Key="DenormalizerConverter"/>
         <Editor:VisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
+        <local:DocumentConverter x:Key="DocumentConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <Binding Source="{StaticResource MainViewModelStatic}"/>
@@ -80,7 +80,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <TextBox x:Name="mainFeedback" Grid.Row="1" Grid.Column="1" Margin="20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding FeedbackText, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
+        <local:BindableRichTextBox x:Name="mainFeedback" Grid.Row="1" Grid.Column="1" Margin="20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextChanged="TextBox_TextChanged_1" Document="{Binding FeedbackText, Converter={StaticResource DocumentConverter}, Source={StaticResource MainViewModelStatic}}">
+            <local:BindableRichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </local:BindableRichTextBox.Resources>
+        </local:BindableRichTextBox>
         <TextBox x:Name="playerDescription" Grid.Row="0" Grid.Column="1" Margin="20,20,20,20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding CurrentGame.PlayerDescription, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
         <TextBox x:Name="equippedItems" Grid.Row="1" Grid.Column="2" Margin="20,20,20,20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding CurrentGame.CurrentlyEquippedText, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
         <Grid Grid.Row="2" Grid.ColumnSpan="3" Visibility="{Binding ExploreMode, Converter={StaticResource BooleanToVisibilityConverter}}">

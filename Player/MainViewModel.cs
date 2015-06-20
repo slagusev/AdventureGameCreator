@@ -17,6 +17,7 @@ namespace Player
         public MainViewModel()
         {
             WireCommands();
+            this.FeedbackText.CollectionChanged += (s, e) => { RaisePropertyChanged(FeedbackTextPropertyName);  };
             //this.ViewEquipment();
         }
         /// <summary>
@@ -53,13 +54,13 @@ namespace Player
         /// </summary>
         public const string FeedbackTextPropertyName = "FeedbackText";
 
-        private string _feedbackText = "";
+        private ObservableCollection<object> _feedbackText = new ObservableCollection<object>();
 
         /// <summary>
         /// Sets and gets the FeedbackText property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public string FeedbackText
+        public ObservableCollection<object> FeedbackText
         {
             get
             {
@@ -106,7 +107,7 @@ namespace Player
                 line = FormatText(line, script);
 
 
-                mvm.FeedbackText += line + "\n\n";
+                mvm.FeedbackText.Add(line + "\n\n");
             }
         }
 

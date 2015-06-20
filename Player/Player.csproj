@@ -53,7 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindableRichTextBox.cs" />
     <Compile Include="DenormalizerConverter.cs" />
+    <Compile Include="DocumentConverter.cs" />
     <Compile Include="ObjectTypesWrappers\ActiveEvent.cs" />
     <Compile Include="ObjectTypesWrappers\ConversationWrapper.cs" />
     <Compile Include="ObjectTypesWrappers\InteractableWrapper.cs" />
