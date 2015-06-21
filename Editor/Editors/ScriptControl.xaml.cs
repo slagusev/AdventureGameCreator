@@ -52,6 +52,7 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(ChangeRoom), typeof(ScriptEditors.ChangeRoomEditor));
             ScriptEditorsByScriptType.Add(typeof(CreateEvent), typeof(ScriptEditors.CreateEventEditor));
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.AddToArray), typeof(ScriptEditors.AddToArray));
+            ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.ForEachInArray), typeof(ScriptEditors.ForEachInArrayEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

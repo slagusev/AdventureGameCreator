@@ -84,6 +84,7 @@ namespace Editor.Editors
         }
         public void RefreshListBox()
         {
+            if (MainViewModel.MainViewModelStatic.ArrayGroups == null) return;
             vars = new ObservableCollection<Tuple<string, ObservableCollection<GenericRef<VarArray>>>>();
             foreach (var a in MainViewModel.MainViewModelStatic.ArrayGroups.Groups)
             {

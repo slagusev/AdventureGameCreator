@@ -333,5 +333,11 @@ namespace Editor.ScriptEditors
             LoadWindow(new ScriptEditors.AddToArray(), new Scripter.Arrays.AddToArray());
         }
 
+        private void iterateThroughArray_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            LoadWindow(new ScriptEditors.ForEachInArrayEditor(), new Scripter.Arrays.ForEachInArray(script));
+        }
+
     }
 }

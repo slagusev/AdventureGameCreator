@@ -74,6 +74,7 @@
     <Compile Include="ScriptLineTypes\DisplayTextWrapper.cs" />
     <Compile Include="ScriptLineTypes\ForceEquipWrapper.cs" />
     <Compile Include="ScriptLineTypes\ForceUnequipWrapper.cs" />
+    <Compile Include="ScriptLineTypes\ForEachInArrayWrapper.cs" />
     <Compile Include="ScriptLineTypes\GetCurrentItemWrapper.cs" />
     <Compile Include="ScriptLineTypes\GetEquipmentSlotWrapper.cs" />
     <Compile Include="ScriptLineTypes\GetItemPropertyWrapper.cs" />

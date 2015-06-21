@@ -119,6 +119,10 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new AddToArrayWrapper((AddToArray)line);
             }
+            if (lineType == typeof(ForEachInArray))
+            {
+                lineWrapper = new ForEachInArrayWrapper((ForEachInArray)line);
+            }
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;

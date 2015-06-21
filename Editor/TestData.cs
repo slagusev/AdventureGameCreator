@@ -58,6 +58,7 @@ namespace Editor
         public static CommonEvent TestCommonEvent { get; set; }
 
         public static AddToArray TestAddToArray { get; set; }
+        public static ForEachInArray TestForEachInArray { get; set; }
 
         static TestData()
         {

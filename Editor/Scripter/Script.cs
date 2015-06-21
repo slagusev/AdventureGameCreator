@@ -221,6 +221,9 @@ namespace Editor.Scripter
                     case "AddToArray":
                         script.ScriptLines.Add(Arrays.AddToArray.FromXML(element));
                         break;
+                    case "ForEachInArray":
+                        script.ScriptLines.Add(Arrays.ForEachInArray.FromXML(element, script));
+                        break;
                     default:
                         break;
                 }

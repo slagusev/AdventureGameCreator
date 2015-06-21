@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Editor.Scripter.Arrays
 {
-    class ForEachInArray : ScriptLine
+    public class ForEachInArray : ScriptLine
     {
 
-        public ForEachInArray()
+        public ForEachInArray(Script baseScript)
         {
-
+            this.ExecutingScript = new Script(baseScript);
         }
 
         /// <summary>
@@ -105,9 +106,66 @@ namespace Editor.Scripter.Arrays
             }
         }
 
+        /// <summary>
+        /// The <see cref="ClearArray" /> property's name.
+        /// </summary>
+        public const string ClearArrayPropertyName = "ClearArray";
+
+        private bool _clearArray = false;
+
+        /// <summary>
+        /// Sets and gets the ClearArray property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool ClearArray
+        {
+            get
+            {
+                return _clearArray;
+            }
+
+            set
+            {
+                if (_clearArray == value)
+                {
+                    return;
+                }
+
+                _clearArray = value;
+                RaisePropertyChanged(ClearArrayPropertyName);
+            }
+        }
+
         public override System.Xml.Linq.XElement ToXML()
         {
-            throw new NotImplementedException();
+            return new System.Xml.Linq.XElement("ForEachInArray", new XElement("LinkedArray", LinkedArray != null ? LinkedArray.Ref : Guid.Empty),
+                                                                  new XElement("LinkedVar", LinkedVar!= null ? LinkedVar.LinkedVarId : Guid.Empty),
+                                                                  new XElement("ClearArray", ClearArray),
+                                                                  new XElement("ExecutingScript", ExecutingScript.ToXML()));
+        }
+
+        public static ForEachInArray FromXML(XElement xml, Script baseScript)
+        {
+            var res = new ForEachInArray(baseScript)
+            {
+                LinkedArray = GenericRef<VarArray>.GetArrayRef(),
+                LinkedVar = new VarRef(Guid.Parse(xml.Element("LinkedVar").Value)),
+                ExecutingScript = Script.FromXML(xml.Element("ExecutingScript").Element("Script"), baseScript),
+                ClearArray = Boolean.Parse(xml.Element("ClearArray").Value)
+
+            };
+            res.LinkedArray.Ref = Guid.Parse(xml.Element("LinkedArray").Value);
+            return res;
+        }
+
+        public override string Plaintext
+        {
+            get
+            {
+                var scriptString = string.Join("\n",ExecutingScript.ScriptLines.Where(a => a.GetType() != typeof(Scripter.Misc.Blank)).Select(a => "  "+a.Plaintext));
+                return "For Each object in " + (LinkedArray != null && LinkedArray.Value != null ? LinkedArray.Value.Name : "UNKNOWN ARRAY")
+                    + ", store the value in " + (LinkedVar != null && LinkedVar.LinkedVariable != null ? LinkedVar.LinkedVariable.Name : "UNKNOWN VARIABLE") + ", and perform the following actions:\n{\n" + scriptString + "\n}";
+            }
         }
     }
 }

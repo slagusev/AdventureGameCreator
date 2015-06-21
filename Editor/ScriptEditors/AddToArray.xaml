@@ -14,7 +14,7 @@
     <Grid>
         <StackPanel Margin="10,10,10,-10">
             <TextBlock Margin="10"><Run Text="Choose the array:"/></TextBlock>
-            <Controls:ArraySelector SelectedItem="{Binding ArrayRef, Mode=TwoWay}" ></Controls:ArraySelector>
+            <Controls:ArraySelector SelectedItem="{Binding ArrayRef, Mode=TwoWay}" Height="150"></Controls:ArraySelector>
             <TextBlock Margin="10"><Run Text="Choose the object to add to the array:"/></TextBlock>
 
             <Controls:VariableSelector Height="150" ShowCommonEventRefs="{Binding ArrayRef.Value.IsCommonEvent}" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowNumber="{Binding ArrayRef.Value.IsNumber}" ShowItems="{Binding ArrayRef.Value.IsItem}" ShowString="{Binding ArrayRef.Value.String}" ShowDateTime="False" />

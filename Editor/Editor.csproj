@@ -222,6 +222,9 @@
     <Compile Include="ScriptEditors\ForceUnequipEditor.xaml.cs">
       <DependentUpon>ForceUnequipEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\ForEachInArrayEditor.xaml.cs">
+      <DependentUpon>ForEachInArrayEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\GetCurrentItemEditor.xaml.cs">
       <DependentUpon>GetCurrentItemEditor.xaml</DependentUpon>
     </Compile>
@@ -478,6 +481,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\ForceUnequipEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ForEachInArrayEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -40,6 +40,7 @@
                 <GroupBox Header="Array Management" >
                     <StackPanel>
                         <Button x:Name="addToArray" Content="Add To Array..." Click="addToArray_Click"/>
+                        <Button x:Name="iterateThroughArray" Content="Iterate Through Array..." Click="iterateThroughArray_Click"/>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
