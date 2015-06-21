@@ -432,7 +432,7 @@ namespace Editor.ObjectTypes
         /// </summary>
         public const string GroupPropertyName = "Group";
 
-        private string _group = "Default";
+        private string _group = "asdf";
 
         /// <summary>
         /// Sets and gets the Group property.

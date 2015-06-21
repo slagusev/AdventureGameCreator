@@ -43,7 +43,7 @@ namespace Editor.NewForms
             {
                 if (MainViewModel.MainViewModelStatic.Variables.Where(a => a.Name == txtName.Text).Count() == 0)
                 {
-                    Variable variable = new Variable { IsNumber = true, Name = txtName.Text, Id = Guid.NewGuid(), DefaultNumber = 0 };
+                    Variable variable = new Variable { IsNumber = true, Name = txtName.Text, Id = Guid.NewGuid(), DefaultNumber = 0, Group="Default" };
                     MainViewModel.MainViewModelStatic.Variables.Add(variable);
                     var wv = new WindowView
                     {
