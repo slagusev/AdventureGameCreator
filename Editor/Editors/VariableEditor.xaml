@@ -7,7 +7,6 @@
              xmlns:Editor="clr-namespace:Editor"
              xmlns:Controls="clr-namespace:Editor.Editors"
              xmlns:ObjectTypes="clr-namespace:Editor.ObjectTypes"
-             xmlns:xckt="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DesignHeight="1000" d:DesignWidth="1000"
              DataContext="{Binding TestNumberVariable, Source={StaticResource TestDataStatic}}">
     <UserControl.Resources>
@@ -38,7 +37,7 @@
                 Default Value:
                 
             </TextBlock>
-            <xckt:DateTimePicker HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Value="{Binding DefaultDateTime}" Visibility="{Binding IsDateTime, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></xckt:DateTimePicker>
+            
             <TextBox HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Text="{Binding DefaultString, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsString, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></TextBox>
             <TextBox HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Text="{Binding DefaultNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNumber, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></TextBox>
             <TextBlock HorizontalAlignment="Left" Margin="20,0,0,20" Width="300" Text="None" Visibility="{Binding IsItem, ConverterParameter=VisibilityConverter1, Converter={StaticResource VisibilityConverter}}"></TextBlock>

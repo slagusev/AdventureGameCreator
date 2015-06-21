@@ -2,7 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:Editor.Editors"
-        xmlns:xckt="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:Editor="clr-namespace:Editor" x:Class="Editor.ScriptEditors.ConditionEditor"
         Title="If...Then...Else..." Height="500" Width="500">
     <Window.Resources>
@@ -54,7 +53,7 @@
                         <TextBlock><Run Text="To:"/></TextBlock>
                             <Controls:VariableSelector Height="150" ShowItems="False" ShowCommonEventRefs="False" ShowDateTime="{Binding IsDateTime}" ShowNumber="{Binding IsNumber}" ShowString="{Binding IsString}" Visibility="{Binding IsComparisonToVariable, Converter={StaticResource VisibilityConverter}}" SelectedItem="{Binding VariableToCompare, Mode=TwoWay}"/>
                             <StackPanel Visibility="{Binding IsComparisonToConstant, Converter={StaticResource VisibilityConverter}}">
-                                <xckt:DateTimePicker Visibility="{Binding IsDateTime, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Left" Width="300" Value="{Binding DateToCompareTo}"/>
+                                
                                 <TextBox Text="{Binding NumberToCompareTo}" Visibility="{Binding IsNumber, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Left" Width="200"/>
                                 <TextBox Text="{Binding StringToCompareTo}" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Left" Width="200"/>
                             </StackPanel>
