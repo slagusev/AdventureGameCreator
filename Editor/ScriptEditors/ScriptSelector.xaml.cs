@@ -328,5 +328,10 @@ namespace Editor.ScriptEditors
             LoadWindow(new CreateEventEditor(), new CreateEvent());
         }
 
+        private void addToArray_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.AddToArray(), new Scripter.Arrays.AddToArray());
+        }
+
     }
 }

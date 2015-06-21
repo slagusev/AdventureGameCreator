@@ -289,7 +289,37 @@ namespace Editor
                 RaisePropertyChanged(ItemsPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="Arrays" /> property's name.
+        /// </summary>
+        public const string ArraysPropertyName = "Arrays";
 
+        private ObservableCollection<VarArray> _arrays = null;
+
+        /// <summary>
+        /// Sets and gets the Arrays property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<VarArray> Arrays
+        {
+            get
+            {
+                return _arrays;
+            }
+
+            set
+            {
+                if (_arrays == value)
+                {
+                    return;
+                }
+
+                _arrays = value;
+                RaisePropertyChanged(ArraysPropertyName);
+                value.CollectionChanged += (s, e) => RecalculateArrayGroups();
+                RecalculateArrayGroups();
+            }
+        }
         /// <summary>
         /// The <see cref="Conversations" /> property's name.
         /// </summary>
@@ -532,6 +562,38 @@ namespace Editor
         }
 
         /// <summary>
+        /// The <see cref="ArrayGroups" /> property's name.
+        /// </summary>
+        public const string ArrayGroupsPropertyName = "ArrayGroups";
+
+        private GenericGroup<VarArray> _arrayGroups = null;
+
+        /// <summary>
+        /// Sets and gets the ArrayGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public GenericGroup<VarArray> ArrayGroups
+        {
+            get
+            {
+                return _arrayGroups;
+            }
+
+            set
+            {
+                if (_arrayGroups == value)
+                {
+                    return;
+                }
+                
+                _arrayGroups = value;
+                
+                RaisePropertyChanged(ArrayGroupsPropertyName);
+                
+            }
+        }
+
+        /// <summary>
         /// The <see cref="VariableGroups" /> property's name.
         /// </summary>
         public const string VariableGroupsPropertyName = "VariableGroups";
@@ -596,6 +658,7 @@ namespace Editor
                 new XElement("Zones", from a in Zones select a.ToXML()),
                 new XElement("Interactables", from a in Interactables select a.ToXML()),
                 new XElement("Variables", from a in Variables select a.ToXml()),
+                new XElement("Arrays", from a in Arrays select a.ToXML()),
                 new XElement("ItemClasses", from a in ItemClasses select a.ToXML()),
                 new XElement("Items", from a in Items select a.ToXml()),
                 new XElement("Conversations", from a in Conversations select a.ToXML()),
@@ -647,6 +710,16 @@ namespace Editor
             if (variables != null)
             {
                 mvm.Variables = new ObservableCollection<Variable>(from a in variables.Elements("Variable") select Variable.FromXML(a));
+            }
+            XElement arrays = xml.Element("Arrays");
+            if (arrays != null)
+            {
+                mvm.Arrays = new ObservableCollection<VarArray>();
+                mvm.Arrays = new ObservableCollection<VarArray>(from a in arrays.Elements("Array") select VarArray.FromXML(a));
+            }
+            else
+            {
+                mvm.Arrays = new ObservableCollection<VarArray>();
             }
             mvm.InteractableGroups.Clear();
             mvm.RecalculateInteractableGroups();
@@ -759,5 +832,10 @@ namespace Editor
         {
             VariableGroups = new GenericGroup<Variable>(this.Variables, a => a.Group, a => a.Name);
         }
+        internal void RecalculateArrayGroups()
+        {
+            ArrayGroups = new GenericGroup<VarArray>(this.Arrays, a => a.Group, a => a.Name);
+        }
+
     }
 }

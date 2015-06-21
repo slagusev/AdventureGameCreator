@@ -94,6 +94,27 @@ namespace Editor
                 }
                 else wv = existingWindows.First();
             }
+            if (mainTree.SelectedItem.GetType() == typeof(VarArray))
+            {
+                VarArray g = mainTree.SelectedItem as VarArray;
+                var existingWindows = (from a in MainViewModel.MainViewModelStatic.OpenWindows
+                                       let b = a.Content as ArrayEditor
+                                       where b != null && b.DataContext == g
+                                       select a);
+                if (existingWindows.Count() == 0)
+                {
+                    wv = new WindowView
+                    {
+                        TabName = "Array - " + g.Name,
+                        Content = (UserControl)new ArrayEditor
+                        {
+                            DataContext = g
+                        }
+                    };
+                    MainViewModel.MainViewModelStatic.OpenWindows.Add(wv);
+                }
+                else wv = existingWindows.First();
+            }
             if (mainTree.SelectedItem.GetType() == typeof(ItemClass))
             {
                 ItemClass g = mainTree.SelectedItem as ItemClass;

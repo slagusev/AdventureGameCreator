@@ -1,5 +1,6 @@
 ﻿using Editor.ObjectTypes;
 using Editor.Scripter;
+using Editor.Scripter.Arrays;
 using Editor.Scripter.Conditions;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
@@ -44,6 +45,8 @@ namespace Editor
         public static ItemClass TestItemClass { get; set; }
         public static Item TestItem { get; set; }
 
+        public static VarArray TestArray { get; set; }
+
         //Conversation Samples
         public static Conversation TestConversation { get; set; }
 
@@ -53,6 +56,8 @@ namespace Editor
 
         //Common Event Samples
         public static CommonEvent TestCommonEvent { get; set; }
+
+        public static AddToArray TestAddToArray { get; set; }
 
         static TestData()
         {
@@ -222,6 +227,11 @@ namespace Editor
             //var tempRooms = new System.Collections.ObjectModel.ObservableCollection<Room>();
             //tempRooms.Add(TestData.TestRoom);
             //MainViewModel.MainViewModelStatic.Zones.Add(new Zone { ZoneName = "Test", Rooms = tempRooms });
+
+            //TestArray.IsNumber = true;
+            //TestArray.Name = "Test";
+            //TestArray.Group = "Test Group";
+            
 
 
         }

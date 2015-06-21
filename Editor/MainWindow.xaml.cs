@@ -41,6 +41,7 @@ namespace Editor
             {
                 //MainViewModel.MainViewModelStatic = mvm;
                 var mvm = (MainViewModel)Editor.App.Current.Resources["MainViewModelStatic"] ;
+                MainViewModel.MainViewModelStatic.Arrays = new System.Collections.ObjectModel.ObservableCollection<ObjectTypes.VarArray>();
                 var xml = MainViewModel.MainViewModelStatic.ToXML();
                 FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
@@ -48,6 +49,7 @@ namespace Editor
                 sw.Close();
                 MainViewModel.MainViewModelStatic.Location = sfd.FileName;
                 MainViewModel.MainViewModelStatic.ItemClasses.Add(Editor.ObjectTypes.ItemClass.GetBaseItemClass());
+                
                 //mvm.Zones = new System.Collections.ObjectModel.ObservableCollection<ObjectTypes.Zone>();
                 new MainEditor().Show();
                 this.Close();

@@ -218,6 +218,9 @@ namespace Editor.Scripter
                     case "CreateEvent":
                         script.ScriptLines.Add(Editor.Scripter.Flow.CreateEvent.FromXML(element));
                         break;
+                    case "AddToArray":
+                        script.ScriptLines.Add(Arrays.AddToArray.FromXML(element));
+                        break;
                     default:
                         break;
                 }

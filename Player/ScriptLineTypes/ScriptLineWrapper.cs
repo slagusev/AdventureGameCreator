@@ -1,4 +1,5 @@
 ﻿using Editor.Scripter;
+using Editor.Scripter.Arrays;
 using Editor.Scripter.Conditions;
 using Editor.Scripter.ConversationFlow;
 using Editor.Scripter.Flow;
@@ -114,7 +115,10 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new CreateEventWrapper((CreateEvent)line);
             }
-            
+            if (lineType == typeof(AddToArray))
+            {
+                lineWrapper = new AddToArrayWrapper((AddToArray)line);
+            }
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;

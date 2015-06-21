@@ -19,6 +19,7 @@
 
             <MenuItem Header="_Interactable" Click="newInteractable_Click"></MenuItem>
             <MenuItem Header="_Variable" Click="MenuItem_Click_1"></MenuItem>
+            <MenuItem Header="_Array" Click="MenuItem_Click_3"></MenuItem>
             <MenuItem Header="Item _Class" Name="newItemClass" Click="newItemClass_Click"></MenuItem>
             <MenuItem Header="I_tem" Name="newItem" Click="newItem_Click"></MenuItem>
             <MenuItem Header="Conv_ersation" Name="newConversation" Click="newConversation_Click_1"></MenuItem>

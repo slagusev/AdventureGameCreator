@@ -15,6 +15,13 @@ namespace Editor.ObjectTypes
             this.idQuery = idQuery;
         }
 
+        //public GenericRef(Func<Guid, VarArray> func1, Func<VarArray, Guid> func2)
+        //{
+        //    // TODO: Complete member initialization
+        //    this.func1 = func1;
+        //    this.func2 = func2;
+        //}
+
         /// <summary>
         /// The <see cref="Value" /> property's name.
         /// </summary>
@@ -86,6 +93,8 @@ namespace Editor.ObjectTypes
         Func<T,Guid> idQuery;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private Func<Guid, VarArray> func1;
+        private Func<VarArray, Guid> func2;
         private void RaisePropertyChanged(String propertyName = "")
         {
             if (PropertyChanged != null)
@@ -115,6 +124,24 @@ namespace Editor.ObjectTypes
                 else return Guid.Empty;
             });
         }
-
+        public static GenericRef<VarArray> GetArrayRef()
+        {
+            return new GenericRef<VarArray>(id =>
+            {
+                foreach (var a in MainViewModel.MainViewModelStatic.Arrays)
+                {
+                    
+                    if (a.Id == id)
+                        return a;
+                    
+                }
+                return null;
+            }, arr =>
+            {
+                if (arr != null)
+                    return arr.Id;
+                else return Guid.Empty;
+            });
+        }
     }
 }

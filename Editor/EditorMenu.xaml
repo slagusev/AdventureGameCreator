@@ -45,6 +45,18 @@
                     </HierarchicalDataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
+            <TreeViewItem Header="Arrays" IsExpanded="False" ItemsSource="{Binding ArrayGroups.Groups, Source={StaticResource MainViewModelStatic}}" >
+                <TreeViewItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Item2}">
+                        <TextBlock Text="{Binding Item1, Mode=OneWay}"></TextBlock>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
             <TreeViewItem Header="Item Classes" IsExpanded="False" ItemsSource="{Binding ItemClasses, Source={StaticResource MainViewModelStatic}}">
                 <TreeViewItem.ItemTemplate>
                     <DataTemplate>

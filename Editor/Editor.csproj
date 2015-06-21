@@ -78,6 +78,12 @@
     <Compile Include="EditorMenu.xaml.cs">
       <DependentUpon>EditorMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ArrayEditor.xaml.cs">
+      <DependentUpon>ArrayEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ArraySelector.xaml.cs">
+      <DependentUpon>ArraySelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\CommonEventEditor.xaml.cs">
       <DependentUpon>CommonEventEditor.xaml</DependentUpon>
     </Compile>
@@ -128,6 +134,9 @@
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="NewForms\NewArray.xaml.cs">
+      <DependentUpon>NewArray.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewCommonEvent.xaml.cs">
       <DependentUpon>NewCommonEvent.xaml</DependentUpon>
     </Compile>
@@ -158,6 +167,7 @@
     <Compile Include="NewForms\NewZone.xaml.cs">
       <DependentUpon>NewZone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ObjectTypes\VarArray.cs" />
     <Compile Include="ObjectTypes\CommonEvent.cs" />
     <Compile Include="ObjectTypes\CommonEventRef.cs" />
     <Compile Include="ObjectTypes\Conversation.cs" />
@@ -187,6 +197,9 @@
     </Compile>
     <Compile Include="ScriptEditors\AddTextEditor.xaml.cs">
       <DependentUpon>AddTextEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\AddToArray.xaml.cs">
+      <DependentUpon>AddToArray.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\ChangeRoomEditor.xaml.cs">
       <DependentUpon>ChangeRoomEditor.xaml</DependentUpon>
@@ -242,6 +255,9 @@
     <Compile Include="ScriptEditors\StartConversationEditor.xaml.cs">
       <DependentUpon>StartConversationEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Scripter\Arrays\AddToArray.cs" />
+    <Compile Include="Scripter\Arrays\ForEachInArray.cs" />
+    <Compile Include="Scripter\Arrays\RemoveFromArray.cs" />
     <Compile Include="Scripter\Brancher.cs" />
     <Compile Include="Scripter\Conditions\Condition.cs" />
     <Compile Include="Scripter\Conditions\Conditional.cs" />
@@ -278,6 +294,14 @@
       <DependentUpon>ZoneEditor.xaml</DependentUpon>
     </Compile>
     <Page Include="EditorMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ArrayEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ArraySelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -365,6 +389,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewForms\NewArray.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewCommonEvent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -418,6 +446,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\AddTextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\AddToArray.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

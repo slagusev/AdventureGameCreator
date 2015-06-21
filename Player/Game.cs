@@ -18,6 +18,7 @@ namespace Player
         public Dictionary<Guid, RoomWrapper> Rooms = new Dictionary<Guid, RoomWrapper>();
         public Dictionary<Guid, ZoneWrapper> Zones = new Dictionary<Guid, ZoneWrapper>();
         public Dictionary<Guid, VariableWrapper> VarById = new Dictionary<Guid, VariableWrapper>();
+        public Dictionary<Guid, List<object>> ArraysById = new Dictionary<Guid, List<object>>();
         public Dictionary<string, VariableWrapper> VarByName = new Dictionary<string, VariableWrapper>();
         public List<ActiveEvent> ActiveEvents = new List<ActiveEvent>();
         /// <summary>
@@ -215,6 +216,10 @@ namespace Player
             foreach (var a in mvm.Settings.EquipmentSlots)
             {
                 g.EquippedItems.Add(a, null);
+            }
+            foreach (var a in mvm.Arrays)
+            {
+                g.ArraysById.Add(a.Id, new List<object>());
             }
             return g;
 

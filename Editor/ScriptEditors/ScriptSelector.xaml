@@ -36,6 +36,13 @@
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
+            <ScrollViewer>
+                <GroupBox Header="Array Management" >
+                    <StackPanel>
+                        <Button x:Name="addToArray" Content="Add To Array..." Click="addToArray_Click"/>
+                    </StackPanel>
+                </GroupBox>
+            </ScrollViewer>
             <ScrollViewer Visibility="{Binding HasTextFunctionality, Converter={StaticResource VisibilityConverter}}">
                 <GroupBox Header="Text Functionality" >
                     <StackPanel >
