@@ -21,6 +21,7 @@ namespace Editor.Scripter
             this.ScriptLines.Add(new Blank());
             this.AllowedCommonEventTypes.Add("General");
             this.AllowedCommonEventTypes.Add("Returned Value Script");
+            this.AllowedCommonEventTypes.Add("Subscript");
         }
 
         public Script(Script s)

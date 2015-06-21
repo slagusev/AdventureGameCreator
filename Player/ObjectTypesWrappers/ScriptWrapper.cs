@@ -23,6 +23,7 @@ namespace Player.ObjectTypesWrappers
         public VarRef VariableResult { get; set; }
         public bool IsRootScript = false;
         public Dictionary<Guid, VariableWrapper> localVars = new Dictionary<Guid,VariableWrapper>();
+        public bool isSubscript = false;
         public Dictionary<string, VariableWrapper> localVarsByName = new Dictionary<string, VariableWrapper>();
         public void DupeVars(ScriptWrapper s)
         {
@@ -95,7 +96,7 @@ namespace Player.ObjectTypesWrappers
         }
         public VariableWrapper GetVarById(Guid id)
         {
-            if (localVars.ContainsKey(id))
+            if (localVars.ContainsKey(id) && !isSubscript)
             {
                 return localVars[id];
             }

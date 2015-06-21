@@ -20,6 +20,7 @@ namespace Editor.ObjectTypes
         public static string ScriptTypeDescription = "Description Script";
         public static string ScriptTypeTrueFalse = "True/False Script";
         public static string ScriptTypeReturnedValue = "Returned Value Script";
+        public static string ScriptTypeOverwriteLocals = "Subscript";
 
         static CommonEvent()
         {
@@ -121,6 +122,22 @@ namespace Editor.ObjectTypes
             TrueFalseScript.CanStartConversations = false;
             ReturnedValueScript.AllowedCommonEventTypes.Add(ScriptTypeReturnedValue);
             AddCommonEventType("Returned Value Script", "A common event that returns a value to the parent script. Limited functionality.", ReturnedValueScript);
+
+            Script OverwriteLocalsScript = new Script();
+            OverwriteLocalsScript.CanAddItem = false;
+            OverwriteLocalsScript.CanAddText = false;
+            OverwriteLocalsScript.CanComment = true;
+            OverwriteLocalsScript.CanConditional = true;
+            OverwriteLocalsScript.CanDisplayText = false;
+            OverwriteLocalsScript.CanReturn = false;
+            OverwriteLocalsScript.CanSetVariable = true;
+            OverwriteLocalsScript.CanStopGame = false;
+            OverwriteLocalsScript.HasTextFunctionality = false;
+            OverwriteLocalsScript.IsItemScript = false;
+            OverwriteLocalsScript.IsInConversation = false;
+            OverwriteLocalsScript.CanStartConversations = false;
+
+            AddCommonEventType("Subscript", "A common event that runs as a subscript of its parent. Overwrites its parents' local values, as opposed to duplicating them.", OverwriteLocalsScript);
 
         }
         private static void AddCommonEventType(string name, string description, Script baseScript)

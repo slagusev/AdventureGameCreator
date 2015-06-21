@@ -25,6 +25,7 @@ namespace Player.ScriptLineTypes
                 {
                     var game = MainViewModel.GetMainViewModelStatic().CurrentGame;
                     ScriptWrapper wrapper;
+                    string scriptType;
                     CommonEventRef cRef = null;
                     if (line.RunFromVariable)
                     {
@@ -34,6 +35,7 @@ namespace Player.ScriptLineTypes
                             if (cer != null && cer.LinkedCommonEvent != null)
                             {
                                 wrapper = new ScriptWrapper(cer.LinkedCommonEvent.AssociatedScript);
+                                scriptType = cer.LinkedCommonEvent.EventType.Item1;
                                 cRef = cer;
                             }
                             else
@@ -51,11 +53,20 @@ namespace Player.ScriptLineTypes
                     else
                     {
                         wrapper = new ScriptWrapper(line.SelectedEvent.LinkedCommonEvent.AssociatedScript);
+                        scriptType = line.SelectedEvent.LinkedCommonEvent.EventType.Item1;
                         cRef = line.SelectedEvent;
                     }
-                    wrapper.parent = this.parent;
-                    wrapper.DupeVars(this.parent);
-                    wrapper.IsRootScript = true;
+                    if (scriptType != CommonEvent.ScriptTypeOverwriteLocals)
+                    {
+                        wrapper.parent = this.parent;
+                        wrapper.DupeVars(this.parent);
+                        wrapper.IsRootScript = true;
+                    }
+                    else
+                    {
+                        wrapper.isSubscript = true;
+                        wrapper.parent = this.parent;
+                    }
                     var result = wrapper.Execute();
 
                     if (wrapper.VariableResult != null && line.VarRef != null && parent.GetVarById(wrapper.VariableResult.LinkedVarId) != null && parent.GetVarById(line.VarRef.LinkedVarId) != null)
