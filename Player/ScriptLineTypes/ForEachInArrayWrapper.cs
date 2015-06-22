@@ -40,6 +40,7 @@ namespace Player.ScriptLineTypes
 
                     //Then execute the child script
                     ScriptWrapper sw = new ScriptWrapper(line.ExecutingScript);
+                    sw.parent = this.parent;
                     var res = sw.Execute();
 
                     //If a true or false value was returned, finish the script immediately.

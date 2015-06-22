@@ -22,10 +22,10 @@ namespace Player.ScriptLineTypes
             {
                 var arrayRef = line.ArrayRef.Value;
                 var game = MainViewModel.GetMainViewModelStatic().CurrentGame;
-                if (arrayRef.IsCommonEvent) game.ArraysById[line.ArrayRef.Ref].Add(game.VarById[line.VarRef.LinkedVarId].CurrentCommonEventValue);
-                if (arrayRef.IsString) game.ArraysById[line.ArrayRef.Ref].Add(game.VarById[line.VarRef.LinkedVarId].CurrentStringValue);
-                if (arrayRef.IsNumber) game.ArraysById[line.ArrayRef.Ref].Add(game.VarById[line.VarRef.LinkedVarId].CurrentNumberValue);
-                if (arrayRef.IsItem) game.ArraysById[line.ArrayRef.Ref].Add(game.VarById[line.VarRef.LinkedVarId].CurrentItemValue);
+                if (arrayRef.IsCommonEvent) game.ArraysById[line.ArrayRef.Ref].Add(this.parent.GetVarById(line.VarRef.LinkedVarId).CurrentCommonEventValue);
+                if (arrayRef.IsString) game.ArraysById[line.ArrayRef.Ref].Add(this.parent.GetVarById(line.VarRef.LinkedVarId).CurrentStringValue);
+                if (arrayRef.IsNumber) game.ArraysById[line.ArrayRef.Ref].Add(this.parent.GetVarById(line.VarRef.LinkedVarId).CurrentNumberValue);
+                if (arrayRef.IsItem) game.ArraysById[line.ArrayRef.Ref].Add(this.parent.GetVarById(line.VarRef.LinkedVarId).CurrentItemValue);
                 return null;
             }
             else
