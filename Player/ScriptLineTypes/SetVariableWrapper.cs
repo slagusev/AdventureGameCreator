@@ -90,10 +90,27 @@ namespace Player.ScriptLineTypes
             }
             else if (line.IsString)
             {
-                string right = "";
-                if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentStringValue;
-                else right = line.StringValue;
-                left.CurrentStringValue = right;
+                if (line.IsSet)
+                { 
+                    string right = "";
+                    if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentStringValue;
+                    else right = line.StringValue;
+                    left.CurrentStringValue = right;
+                }
+                else if (line.IsAppendToEnd)
+                {
+                    string right = "";
+                    if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentStringValue;
+                    else right = line.StringValue;
+                    left.CurrentStringValue = left.CurrentStringValue + right;
+                }
+                else if (line.IsAppendToStart)
+                {
+                    string right = "";
+                    if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentStringValue;
+                    else right = line.StringValue;
+                    left.CurrentStringValue = right + left.CurrentStringValue;
+                }
             }
             else if (line.IsItem)
             {

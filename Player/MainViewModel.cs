@@ -25,6 +25,8 @@ namespace Player
         /// </summary>
         public const string CurrentGamePropertyName = "CurrentGame";
 
+
+
         private Game _currentGame = null;
 
         /// <summary>
@@ -49,6 +51,37 @@ namespace Player
                 RaisePropertyChanged(CurrentGamePropertyName);
             }
         }
+
+        /// <summary>
+        /// The <see cref="Location" /> property's name.
+        /// </summary>
+        public const string LocationPropertyName = "Location";
+
+        private string _location = "";
+
+        /// <summary>
+        /// Sets and gets the Location property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string Location
+        {
+            get
+            {
+                return _location;
+            }
+
+            set
+            {
+                if (_location == value)
+                {
+                    return;
+                }
+
+                _location = value;
+                RaisePropertyChanged(LocationPropertyName);
+            }
+        }
+
         /// <summary>
         /// The <see cref="FeedbackText" /> property's name.
         /// </summary>
@@ -95,7 +128,7 @@ namespace Player
 
         }
 
-        public static void WriteText(string line, ScriptWrapper script, bool includeBar = false )
+        public static void WriteText(string line, ScriptWrapper script, bool includeBar = false)
         {
             if (includeBar)
             {
@@ -109,6 +142,17 @@ namespace Player
 
                 mvm.FeedbackText.Add(line + "\n\n");
             }
+        }
+        public static void WriteImage(ImageRef line, ScriptWrapper script, bool includeBar = false)
+        {
+            if (includeBar)
+            {
+                WriteText("-------------------------------------------", null);
+            }
+            
+            var mvm = (MainViewModel)Player.App.Current.Resources["MainViewModelStatic"];
+            mvm.FeedbackText.Add(line);
+            
         }
 
         

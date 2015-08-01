@@ -17,7 +17,7 @@ namespace Player
         {
             if (e.Args.Count() > 0)
             {
-                App.Current.Resources["FileName"] = e.Args[0];
+                App.Current.Resources["FileName"] = string.Join(" ",e.Args);
             }
             else
             {

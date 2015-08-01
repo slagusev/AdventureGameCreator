@@ -5,6 +5,7 @@
         xmlns:local="clr-namespace:Player" x:Class="Player.MainPlayer"
         Title="Adventure Game Player" Height="768" Width="1024">
     <Window.Resources>
+        <local:ImageConverter x:Key="ImageConverter"/>
         <local:DenormalizerConverter x:Key="DenormalizerConverter"/>
         <Editor:VisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <local:DocumentConverter x:Key="DocumentConverter"/>
@@ -88,7 +89,7 @@
             </local:BindableRichTextBox.Resources>
         </local:BindableRichTextBox>
         <TextBox x:Name="playerDescription" Grid.Row="0" Grid.Column="1" Margin="20,20,20,20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding CurrentGame.PlayerDescription, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
-        <TextBox x:Name="equippedItems" Grid.Row="1" Grid.Column="2" Margin="20,20,20,20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding CurrentGame.CurrentlyEquippedText, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
+        <local:BindableRichTextBox x:Name="equippedItems" Grid.Row="1" Grid.Column="2" Margin="20,20,20,20" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Document="{Binding CurrentGame.CurrentlyEquippedText, Converter={StaticResource DocumentConverter}, Source={StaticResource MainViewModelStatic}}" TextChanged="TextBox_TextChanged_1"/>
         <Grid Grid.Row="2" Grid.ColumnSpan="3" Visibility="{Binding ExploreMode, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.Resources>
@@ -153,7 +154,10 @@
                 <ListBox SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CurrentGame.PlayerInventory, Source={StaticResource MainViewModelStatic}}" Width="200" Margin="20">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding CurrentName}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}" Visibility="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}"  Width="16" Height="16"></Image>
+                                <TextBlock Text="{Binding CurrentName}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -173,9 +177,12 @@
                 
                 <ListBox VerticalAlignment="Stretch" SelectedItem="{Binding SelectedEquippableItem}" ItemsSource="{Binding EquippableItems, Source={StaticResource MainViewModelStatic}}" Width="200" Height="142" Margin="20">
                     <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding CurrentName}"/>
-                        </DataTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}" Visibility="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}"  Width="16" Height="16"></Image>
+                                    <TextBlock Text="{Binding CurrentName}"/>
+                                </StackPanel>
+                            </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
                 </StackPanel>
@@ -186,7 +193,10 @@
                     <ListBox SelectedItem="{Binding SelectedEquippedItem}" ItemsSource="{Binding EquippedItems, Source={StaticResource MainViewModelStatic}}" Width="200"  Height="142" Margin="20">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CurrentName}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}" Visibility="{Binding CurrentIconPath.Path, Converter={StaticResource ImageConverter}}" Width="24" Height="24"></Image>
+                                    <TextBlock Text="{Binding CurrentName}"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

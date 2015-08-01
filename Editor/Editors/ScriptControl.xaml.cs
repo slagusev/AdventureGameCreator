@@ -53,6 +53,10 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(CreateEvent), typeof(ScriptEditors.CreateEventEditor));
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.AddToArray), typeof(ScriptEditors.AddToArray));
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.ForEachInArray), typeof(ScriptEditors.ForEachInArrayEditor));
+            ScriptEditorsByScriptType.Add(typeof(ShowImage), typeof(ScriptEditors.ShowImageEditor));
+            ScriptEditorsByScriptType.Add(typeof(AddImage), typeof(ScriptEditors.AddImageEditor));
+            ScriptEditorsByScriptType.Add(typeof(GetItemName), typeof(ScriptEditors.GetItemNameEditor));
+            ScriptEditorsByScriptType.Add(typeof(SetItemName), typeof(ScriptEditors.SetItemNameEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

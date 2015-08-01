@@ -73,6 +73,7 @@ namespace Editor
                 if (MainViewModel.MainViewModelStatic.ItemClasses.Count == 0)
                     mvm.ItemClasses.Add(Editor.ObjectTypes.ItemClass.GetBaseItemClass());
                 Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
+                
                 new MainEditor().Show();
                 //MainViewModel.MainViewModelStatic.OpenWindows.Add(new WindowView()
                 //{

@@ -123,6 +123,18 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new ForEachInArrayWrapper((ForEachInArray)line);
             }
+            if (lineType == typeof(ShowImage))
+            {
+                lineWrapper = new ShowImageWrapper((ShowImage)line);
+            }
+            if (lineType == typeof(SetItemName))
+            {
+                lineWrapper = new SetItemNameWrapper((SetItemName)line);
+            }
+            if (lineType == typeof(GetItemName))
+            {
+                lineWrapper = new GetItemNameWrapper((GetItemName)line);
+            }
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;

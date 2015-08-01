@@ -224,6 +224,18 @@ namespace Editor.Scripter
                     case "ForEachInArray":
                         script.ScriptLines.Add(Arrays.ForEachInArray.FromXML(element, script));
                         break;
+                    case "ShowImage":
+                        script.ScriptLines.Add(TextFunctions.ShowImage.FromXML(element));
+                        break;
+                    case "AddImage":
+                        script.ScriptLines.Add(TextFunctions.AddImage.FromXML(element));
+                        break;
+                    case "GetItemName":
+                        script.ScriptLines.Add(ItemManagement.GetItemName.FromXML(element));
+                        break;
+                    case "SetItemName":
+                        script.ScriptLines.Add(ItemManagement.SetItemName.FromXML(element));
+                        break;
                     default:
                         break;
                 }

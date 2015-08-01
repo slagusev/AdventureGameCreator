@@ -14,7 +14,10 @@ namespace Player
 {
     class Game : INotifyPropertyChanged
     {
-
+        public Game()
+        {
+            this.CurrentlyEquippedText.CollectionChanged += (s, e) => { RaisePropertyChanged(CurrentlyEquippedTextPropertyName); };
+        }
         public Dictionary<Guid, RoomWrapper> Rooms = new Dictionary<Guid, RoomWrapper>();
         public Dictionary<Guid, ZoneWrapper> Zones = new Dictionary<Guid, ZoneWrapper>();
         public Dictionary<Guid, VariableWrapper> VarById = new Dictionary<Guid, VariableWrapper>();
@@ -232,14 +235,23 @@ namespace Player
         }
         public void RefreshCurrentlyEquippedText()
         {
+            CurrentlyEquippedText.Clear();
             if (this.EquippedItems.Count() > 0)
             {
-                CurrentlyEquippedText = "Equipped Items:";
-                CurrentlyEquippedText += "\n\n";
+                CurrentlyEquippedText.Add("Equipped Items:");
+                //CurrentlyEquippedText.Add("\n\n");
+                ObservableCollection<object> equipped = new ObservableCollection<object>();
                 foreach (var a in this.EquippedItems)
                 {
-                    CurrentlyEquippedText += a.Key.Name + ": " + (a.Value != null ? a.Value.CurrentName : "Nothing") + "\n";
+                    equipped.Add(a.Key.Name + ": ");
+                    if (a.Value != null && a.Value.CurrentIconPath != null && !string.IsNullOrWhiteSpace(a.Value.CurrentIconPath.Path))
+                    {
+                        equipped.Add(new ImageRef(a.Value.CurrentIconPath, 24, 24));
+                    }
+                    equipped.Add(a.Value != null ? a.Value.CurrentName : "Nothing");
+                    equipped.Add("\n");
                 }
+                CurrentlyEquippedText.Add(equipped);
             }
         }
         /// <summary>
@@ -247,13 +259,13 @@ namespace Player
         /// </summary>
         public const string CurrentlyEquippedTextPropertyName = "CurrentlyEquippedText";
 
-        private string _currentlyEquippedText = "";
+        private ObservableCollection<object> _currentlyEquippedText = new ObservableCollection<object>();
 
         /// <summary>
         /// Sets and gets the CurrentlyEquippedText property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public string CurrentlyEquippedText
+        public ObservableCollection<object> CurrentlyEquippedText
         {
             get
             {

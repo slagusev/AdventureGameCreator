@@ -47,7 +47,6 @@ namespace Player
                 OpenGame(ofd.FileName);
             }
         }
-
         private void OpenGame(string fileName)
         {
             FileStream fs = new FileStream(fileName, FileMode.Open);
@@ -56,6 +55,7 @@ namespace Player
             sr.Close();
 
             var mvm = new MainViewModel();
+            mvm.Location = fileName;
             //player.DataContext = mvm;
             mvm.CurrentGame = Game.FromXml(xml);
 

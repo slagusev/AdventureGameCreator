@@ -1,0 +1,18 @@
+﻿<Window x:Class="Editor.ScriptEditors.GetItemNameEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        Title="Get Item Name" Height="550" Width="400">
+    <Grid>
+        <StackPanel>
+            <TextBlock>Get name of Item:</TextBlock>
+            <Controls:VariableSelector Height="200" SelectedItem="{Binding ItemVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowDateTime="False" ShowItems="True" ShowNumber="False" ShowString="False">
+                
+            </Controls:VariableSelector>
+            <CheckBox IsChecked="{Binding UseDefaultName}">Use the item's Original name rather than its Current name</CheckBox>
+            <TextBlock>Store the value in the following variable:</TextBlock>
+            <Controls:VariableSelector Height="200" SelectedItem="{Binding StringVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowDateTime="False" ShowItems="False" ShowNumber="False"/>
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

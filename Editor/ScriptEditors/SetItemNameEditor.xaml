@@ -1,0 +1,17 @@
+﻿<Window x:Class="Editor.ScriptEditors.SetItemNameEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Editor.Editors"
+        Title="Set Item Name" Height="550" Width="400">
+    <Grid>
+        <StackPanel>
+            <TextBlock>Change name of Item:</TextBlock>
+            <Controls:VariableSelector Height="200" SelectedItem="{Binding ItemVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowDateTime="False" ShowItems="True" ShowNumber="False" ShowString="False">
+
+            </Controls:VariableSelector>
+            <TextBlock>Change the name to the following value:</TextBlock>
+            <Controls:VariableSelector Height="200" SelectedItem="{Binding StringVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowDateTime="False" ShowItems="False" ShowNumber="False"/>
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

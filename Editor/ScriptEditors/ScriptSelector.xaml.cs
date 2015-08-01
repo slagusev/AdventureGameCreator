@@ -339,5 +339,25 @@ namespace Editor.ScriptEditors
             LoadWindow(new ScriptEditors.ForEachInArrayEditor(), new Scripter.Arrays.ForEachInArray(script));
         }
 
+        private void displayImage_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.ShowImageEditor(), new Scripter.TextFunctions.ShowImage());
+        }
+
+        private void addImage_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.AddImageEditor(), new Scripter.TextFunctions.AddImage());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.GetItemNameEditor(), new Scripter.ItemManagement.GetItemName());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.SetItemNameEditor(), new Scripter.ItemManagement.SetItemName());
+        }
+
     }
 }

@@ -286,7 +286,7 @@ namespace Editor.Scripter.Flow
                 {
                     return;
                 }
-                if (value)
+                if (value && !IsSet && !IsAppendToStart && !IsAppendToEnd)
                     IsSet = true;
                 _isString = value;
                 if (value)
@@ -336,6 +336,74 @@ namespace Editor.Scripter.Flow
                     IsRandomized = false;
                 }
                 RaisePropertyChanged(IsSetPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsAppendToStart" /> property's name.
+        /// </summary>
+        public const string AppendToStartPropertyName = "AppendToStart";
+
+        private bool _appendToStart = false;
+
+        /// <summary>
+        /// Sets and gets the AppendToStart property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsAppendToStart
+        {
+            get
+            {
+                return _appendToStart;
+            }
+
+            set
+            {
+                if (_appendToStart == value)
+                {
+                    return;
+                }
+                if (value)
+                {
+                    IsSet = false;
+                    IsAppendToEnd = false;
+                }
+                _appendToStart = value;
+                RaisePropertyChanged(AppendToStartPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsAppendToEnd" /> property's name.
+        /// </summary>
+        public const string IsAppendToEndPropertyName = "IsAppendToEnd";
+
+        private bool _appendToEnd = false;
+
+        /// <summary>
+        /// Sets and gets the IsAppendToEnd property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsAppendToEnd
+        {
+            get
+            {
+                return _appendToEnd;
+            }
+
+            set
+            {
+                if (_appendToEnd == value)
+                {
+                    return;
+                }
+                if (value)
+                {
+                    IsSet = false;
+                    IsAppendToStart = false;
+                }
+                _appendToEnd = value;
+                RaisePropertyChanged(IsAppendToEndPropertyName);
             }
         }
 
@@ -965,6 +1033,10 @@ namespace Editor.Scripter.Flow
             string action = "";
             if (IsSet)
                 action = "Set";
+            if (IsAppendToEnd)
+                action = "AppendToEnd";
+            if (IsAppendToStart)
+                action = "AppendToStart";
             if (IsIncrement)
                 action = "Increment";
             if (IsDecrement)
@@ -1043,6 +1115,12 @@ namespace Editor.Scripter.Flow
                 {
                     case "Set":
                         sv.IsSet = true;
+                        break;
+                    case "AppendToStart":
+                        sv.IsAppendToStart = true;
+                        break;
+                    case "AppendToEnd":
+                        sv.IsAppendToEnd = true;
                         break;
                     case "Increment":
                         sv.IsIncrement = true;

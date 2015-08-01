@@ -48,7 +48,9 @@
                 <GroupBox Header="Text Functionality" >
                     <StackPanel >
                         <Button x:Name="displayText" Click="displayText_Click" Content="Display Text..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" />
+                        <Button x:Name="displayImage" Content="Display Image..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" Click="displayImage_Click" />
                         <Button x:Name="addText" Click="addText_Click" Content="Add Text..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" />
+                        <!--<Button x:Name="addImage" Content="Add Image..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" Click="addImage_Click" />-->
                         <Button x:Name="startConversation" Click="startConversation_Click" Content="Start Conversation..." Visibility="{Binding CanStartConversations, Converter={StaticResource VisibilityConverter}}" />
                         <Button x:Name="goToStage" Click="goToStage_Click_1"  Content="Go to Conversation Stage..." Visibility="{Binding IsInConversation, Converter={StaticResource VisibilityConverter}}" />
                     </StackPanel>
@@ -66,6 +68,9 @@
                         <Button Content="Get Equipped Item..." x:Name="getEquippedItem" Visibility="{Binding CanSetVariable, Converter={StaticResource VisibilityConverter}}" Click="getEquippedItem_Click"></Button>
                         <Button Content="Force Equip..." x:Name="forceEquip" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}" Click="forceEquip_Click"></Button>
                         <Button Content="Force Unequip..." x:Name="forceUnequip" Visibility="{Binding CanAddItem, Converter={StaticResource VisibilityConverter}}" Click="forceUnequip_Click"></Button>
+                        <Button Content="Get Item Name..." Click="Button_Click"></Button>
+                        <Button Content="Change Item Name..." Click="Button_Click_1"></Button>
+                        <Button Content="Change Item Icon..."></Button>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

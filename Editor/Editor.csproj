@@ -74,6 +74,9 @@
     <Compile Include="Editors\ConversationEditor.xaml.cs">
       <DependentUpon>ConversationEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ImageFinder.xaml.cs">
+      <DependentUpon>ImageFinder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\ItemSelector.xaml.cs">
       <DependentUpon>ItemSelector.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,9 @@
     <Compile Include="ObjectTypes\VarRef.cs" />
     <Compile Include="ObjectTypes\Zone.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ScriptEditors\AddImageEditor.xaml.cs">
+      <DependentUpon>AddImageEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\AddItemEditor.xaml.cs">
       <DependentUpon>AddItemEditor.xaml</DependentUpon>
     </Compile>
@@ -212,6 +218,9 @@
     <Compile Include="ScriptEditors\GetEquipmentSlotEditor.xaml.cs">
       <DependentUpon>GetEquipmentSlotEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\GetItemNameEditor.xaml.cs">
+      <DependentUpon>GetItemNameEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\GetItemPropertyEditor.xaml.cs">
       <DependentUpon>GetItemPropertyEditor.xaml</DependentUpon>
     </Compile>
@@ -230,11 +239,17 @@
     <Compile Include="ScriptEditors\ScriptSelector.xaml.cs">
       <DependentUpon>ScriptSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\SetItemNameEditor.xaml.cs">
+      <DependentUpon>SetItemNameEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\SetItemPropertyEditor.xaml.cs">
       <DependentUpon>SetItemPropertyEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\SetVariableEditor.xaml.cs">
       <DependentUpon>SetVariableEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\ShowImageEditor.xaml.cs">
+      <DependentUpon>ShowImageEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\StartConversationEditor.xaml.cs">
       <DependentUpon>StartConversationEditor.xaml</DependentUpon>
@@ -257,18 +272,22 @@
     <Compile Include="Scripter\ItemManagement\ForceUnequip.cs" />
     <Compile Include="Scripter\ItemManagement\GetCurrentItem.cs" />
     <Compile Include="Scripter\ItemManagement\GetEquipmentSlot.cs" />
+    <Compile Include="Scripter\ItemManagement\GetItemName.cs" />
     <Compile Include="Scripter\ItemManagement\GetItemProperty.cs" />
     <Compile Include="Scripter\ItemManagement\AddItemToInventory.cs" />
     <Compile Include="Scripter\ItemManagement\RemoveItem.cs" />
     <Compile Include="Scripter\ItemManagement\RemoveThisItem.cs" />
+    <Compile Include="Scripter\ItemManagement\SetItemName.cs" />
     <Compile Include="Scripter\ItemManagement\SetItemProperty.cs" />
     <Compile Include="Scripter\Misc\Blank.cs" />
     <Compile Include="Scripter\Misc\ChangeRoom.cs" />
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />
     <Compile Include="Scripter\ScriptLine.cs" />
+    <Compile Include="Scripter\TextFunctions\AddImage.cs" />
     <Compile Include="Scripter\TextFunctions\AddText.cs" />
     <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
+    <Compile Include="Scripter\TextFunctions\ShowImage.cs" />
     <Compile Include="Scripter\TextFunctions\StartConversation.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="VariableSelectorConverter.cs" />
@@ -298,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ConversationEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ImageFinder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,6 +448,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\AddImageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\AddItemEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -477,6 +504,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\GetItemNameEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\GetItemPropertyEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -501,11 +532,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\SetItemNameEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\SetItemPropertyEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\SetVariableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\ShowImageEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

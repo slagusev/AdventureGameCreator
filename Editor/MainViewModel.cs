@@ -836,6 +836,87 @@ namespace Editor
         {
             ArrayGroups = new GenericGroup<VarArray>(this.Arrays, a => a.Group, a => a.Name);
         }
+        public static string GetRelativePath(string MainFile, string RelativeFile)
+        {
+            var mainSplit = MainFile.Split('\\');
+            var relativeSplit = RelativeFile.Split('\\');
+            int i = 0;
+            while (i < mainSplit.Length && i < relativeSplit.Length && mainSplit[i] == relativeSplit[i])
+            {
+                i++;
+            }
+            if (i == mainSplit.Length-1 && i == relativeSplit.Length-1)
+            {
+                //Example: c:\src\main.xml and c:\src\relative.jpg
+                return ".\\" + relativeSplit[i]; //In same directory
+            }
+            else if (i < mainSplit.Length-1)
+            {
+                //Example: c:\src\file\main.xml and c:\img\relative.jpg
+                //Length of c:\src\file\main.xml: 4
+                //Length of c:\img\relative.jpg: 3
+                //Value of i: 1
+                //Relative path: ..\..\img\relative.jpg
+                string result = "";
+                for (int j = i+1; j < mainSplit.Length; j++)
+                {
+                    result += "..\\";
+                }
+                for (int j = i; j < relativeSplit.Length - 1; j++)
+                { 
+                    result += relativeSplit[j] + "\\";
+                }
+                result += relativeSplit[relativeSplit.Length - 1];
+                return result;
+            }
+            else
+            {
+                string result = ".\\";
+                for (int j = i; j < relativeSplit.Length - 1; j++)
+                { 
+                    result += relativeSplit[j] + "\\";
+                }
+                result += relativeSplit[relativeSplit.Length - 1];
+                return result;
+            }
+        }
+        public static string AbsolutePath(string MainFile, string RelativePath)
+        {
+            var mainSplit = MainFile.Split('\\');
+            var relativeSplit = RelativePath.Split('\\');
+            if (RelativePath.StartsWith(".\\"))
+            {
+                string result = "";
+                for (var i = 0; i < mainSplit.Length - 1; i++)
+                {
+                    result += mainSplit[i] + "\\";
+                }
+                for (var i = 1; i < relativeSplit.Length - 1; i++)
+                {
+                    result += relativeSplit[i] + "\\";
+                }
+                return result + relativeSplit[relativeSplit.Length-1];
 
+            }
+            else
+            {
+                var dotCount = 0;
+                while (dotCount < relativeSplit.Length && relativeSplit[dotCount] == "..")
+                {
+                    dotCount++;
+                }
+                var result = "";
+                for (var i = 0; i < mainSplit.Length - dotCount - 1; i++ )
+                {
+                    result += mainSplit[i] + "\\";
+                }
+                for (var i = dotCount; i < relativeSplit.Length - 1; i++)
+                {
+                    result += relativeSplit[i] + "\\";
+                }
+                result += relativeSplit[relativeSplit.Length - 1];
+                return result;
+            }
+        }
     }
 }

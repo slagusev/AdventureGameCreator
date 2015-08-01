@@ -43,7 +43,9 @@
                 </StackPanel>
                 <!--Only show this with numbers and dates-->
                 <CheckBox Margin="5" IsChecked="{Binding IsMultiply, Mode=TwoWay}"  Content="Multiply" Visibility="{Binding IsNumber, Converter={StaticResource VisibilityConverter}}"/>
-                <!--Only show this with numbers -->
+                <!--Only show this with strings -->
+                <CheckBox Margin="5" IsChecked="{Binding IsAppendToEnd, Mode=TwoWay}"  Content="Append To End" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}}"/>
+                <CheckBox Margin="5" IsChecked="{Binding IsAppendToStart, Mode=TwoWay}"  Content="Append To Start" Visibility="{Binding IsString, Converter={StaticResource VisibilityConverter}}"/>
 
             </StackPanel>
             <StackPanel Orientation="Horizontal">

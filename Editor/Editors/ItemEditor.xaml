@@ -42,8 +42,11 @@
                 </StackPanel>
             </Expander>
             <Expander Header="Description" Margin="20,0,5,0">
-
-                <Controls:ScriptControl Height="200" DataContext="{Binding Description}"></Controls:ScriptControl>
+                <StackPanel>
+                    <Controls:ScriptControl Height="200" DataContext="{Binding Description}"></Controls:ScriptControl>
+                    <TextBlock>Icon:</TextBlock>
+                    <Controls:ImageFinder Height="200" Width="300" HorizontalAlignment="Left" Path="{Binding Icon, Mode=TwoWay}"></Controls:ImageFinder>
+                </StackPanel>
             </Expander>
             <Expander Header="On Use" Margin="20,0,5,0">
                 <Controls:ScriptControl Height="200" DataContext="{Binding OnUse}"></Controls:ScriptControl>
@@ -143,6 +146,7 @@
                     </StackPanel>
                 </Grid>
             </Expander>
+            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

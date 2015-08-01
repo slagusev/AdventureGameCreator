@@ -14,6 +14,14 @@ namespace Player.ObjectTypesWrappers
         {
             item = i;
             CurrentName = i.DefaultName;
+            if (!string.IsNullOrWhiteSpace(i.Icon))
+            {
+                CurrentIconPath = new ImageRef { Path = Editor.MainViewModel.AbsolutePath(MainViewModel.GetMainViewModelStatic().Location, i.Icon) };
+            }
+            else
+            {
+                CurrentIconPath = new ImageRef { Path = "" };
+            }
             foreach (var property in i.ItemProperties)
             {
                 var baseVar = property.BaseVariable;
@@ -133,6 +141,36 @@ namespace Player.ObjectTypesWrappers
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CurrentIconPath" /> property's name.
+        /// </summary>
+        public const string CurrentIconPathPropertyName = "CurrentIconPath";
+
+        private ImageRef _currentIconPath = null;
+
+        /// <summary>
+        /// Sets and gets the CurrentIconPath property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ImageRef CurrentIconPath
+        {
+            get
+            {
+                return _currentIconPath;
+            }
+
+            set
+            {
+                if (_currentIconPath == value)
+                {
+                    return;
+                }
+
+                _currentIconPath = value;
+                RaisePropertyChanged(CurrentIconPathPropertyName);
             }
         }
     }

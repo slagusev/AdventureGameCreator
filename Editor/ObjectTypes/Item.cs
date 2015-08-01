@@ -514,6 +514,7 @@ namespace Editor.ObjectTypes
                 new XElement("Removable", this.Removable),
                 new XElement("Properties", from a in this.ItemProperties select a.ToXml()),
                 new XElement("OnUse", this.OnUse.ToXML()),
+                new XElement("Icon", this.Icon),
                 new XElement("IsEquipment", this.IsEquipment),
                 EquipmentRef.ToXML());
                                             
@@ -572,8 +573,41 @@ namespace Editor.ObjectTypes
                     i.EquipmentRef = Equipment.FromXML(xml.Element("Equipment"));
                 }
             }
+            if (xml.Element("Icon") != null)
+            {
+                i.Icon = xml.Element("Icon").Value;
+            }
             return i;
 
+        }
+        /// <summary>
+        /// The <see cref="Icon" /> property's name.
+        /// </summary>
+        public const string IconPropertyName = "Icon";
+
+        private string _icon = "";
+
+        /// <summary>
+        /// Sets and gets the Image property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string Icon
+        {
+            get
+            {
+                return _icon;
+            }
+
+            set
+            {
+                if (_icon == value)
+                {
+                    return;
+                }
+
+                _icon = value;
+                RaisePropertyChanged(IconPropertyName);
+            }
         }
     }
 
