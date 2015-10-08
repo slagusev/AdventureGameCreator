@@ -41,6 +41,9 @@
                     <StackPanel>
                         <Button x:Name="addToArray" Content="Add To Array..." Click="addToArray_Click"/>
                         <Button x:Name="iterateThroughArray" Content="Iterate Through Array..." Click="iterateThroughArray_Click"/>
+                        <Button x:Name="getAllItems" Content="Get Player's Inventory" Click="getAllItems_Click"/>
+                        <Button x:Name="getSomeItems" Content="Get All in Inventory of Type" Click="getSomeItems_Click"/>
+                        <Button x:Name="concatenateArray" Content="Concatenate Array" Click="concatArray_Click"/>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
@@ -50,7 +53,7 @@
                         <Button x:Name="displayText" Click="displayText_Click" Content="Display Text..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" />
                         <Button x:Name="displayImage" Content="Display Image..." Visibility="{Binding CanDisplayText, Converter={StaticResource VisibilityConverter}}" Click="displayImage_Click" />
                         <Button x:Name="addText" Click="addText_Click" Content="Add Text..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" />
-                        <!--<Button x:Name="addImage" Content="Add Image..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" Click="addImage_Click" />-->
+                        <Button x:Name="addImage" Content="Add Image..." Visibility="{Binding CanAddText, Converter={StaticResource VisibilityConverter}}" Click="addImage_Click" />
                         <Button x:Name="startConversation" Click="startConversation_Click" Content="Start Conversation..." Visibility="{Binding CanStartConversations, Converter={StaticResource VisibilityConverter}}" />
                         <Button x:Name="goToStage" Click="goToStage_Click_1"  Content="Go to Conversation Stage..." Visibility="{Binding IsInConversation, Converter={StaticResource VisibilityConverter}}" />
                     </StackPanel>

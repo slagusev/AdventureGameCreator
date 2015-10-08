@@ -359,5 +359,20 @@ namespace Editor.ScriptEditors
             LoadWindow(new ScriptEditors.SetItemNameEditor(), new Scripter.ItemManagement.SetItemName());
         }
 
+        private void getAllItems_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.GetAllItemsEditor(), new Scripter.Arrays.GetAllItems());
+        }
+
+        private void getSomeItems_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.GetAllItemsOfTypeEditor(), new Scripter.Arrays.GetAllItemsOfType());
+        }
+
+        private void concatArray_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.ConcatenateArrayEditor(), new Scripter.Arrays.ConcatenateArray());
+        }
+
     }
 }

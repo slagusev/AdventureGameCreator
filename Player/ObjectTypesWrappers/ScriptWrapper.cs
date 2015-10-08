@@ -16,10 +16,11 @@ namespace Player.ObjectTypesWrappers
             ScriptBase = s;
 
             VariableResult = null;
+            TextResult = new List<object>();
         }
         Script ScriptBase = null;
         public ItemInstance ItemBase = null;
-        public string TextResult { get; set; }
+        public List<object> TextResult { get; set; }
         public VarRef VariableResult { get; set; }
         public bool IsRootScript = false;
         public Dictionary<Guid, VariableWrapper> localVars = new Dictionary<Guid,VariableWrapper>();
@@ -49,7 +50,7 @@ namespace Player.ObjectTypesWrappers
         }
         public bool? Execute()
         {
-            TextResult = "";
+            TextResult.Clear();
             if (parent == null)
             {
                 foreach (var a in MainViewModel.GetMainViewModelStatic().CurrentGame.VarById.Where(a => a.Value.VariableBase.Name.StartsWith("_")))
@@ -62,7 +63,7 @@ namespace Player.ObjectTypesWrappers
                     }
                 }
             }
-            foreach (var line in ScriptBase.ScriptLines)
+            foreach (var line in ScriptBase.ScriptLines.Where(a => a.GetType() != typeof(CommentWrapper)))
             {
                 ScriptLineWrapper currentLine = ScriptLineWrapper.GetScriptLineWrapper(line, this);
                 if (currentLine != null)
@@ -72,6 +73,7 @@ namespace Player.ObjectTypesWrappers
                     if (result != null)
                         return result;
                 }
+                //currentLine.Dispose();
             }
             return null;
         }

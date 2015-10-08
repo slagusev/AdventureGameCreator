@@ -236,6 +236,15 @@ namespace Editor.Scripter
                     case "SetItemName":
                         script.ScriptLines.Add(ItemManagement.SetItemName.FromXML(element));
                         break;
+                    case "GetAllItems":
+                        script.ScriptLines.Add(Arrays.GetAllItems.FromXML(element));
+                        break;
+                    case "GetAllItemsOfType":
+                        script.ScriptLines.Add(Arrays.GetAllItemsOfType.FromXML(element));
+                        break;
+                    case "ConcatenateArray":
+                        script.ScriptLines.Add(Arrays.ConcatenateArray.FromXML(element));
+                        break;
                     default:
                         break;
                 }

@@ -43,6 +43,7 @@ namespace Player.ScriptLineTypes
                     return false;
                 }
             }
+            
             if (line.IsDateTime)
             {
                 DateTime right = DateTime.MinValue;
@@ -119,15 +120,25 @@ namespace Player.ScriptLineTypes
                 if (rightVar != null) right = parent.GetVarById(line.TargetVar.LinkedVarId).CurrentItemValue;
                 else
                 {
-                    if (line.ItemValue != null && line.ItemValue.LinkedItem != null)
+                    if (line.IsItemInInventory)
                     {
-                        right = new ItemInstance(line.ItemValue.LinkedItem);
+                        var itemInInventory = MainViewModel.GetMainViewModelStatic().CurrentGame.PlayerInventory.Where(a => a.item.ItemID == line.ItemValue.LinkedItemId).FirstOrDefault();
+
+                        right = itemInInventory;
                         left.CurrentItemValue = right;
                     }
                     else
                     {
-                        MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!", this.parent);
-                        return false;
+                        if (line.ItemValue != null && line.ItemValue.LinkedItem != null)
+                        {
+                            right = new ItemInstance(line.ItemValue.LinkedItem);
+                            left.CurrentItemValue = right;
+                        }
+                        else
+                        {
+                            MainViewModel.WriteText("ERROR: Item " + line.ItemValue.LinkedItemId + " Unknown!", this.parent);
+                            return false;
+                        }
                     }
                 }
 

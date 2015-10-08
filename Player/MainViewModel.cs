@@ -18,6 +18,7 @@ namespace Player
         {
             WireCommands();
             this.FeedbackText.CollectionChanged += (s, e) => { RaisePropertyChanged(FeedbackTextPropertyName);  };
+            this.CurrentItemDescription.CollectionChanged += (s, e) => { RaisePropertyChanged(CurrentItemDescriptionPropertyName); };
             //this.ViewEquipment();
         }
         /// <summary>
@@ -141,6 +142,13 @@ namespace Player
 
 
                 mvm.FeedbackText.Add(line + "\n\n");
+                if (mvm.FeedbackText.Count() > 40)
+                {
+                    while (mvm.FeedbackText.Count() > 40)
+                    {
+                        mvm.FeedbackText.Remove(mvm.FeedbackText.First());
+                    }
+                }
             }
         }
         public static void WriteImage(ImageRef line, ScriptWrapper script, bool includeBar = false)
@@ -232,6 +240,7 @@ namespace Player
             
             OutputCurrentRoomDescription();
             MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
+            GC.Collect();
         }
         public void ExamineObject(InteractableWrapper interactable)
         {
@@ -436,11 +445,15 @@ namespace Player
                 _selectedItem = value;
                 if (SelectedItem != null)
                 {
-                    CurrentItemDescription = SelectedItem.GetDescription();
+                    CurrentItemDescription.Clear();
+                    foreach (var res in SelectedItem.GetDescription())
+                    {
+                        CurrentItemDescription.Add(res);
+                    }
                 }
                 else
                 {
-                    CurrentItemDescription = "";
+                    CurrentItemDescription.Clear();
                 }
                 RaisePropertyChanged(SelectedItemPropertyName);
             }
@@ -477,11 +490,16 @@ namespace Player
                 {
                     
                     SelectedEquippedItem = null;
-                    CurrentItemDescription = SelectedEquippableItem.CurrentName + ":\n\n" + SelectedEquippableItem.GetDescription();
+                    CurrentItemDescription.Clear();
+                    CurrentItemDescription.Add(SelectedEquippableItem.CurrentName + ":\n\n");
+                    foreach (var a in SelectedEquippableItem.GetDescription())
+                    {
+                        CurrentItemDescription.Add(a);
+                    }
                 }
                 else
                 {
-                    CurrentItemDescription = "";
+                    CurrentItemDescription.Clear();
                 }
             }
         }
@@ -516,11 +534,17 @@ namespace Player
                 {
                     
                     SelectedEquippableItem = null;
-                    CurrentItemDescription = SelectedEquippedItem.CurrentName + " (Equipped)\n\n" + SelectedEquippedItem.GetDescription();
+                    CurrentItemDescription.Clear();
+
+                    CurrentItemDescription.Add(SelectedEquippedItem.CurrentName + " (Equipped)\n\n");
+                    foreach (var a in SelectedEquippedItem.GetDescription())
+                    {
+                        CurrentItemDescription.Add(a);
+                    }
                 }
                 else
                 {
-                    CurrentItemDescription = "";
+                    CurrentItemDescription.Clear();
                 }
             }
         }
@@ -529,13 +553,13 @@ namespace Player
         /// </summary>
         public const string CurrentItemDescriptionPropertyName = "CurrentItemDescription";
 
-        private string _currentItemDescription = "";
+        private ObservableCollection<object> _currentItemDescription = new ObservableCollection<object>();
 
         /// <summary>
         /// Sets and gets the CurrentItemDescription property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public string CurrentItemDescription
+        public ObservableCollection<object> CurrentItemDescription
         {
             get
             {

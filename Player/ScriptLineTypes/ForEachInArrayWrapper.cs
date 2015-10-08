@@ -32,15 +32,16 @@ namespace Player.ScriptLineTypes
                 foreach (var a in copiedArray)
                 {
                     //First copy the value
-                    var variable = game.VarById[line.LinkedVar.LinkedVarId];
+                    ScriptWrapper sw = new ScriptWrapper(line.ExecutingScript);
+                    sw.parent = this.parent;
+                    var variable = sw.GetVarById(line.LinkedVar.LinkedVarId);
                     if (line.LinkedArray.Value.IsCommonEvent) variable.CurrentCommonEventValue = (CommonEventRef)a;
                     if (line.LinkedArray.Value.IsString) variable.CurrentStringValue = a.ToString();
                     if (line.LinkedArray.Value.IsNumber) variable.CurrentNumberValue = (int)a;
                     if (line.LinkedArray.Value.IsItem) variable.CurrentItemValue = (ItemInstance)a;
 
                     //Then execute the child script
-                    ScriptWrapper sw = new ScriptWrapper(line.ExecutingScript);
-                    sw.parent = this.parent;
+
                     var res = sw.Execute();
 
                     //If a true or false value was returned, finish the script immediately.

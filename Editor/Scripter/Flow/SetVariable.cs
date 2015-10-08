@@ -681,6 +681,7 @@ namespace Editor.Scripter.Flow
                     IsNumberStatic = IsNumber;
                     IsStringStatic = IsString;
                     IsVariable = false;
+                    IsItemInInventory = false;
                 }
                 else
                 {
@@ -717,9 +718,45 @@ namespace Editor.Scripter.Flow
                 if (value)
                 {
                     IsStatic = false;
+                    IsItemInInventory = false;
+                    
                 }
                 _isVariable = value;
                 RaisePropertyChanged(IsVariablePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsItemInInventory" /> property's name.
+        /// </summary>
+        public const string IsItemInInventoryPropertyName = "IsItemInInventory";
+
+        private bool _isItemInInventory = false;
+
+        /// <summary>
+        /// Sets and gets the IsItemInInventory property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsItemInInventory
+        {
+            get
+            {
+                return _isItemInInventory;
+            }
+
+            set
+            {
+                if (_isItemInInventory == value)
+                {
+                    return;
+                }
+                if (value)
+                {
+                    IsStatic = false;
+                    IsVariable = false;
+                }
+                _isItemInInventory = value;
+                RaisePropertyChanged(IsItemInInventoryPropertyName);
             }
         }
         /// <summary>
@@ -1058,7 +1095,7 @@ namespace Editor.Scripter.Flow
             }
             else
             {
-                xml.Add(new XElement("ValueType", "Static"));
+                xml.Add(new XElement("ValueType", IsItemInInventory ? "ItemInInventory" : "Static"));
                 if (IsDateTime)
                 {
                     xml.Add(new XElement("Days", Days));
@@ -1154,6 +1191,7 @@ namespace Editor.Scripter.Flow
                 }
                 else
                 {
+                    if (xml.Element("ValueType").Value == "ItemInInventory") sv.IsItemInInventory = true;
                     if (sv.IsDateTime)
                     {
                         if (xml.Element("Days") != null)
@@ -1268,6 +1306,10 @@ namespace Editor.Scripter.Flow
                     {
                         sb.Append(StringValue);
                     }
+                }
+                else if (IsItemInInventory)
+                {
+                    sb.Append("the first instance of " + ((ItemValue != null && ItemValue.LinkedItem != null) ? ItemValue.LinkedItem.ItemName : "UNKNOWN") + " in the player's inventory.");
                 }
                 else if (TargetVar != null && TargetVar.LinkedVariable != null)
                 {

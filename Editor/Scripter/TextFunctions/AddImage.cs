@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Editor.Scripter.TextFunctions
 {
-    class AddImage : ScriptLine
+    public class AddImage : ScriptLine
     {
         /// <summary>
         /// The <see cref="Path" /> property's name.
@@ -42,9 +42,9 @@ namespace Editor.Scripter.TextFunctions
         {
             return new XElement("AddImage", Path);
         }
-        public static ShowImage FromXML(XElement xml)
+        public static AddImage FromXML(XElement xml)
         {
-            return new ShowImage() { Path = xml.Value };
+            return new AddImage() { Path = xml.Value };
         }
         public override string Plaintext
         {

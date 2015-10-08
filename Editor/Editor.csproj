@@ -194,6 +194,9 @@
     <Compile Include="ScriptEditors\CommentEditor.xaml.cs">
       <DependentUpon>CommentEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\ConcatenateArrayEditor.xaml.cs">
+      <DependentUpon>ConcatenateArrayEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\ConditionEditor.xaml.cs">
       <DependentUpon>ConditionEditor.xaml</DependentUpon>
     </Compile>
@@ -211,6 +214,12 @@
     </Compile>
     <Compile Include="ScriptEditors\ForEachInArrayEditor.xaml.cs">
       <DependentUpon>ForEachInArrayEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\GetAllItemsEditor.xaml.cs">
+      <DependentUpon>GetAllItemsEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\GetAllItemsOfTypeEditor.xaml.cs">
+      <DependentUpon>GetAllItemsOfTypeEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\GetCurrentItemEditor.xaml.cs">
       <DependentUpon>GetCurrentItemEditor.xaml</DependentUpon>
@@ -255,7 +264,10 @@
       <DependentUpon>StartConversationEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Scripter\Arrays\AddToArray.cs" />
+    <Compile Include="Scripter\Arrays\ConcatenateArray.cs" />
     <Compile Include="Scripter\Arrays\ForEachInArray.cs" />
+    <Compile Include="Scripter\Arrays\GetAllItems.cs" />
+    <Compile Include="Scripter\Arrays\GetAllItemsOfType.cs" />
     <Compile Include="Scripter\Arrays\RemoveFromArray.cs" />
     <Compile Include="Scripter\Brancher.cs" />
     <Compile Include="Scripter\Conditions\Condition.cs" />
@@ -472,6 +484,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\ConcatenateArrayEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\ConditionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -493,6 +509,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\ForEachInArrayEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\GetAllItemsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\GetAllItemsOfTypeEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

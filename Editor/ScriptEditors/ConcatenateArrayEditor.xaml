@@ -1,0 +1,29 @@
+﻿<Window x:Class="Editor.ScriptEditors.ConcatenateArrayEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:Controls="clr-namespace:Editor.Editors"
+        xmlns:Editor="clr-namespace:Editor"
+        Title="Concatenate Array"  Height="500" Width="500">
+    <Window.Resources>
+        <Editor:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Margin="10,10,10,-10">
+            <TextBlock Margin="10"><Run Text="Choose the array:"/></TextBlock>
+            <Controls:ArraySelector SelectedItem="{Binding ArrayRef, Mode=TwoWay}" Height="150"></Controls:ArraySelector>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Seperating/Delimiting Characters</TextBlock>
+                <TextBox  Margin="5,0,0,0" Width="100" Text="{Binding Delimiter, Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Final Word</TextBlock>
+                <TextBox  Margin="5,0,0,0" Width="100" Text="{Binding FinalWord, Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <TextBlock Margin="10"><Run Text="Choose the object to add to the array:"/></TextBlock>
+
+            <Controls:VariableSelector Height="150" SelectedItem="{Binding VarRef, Mode=TwoWay}" ShowString="True" />
+            <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1" Content="OK"/>
+        </StackPanel>
+    </Grid>
+</Window>

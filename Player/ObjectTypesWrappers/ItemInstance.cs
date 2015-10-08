@@ -55,7 +55,7 @@ namespace Player.ObjectTypesWrappers
             
         }
 
-        public string GetDescription()
+        public List<object> GetDescription()
         {
             ScriptWrapper s = new ScriptWrapper(item.Description) { ItemBase = this };
             s.Execute();

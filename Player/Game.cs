@@ -17,6 +17,9 @@ namespace Player
         public Game()
         {
             this.CurrentlyEquippedText.CollectionChanged += (s, e) => { RaisePropertyChanged(CurrentlyEquippedTextPropertyName); };
+            this.PlayerDescription.CollectionChanged += (s, e) => { RaisePropertyChanged(PlayerDescriptionPropertyName); };
+            
+            
         }
         public Dictionary<Guid, RoomWrapper> Rooms = new Dictionary<Guid, RoomWrapper>();
         public Dictionary<Guid, ZoneWrapper> Zones = new Dictionary<Guid, ZoneWrapper>();
@@ -231,7 +234,11 @@ namespace Player
         {
             var wrapper = new ScriptWrapper(Settings.PlayerDescription);
             wrapper.Execute();
-            PlayerDescription = wrapper.TextResult;
+            PlayerDescription.Clear();
+            foreach (var res in wrapper.TextResult)
+            {
+                PlayerDescription.Add(res);
+            }
         }
         public void RefreshCurrentlyEquippedText()
         {
@@ -288,13 +295,13 @@ namespace Player
         /// </summary>
         public const string PlayerDescriptionPropertyName = "PlayerDescription";
 
-        private string _playerDescription = "Test";
+        private ObservableCollection<object> _playerDescription = new ObservableCollection<object>();
 
         /// <summary>
         /// Sets and gets the PlayerDescription property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public string PlayerDescription
+        public ObservableCollection<object> PlayerDescription
         {
             get
             {

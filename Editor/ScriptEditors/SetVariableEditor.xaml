@@ -65,6 +65,7 @@
                 <CheckBox Margin="5" IsChecked="{Binding IsStatic, Mode=TwoWay}" Content="New instance" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}" />
                 <CheckBox Margin="5" IsChecked="{Binding IsVariable, Mode=TwoWay}" Content="Variable" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}, ConverterParameter=Invert}"/>
                 <CheckBox Margin="5" IsChecked="{Binding IsVariable, Mode=TwoWay}" Content="Existing" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"/>
+                <CheckBox Margin="5" IsChecked="{Binding IsItemInInventory, Mode=TwoWay}" Content="Item in Inventory" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"/>
             </StackPanel>
             <TextBlock Visibility="{Binding IsRandomized, Converter={StaticResource VisibilityConverter}}">Pick a random number between 0 and...</TextBlock>
             <StackPanel Visibility="{Binding IsDateTimeStatic, Converter={StaticResource VisibilityConverter}}">
@@ -108,6 +109,10 @@
             <Grid Visibility="{Binding IsStatic, Converter={StaticResource VisibilityConverter}}">
             <Editors:ItemSelector SelectedItem="{Binding ItemValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"></Editors:ItemSelector>
             <Editors:CommonEventSelector Margin="10,0,0,0" SelectedItem="{Binding CommonEventValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsCommonEventRef, Converter={StaticResource VisibilityConverter}}"/>
+            </Grid>
+            <Grid Visibility="{Binding IsItemInInventory, Converter={StaticResource VisibilityConverter}}">
+                <Editors:ItemSelector SelectedItem="{Binding ItemValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsItem, Converter={StaticResource VisibilityConverter}}"></Editors:ItemSelector>
+                <Editors:CommonEventSelector Margin="10,0,0,0" SelectedItem="{Binding CommonEventValue, Mode=TwoWay}"  Height="150" Visibility="{Binding IsCommonEventRef, Converter={StaticResource VisibilityConverter}}"/>
             </Grid>
             <Button HorizontalAlignment="Center" Width="100" Content="OK" Click="Button_Click_1"/>
         </StackPanel>

@@ -127,6 +127,10 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new ShowImageWrapper((ShowImage)line);
             }
+            if (lineType == typeof(AddImage))
+            {
+                lineWrapper = new AddImageWrapper((AddImage)line);
+            }
             if (lineType == typeof(SetItemName))
             {
                 lineWrapper = new SetItemNameWrapper((SetItemName)line);
@@ -134,6 +138,18 @@ namespace Player.ScriptLineTypes
             if (lineType == typeof(GetItemName))
             {
                 lineWrapper = new GetItemNameWrapper((GetItemName)line);
+            }
+            if (lineType == typeof(GetAllItems))
+            {
+                lineWrapper = new GetAllItemsWrapper((GetAllItems)line);
+            }
+            if (lineType == typeof(GetAllItemsOfType))
+            {
+                lineWrapper = new GetAllItemsOfTypeWrapper((GetAllItemsOfType)line);
+            }
+            if (lineType == typeof(ConcatenateArray))
+            {
+                lineWrapper = new ConcatenateArrayWrapper((ConcatenateArray)line);
             }
             if (lineWrapper != null)
             {
