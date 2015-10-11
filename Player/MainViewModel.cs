@@ -773,7 +773,7 @@ namespace Player
             {
                 FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
                 var sw = new StreamWriter(fs);
-                sw.Write(ToXML(sfd.FileName).ToString());
+                sw.Write(StringCompressor.CompressString(ToXML(sfd.FileName).ToString()));
                 sw.Flush();
                 sw.Close();
             }

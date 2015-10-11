@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,6 +101,7 @@
     <Compile Include="ScriptLineTypes\StartConversationWrapper.cs" />
     <Compile Include="ScriptLineTypes\StopGameWrapper.cs" />
     <Compile Include="ScriptLineTypes\StopProcessingWrapper.cs" />
+    <Compile Include="StringCompressor.cs" />
     <Page Include="MainPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

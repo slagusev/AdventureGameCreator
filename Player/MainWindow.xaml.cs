@@ -28,7 +28,7 @@ namespace Player
             InitializeComponent();
             if (!string.IsNullOrEmpty((App.Current.Resources["FileName"] ?? "").ToString()))
             {
-                OpenGame(App.Current.Resources["FileName"].ToString());
+                //OpenGame(App.Current.Resources["FileName"].ToString());
             }
         }
 
@@ -41,7 +41,11 @@ namespace Player
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML Files (*.xml)|*.xml";
-            if (ofd.ShowDialog().Value)
+            if (!string.IsNullOrEmpty((App.Current.Resources["FileName"] ?? "").ToString()))
+            {
+                OpenGame(App.Current.Resources["FileName"].ToString());
+            }
+            else if (ofd.ShowDialog().Value)
             {
 
                 OpenGame(ofd.FileName);
@@ -93,7 +97,7 @@ namespace Player
             {
                 FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
                 var sr = new StreamReader(fs);
-                var xml = XElement.Parse(sr.ReadToEnd());
+                var xml = XElement.Parse(StringCompressor.DecompressString(sr.ReadToEnd()));
                 sr.Close();
                 var mvm = MainViewModel.FromXML(xml,ofd.FileName);
                 if (mvm.CurrentGame.CurrentRoom == null)
