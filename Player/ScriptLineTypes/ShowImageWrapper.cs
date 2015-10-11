@@ -20,5 +20,9 @@ namespace Player.ScriptLineTypes
             MainViewModel.WriteImage(new ImageRef() { Path = Editor.MainViewModel.AbsolutePath(MainViewModel.GetMainViewModelStatic().Location, line.Path) }, this.parent, false);
             return null;
         }
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
     }
 }

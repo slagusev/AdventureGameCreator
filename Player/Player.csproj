@@ -99,6 +99,7 @@
     <Compile Include="ScriptLineTypes\ShowImageWrapper.cs" />
     <Compile Include="ScriptLineTypes\StartConversationWrapper.cs" />
     <Compile Include="ScriptLineTypes\StopGameWrapper.cs" />
+    <Compile Include="ScriptLineTypes\StopProcessingWrapper.cs" />
     <Page Include="MainPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

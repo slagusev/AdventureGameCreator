@@ -24,6 +24,7 @@ namespace Editor.ObjectTypes
             OnEquip.CanSetVariable = true;
             OnEquip.CanStopGame = true;
             OnEquip.CanStartConversations = true;
+            OnEquip.IsItemScript = true;
             OnEquip.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeItem);
             OnEquip.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeTrueFalse);
 

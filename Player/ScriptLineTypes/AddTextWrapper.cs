@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
 {
     class AddTextWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         AddText line;
         public AddTextWrapper(AddText at)
         {

@@ -9,6 +9,11 @@ namespace Player.ScriptLineTypes
 {
     class GetItemPropertyWrapper : ScriptLineWrapper
     {
+
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         GetItemProperty line;
         public GetItemPropertyWrapper(GetItemProperty gip)
         {

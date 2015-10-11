@@ -374,5 +374,13 @@ namespace Editor.ScriptEditors
             LoadWindow(new ScriptEditors.ConcatenateArrayEditor(), new Scripter.Arrays.ConcatenateArray());
         }
 
+        private void stopScript_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            var newStopProcessing = new StopProcessing();
+            script.AddBeforeSelected(newStopProcessing);
+            this.Close();
+        }
+
     }
 }

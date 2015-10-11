@@ -9,6 +9,11 @@ namespace Player.ScriptLineTypes
 {
     class ForceUnequipWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
+
         ForceUnequip line;
         public ForceUnequipWrapper(ForceUnequip fue)
         {

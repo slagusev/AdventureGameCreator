@@ -9,7 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class CommentWrapper : ScriptLineWrapper
     {
-
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return Line.ToXML();
+        }
         public CommentWrapper(Comment c)
         {
             Line = c;

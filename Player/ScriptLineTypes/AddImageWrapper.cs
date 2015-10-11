@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class AddImageWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         AddImage line;
         public AddImageWrapper(AddImage ai)
         {

@@ -280,6 +280,7 @@
     <Compile Include="Scripter\Flow\RunCommonEvent.cs" />
     <Compile Include="Scripter\Flow\SetVariable.cs" />
     <Compile Include="Scripter\Flow\StopGame.cs" />
+    <Compile Include="Scripter\Flow\StopProcessing.cs" />
     <Compile Include="Scripter\ItemManagement\ForceEquip.cs" />
     <Compile Include="Scripter\ItemManagement\ForceUnequip.cs" />
     <Compile Include="Scripter\ItemManagement\GetCurrentItem.cs" />

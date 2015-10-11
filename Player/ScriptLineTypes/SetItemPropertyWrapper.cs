@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class SetItemPropertyWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         SetItemProperty line;
         public SetItemPropertyWrapper(SetItemProperty sip)
         {

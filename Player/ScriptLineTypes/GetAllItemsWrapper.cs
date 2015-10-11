@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class GetAllItemsWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         GetAllItems line;
         public GetAllItemsWrapper(GetAllItems gal)
         {

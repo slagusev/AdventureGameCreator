@@ -11,6 +11,10 @@ namespace Player.ScriptLineTypes
 {
     class RunCommonEventWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         RunCommonEvent line;
         public RunCommonEventWrapper(RunCommonEvent rce)
         {

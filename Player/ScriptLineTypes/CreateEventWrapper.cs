@@ -10,6 +10,11 @@ namespace Player.ScriptLineTypes
 {
     class CreateEventWrapper : ScriptLineWrapper
     {
+
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public CreateEvent line;
         public CreateEventWrapper(CreateEvent ce)
         {

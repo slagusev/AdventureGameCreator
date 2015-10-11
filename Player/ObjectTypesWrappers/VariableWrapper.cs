@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player.ObjectTypesWrappers
 {
@@ -32,5 +33,25 @@ namespace Player.ObjectTypesWrappers
         public string CurrentStringValue { get; set; }
         public CommonEventRef CurrentCommonEventValue { get; set; }
         public ItemInstance CurrentItemValue { get; set; }
+
+        internal XElement ToXML()
+        {
+            return new XElement("Variable", "Id",
+                new XElement("CurrentNumberValue", CurrentNumberValue),
+                new XElement("CurrentStringValue", CurrentStringValue),
+                new XElement("CurrentCommonEventValue", CurrentCommonEventValue != null ?  CurrentCommonEventValue.LinkedCommonEventId : Guid.Empty),
+                new XElement("CurrentItemValue", CurrentItemValue != null ? CurrentItemValue.ToXML() : null));
+        }
+
+        internal static VariableWrapper FromXML(XElement xml, Game g, Variable baseVar)
+        {
+            return new VariableWrapper(baseVar)
+            {
+                CurrentNumberValue = Convert.ToInt32(xml.Element("CurrentNumberValue").Value),
+                CurrentStringValue = xml.Element("CurrentStringValue").Value,
+                CurrentCommonEventValue = new CommonEventRef(Guid.Parse(xml.Element("CurrentCommonEventValue").Value)),
+                CurrentItemValue = xml.Element("CurrentItemValue").Value != null && xml.Element("CurrentItemValue").Value != "" ? ItemInstance.FromXML(xml.Element("CurrentItemValue"), g) : null
+            };
+        }
     }
 }

@@ -143,7 +143,7 @@ namespace Editor.Scripter
 
         public static Script FromXML(XElement xml, Script baseScript)
         {
-            Script script = new Script(baseScript);
+            Script script = baseScript != null ? new Script(baseScript) : new Script();
             script.ScriptLines.Clear();
             foreach (var element in xml.Elements())
             {
@@ -244,6 +244,9 @@ namespace Editor.Scripter
                         break;
                     case "ConcatenateArray":
                         script.ScriptLines.Add(Arrays.ConcatenateArray.FromXML(element));
+                        break;
+                    case "StopProcessing":
+                        script.ScriptLines.Add(new Editor.Scripter.Flow.StopProcessing());
                         break;
                     default:
                         break;

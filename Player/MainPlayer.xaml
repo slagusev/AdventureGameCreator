@@ -143,7 +143,7 @@
                     <StackPanel>
                         <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Inventory" Command="{Binding ViewInventoryCommand, Source={StaticResource MainViewModelStatic}}" />
                         <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Equipment" Command="{Binding ViewEquipmentCommand, Source={StaticResource MainViewModelStatic}}" />
-
+                        <Button Width="150" Height="30" HorizontalAlignment="Center" Margin="10" Content="Save" Command="{Binding SaveCommand, Source={StaticResource MainViewModelStatic}}" />
                     </StackPanel>
 
                 </StackPanel>

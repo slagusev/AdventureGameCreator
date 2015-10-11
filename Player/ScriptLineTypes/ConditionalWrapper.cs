@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
 {
     class ConditionalWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public Conditional line = null;
         public ConditionalWrapper(Conditional c)
         {

@@ -10,7 +10,10 @@ namespace Player.ScriptLineTypes
     class AddToArrayWrapper : ScriptLineWrapper
     {
         AddToArray line = null;
-
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public AddToArrayWrapper(AddToArray ata)
         {
             line = ata;

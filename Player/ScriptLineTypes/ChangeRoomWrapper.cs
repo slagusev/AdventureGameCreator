@@ -10,7 +10,10 @@ namespace Player.ScriptLineTypes
     class ChangeRoomWrapper : ScriptLineWrapper
     {
         ChangeRoom line;
-
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public ChangeRoomWrapper(ChangeRoom cr)
         {
             line = cr;

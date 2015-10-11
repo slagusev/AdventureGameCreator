@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player.ObjectTypesWrappers
 {
@@ -23,6 +24,7 @@ namespace Player.ObjectTypesWrappers
         public List<object> TextResult { get; set; }
         public VarRef VariableResult { get; set; }
         public bool IsRootScript = false;
+        public bool StopExecution = false;
         public Dictionary<Guid, VariableWrapper> localVars = new Dictionary<Guid,VariableWrapper>();
         public bool isSubscript = false;
         public Dictionary<string, VariableWrapper> localVarsByName = new Dictionary<string, VariableWrapper>();
@@ -72,6 +74,14 @@ namespace Player.ObjectTypesWrappers
                     //Stop executing the script once a return statement has been triggered.
                     if (result != null)
                         return result;
+                }
+                if (StopExecution)
+                {
+                    if (this.parent != null && !this.IsRootScript )
+                    {
+                        this.parent.StopExecution = true;
+                    }
+                    break;
                 }
                 //currentLine.Dispose();
             }
@@ -138,6 +148,10 @@ namespace Player.ObjectTypesWrappers
                     return MainViewModel.GetMainViewModelStatic().CurrentGame.VarByName[name];
                 else return null;
             }
+        }
+        public XElement ToXML()
+        {
+            return this.ScriptBase.ToXML();
         }
     }
 }

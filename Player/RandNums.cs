@@ -60,7 +60,7 @@ namespace Player
         }
         public static int GetNextRandomInt(int max)
         {
-            return r.Next(max);
+            return r.Next(max+1);
         }
         public static TimeSpan GetRandomTimespan(long ticks)
         {

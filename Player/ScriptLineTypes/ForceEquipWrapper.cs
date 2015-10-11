@@ -9,6 +9,11 @@ namespace Player.ScriptLineTypes
 {
     class ForceEquipWrapper: ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
+
         ForceEquip line;
         public ForceEquipWrapper(ForceEquip fue)
         {

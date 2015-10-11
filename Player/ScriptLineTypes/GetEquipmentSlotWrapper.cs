@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
     class GetEquipmentSlotWrapper : ScriptLineWrapper
     {
         GetEquipmentSlot line;
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public GetEquipmentSlotWrapper(GetEquipmentSlot ges)
         {
             line = ges;

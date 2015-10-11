@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class GetCurrentItemWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         GetCurrentItem line;
         public GetCurrentItemWrapper(GetCurrentItem gci)
         {

@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace Player.ScriptLineTypes
 {
-    class StopGameWrapper : ScriptLineWrapper
+    class StopProcessingWrapper :   ScriptLineWrapper 
     {
         public override bool? Execute()
         {
-            MainViewModel.GetMainViewModelStatic().IsGameOver = true;
+            this.parent.StopExecution = true;
             return null;
         }
+
         public override System.Xml.Linq.XElement ToXML()
         {
-            return new StopGame().ToXML();
+            return new StopProcessing().ToXML();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player.ObjectTypesWrappers
 {
@@ -172,6 +173,45 @@ namespace Player.ObjectTypesWrappers
                 _currentIconPath = value;
                 RaisePropertyChanged(CurrentIconPathPropertyName);
             }
+        }
+
+        internal XElement ToXML()
+        {
+            return new XElement("Item",
+                                    new XElement("Properties", from a in this.Properties select new XElement("Property", new XElement("Name", a.Key), new XElement("Value", a.Value.ToXML()))),
+                                    new XElement("Name", this.CurrentName != this.item.DefaultName ? this.CurrentName : ""),
+                                    new XElement("IconPath", this.CurrentIconPath.Path != this.item.Icon ? this.CurrentIconPath.Path : ""),
+                                    new XElement("CanBeDropped",this.CanBeDropped != this.item.Removable ? this.CanBeDropped.ToString() : ""),
+                                    new XElement("ItemId", this.item.ItemID));
+        }
+
+        internal static ItemInstance FromXML(XElement xml, Game g)
+        {
+            ItemInstance i = new ItemInstance(new ItemRef { LinkedItemId = Guid.Parse(xml.Element("ItemId").Value) }.LinkedItem);
+            if (xml.Element("Name").Value != null && xml.Element("Name").Value != "")
+            {
+                i.CurrentName = xml.Element("Name").Value;
+            }
+            if (xml.Element("IconPath").Value != null && xml.Element("IconPath").Value != "")
+            {
+                i.CurrentIconPath = new ImageRef { Path = xml.Element("IconPath").Value } ;
+            }
+            if (xml.Element("CanBeDropped").Value != null && xml.Element("CanBeDropped").Value != "")
+            {
+                i.CanBeDropped = Convert.ToBoolean(xml.Element("IconPath").Value);
+            }
+            foreach (var property in xml.Element("Properties").Elements("Property").Where(a => i.Properties.ContainsKey(a.Element("Name").Value)))
+            {
+                
+                var propObj = i.Properties[property.Element("Name").Value];
+                var propVar = VariableWrapper.FromXML(property.Element("Value").Element("Variable"),g, propObj.VariableBase);
+                propObj.CurrentCommonEventValue = propVar.CurrentCommonEventValue;
+                propObj.CurrentStringValue = propVar.CurrentStringValue;
+                propObj.CurrentNumberValue = propVar.CurrentNumberValue;
+                propObj.CurrentItemValue = propVar.CurrentItemValue;
+            }
+
+            return i;
         }
     }
 }

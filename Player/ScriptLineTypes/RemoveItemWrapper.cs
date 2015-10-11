@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class RemoveItemWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         RemoveItem line;
 
         public RemoveItemWrapper(RemoveItem ri)

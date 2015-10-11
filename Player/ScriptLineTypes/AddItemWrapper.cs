@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
 {
     class AddItemWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return AddItemLine.ToXML();
+        }
         public AddItemToInventory AddItemLine = null;
         public AddItemWrapper(AddItemToInventory addItem)
         {

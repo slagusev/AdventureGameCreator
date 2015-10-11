@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player.ObjectTypesWrappers
 {
@@ -24,6 +25,19 @@ namespace Player.ObjectTypesWrappers
                 return res;
             }
             else return null;
+        }
+
+        public XElement ToXML()
+        {
+            return new XElement("ActiveEvent", new XElement("Condition", Condition.ToXML()), new XElement("Result", Result.ToXML())) ;
+        }
+        public static ActiveEvent FromXML(XElement xml)
+        {
+            return new ActiveEvent()
+            {
+                Condition = new ScriptWrapper(Editor.Scripter.Script.FromXML(xml.Element("Condition"), null)),
+                Result = new ScriptWrapper(Editor.Scripter.Script.FromXML(xml.Element("Result"), null))
+            };
         }
     }
 }

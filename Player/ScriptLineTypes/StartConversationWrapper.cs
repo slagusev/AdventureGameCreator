@@ -28,5 +28,9 @@ namespace Player.ScriptLineTypes
             }
             return false;
         }
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
     }
 }

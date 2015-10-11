@@ -173,5 +173,9 @@ namespace Player.ScriptLineTypes
             }
             return null;
         }
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
     }
 }

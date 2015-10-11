@@ -84,5 +84,35 @@ namespace Player
             }
             this.Close();
         }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Save Files (*.ags)|*.ags";
+            if (ofd.ShowDialog().Value)
+            {
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                var sr = new StreamReader(fs);
+                var xml = XElement.Parse(sr.ReadToEnd());
+                sr.Close();
+                var mvm = MainViewModel.FromXML(xml,ofd.FileName);
+                if (mvm.CurrentGame.CurrentRoom == null)
+                {
+                    System.Windows.MessageBox.Show("Error:\nThe player's starting room was not found. It may have been deleted");
+                }
+                else
+                {
+                    var player = new MainPlayer();
+
+                    mvm.OutputCurrentRoomDescription();
+
+
+
+
+                    player.Show();
+                }
+                this.Close();
+            }
+        }
     }
 }

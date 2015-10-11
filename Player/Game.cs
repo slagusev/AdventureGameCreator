@@ -253,7 +253,7 @@ namespace Player
                     equipped.Add(a.Key.Name + ": ");
                     if (a.Value != null && a.Value.CurrentIconPath != null && !string.IsNullOrWhiteSpace(a.Value.CurrentIconPath.Path))
                     {
-                        equipped.Add(new ImageRef(a.Value.CurrentIconPath, 24, 24));
+                        equipped.Add(new ImageRef(a.Value.CurrentIconPath, 30, 30));
                     }
                     equipped.Add(a.Value != null ? a.Value.CurrentName : "Nothing");
                     equipped.Add("\n");
@@ -399,7 +399,7 @@ namespace Player
                     {
                         if (!force)
                         {
-                            var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                            var result = new ScriptWrapper(equip.OnUnequip) { ItemBase = a }.Execute();
                             if (result != false)
                                 markedForRemoval.Add(a);
                             else
@@ -415,13 +415,21 @@ namespace Player
                     }
                     if (!force && equip.CoversSlots.Contains(slot))
                     {
-                        var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                        var result = new ScriptWrapper(equip.OnUnequip) { ItemBase = a }.Execute();
                         if (result == false)
                         {
                             MainViewModel.WriteText("Unable to equip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!", null);
                             return new List<ItemInstance>();
                         }
                     }
+                }
+            }
+            {
+                var result = new ScriptWrapper(i.item.EquipmentRef.OnEquip) { ItemBase = i }.Execute();
+                if (result == false)
+                {
+                    MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because it is currently unable to be equipped!", null);
+                    return new List<ItemInstance>();
                 }
             }
             foreach (var a in markedForRemoval)
@@ -453,7 +461,7 @@ namespace Player
                         var equip = a.item.EquipmentRef;
                         if (equip.CoversSlots.Contains(slot))
                         {
-                            var result = new ScriptWrapper(equip.OnUnequip).Execute();
+                            var result = new ScriptWrapper(equip.OnUnequip) { ItemBase = a }.Execute();
                             if (result == false)
                             {
                                 MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because " + a.CurrentName + " is covering it and could not be removed!", null);
@@ -463,7 +471,7 @@ namespace Player
                     }
                 }
                 {
-                    var result = new ScriptWrapper(i.item.EquipmentRef.OnUnequip).Execute();
+                    var result = new ScriptWrapper(i.item.EquipmentRef.OnUnequip) { ItemBase = i }.Execute();
                     if (result == false)
                     {
                         MainViewModel.WriteText("Unable to unequip " + i.CurrentName + " because it is currently unable to be removed!", null);

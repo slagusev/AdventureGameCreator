@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class ReturnValueWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public ReturnValue line;
         public ReturnValueWrapper(ReturnValue rv)
         {

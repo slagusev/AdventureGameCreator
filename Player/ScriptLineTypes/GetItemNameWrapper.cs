@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
     class GetItemNameWrapper : ScriptLineWrapper
     {
         GetItemName line;
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public GetItemNameWrapper(GetItemName gin)
         {
             line = gin;

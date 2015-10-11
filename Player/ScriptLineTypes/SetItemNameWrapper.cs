@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class SetItemNameWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
          SetItemName line;
          public SetItemNameWrapper(SetItemName gin)
         {

@@ -33,6 +33,7 @@
                         <Button x:Name="runCommonEvent" Click="runCommonEvent_Click_1" Content="Run Common Event..."/>
                         <Button x:Name="addEvent" Click="addEvent_Click_1"  Content="Add Triggered Event..."/>
                         <Button x:Name="StopGame" Click="StopGame_Click" Content="Game Over" Visibility="{Binding CanStopGame, Converter={StaticResource VisibilityConverter}}"/>
+                        <Button x:Name="stopScript" Content="Stop Script" Click="stopScript_Click"/>
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>
@@ -44,6 +45,7 @@
                         <Button x:Name="getAllItems" Content="Get Player's Inventory" Click="getAllItems_Click"/>
                         <Button x:Name="getSomeItems" Content="Get All in Inventory of Type" Click="getSomeItems_Click"/>
                         <Button x:Name="concatenateArray" Content="Concatenate Array" Click="concatArray_Click"/>
+                        
                     </StackPanel>
                 </GroupBox>
             </ScrollViewer>

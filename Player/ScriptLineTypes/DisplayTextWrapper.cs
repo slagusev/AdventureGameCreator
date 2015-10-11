@@ -9,7 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class DisplayTextWrapper : ScriptLineWrapper
     {
-
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         public DisplayText line = null;
         public DisplayTextWrapper(DisplayText d)
         {

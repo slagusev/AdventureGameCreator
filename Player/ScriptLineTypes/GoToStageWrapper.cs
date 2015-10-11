@@ -9,6 +9,10 @@ namespace Player.ScriptLineTypes
 {
     class GoToStageWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         GoToStage line;
         public GoToStageWrapper(GoToStage gts)
         {

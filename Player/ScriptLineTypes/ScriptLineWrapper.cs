@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player.ScriptLineTypes
 {
@@ -151,13 +152,21 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new ConcatenateArrayWrapper((ConcatenateArray)line);
             }
+            if (lineType == typeof(StopProcessing))
+            {
+                lineWrapper = new StopProcessingWrapper();
+            }
+
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;
             }
+            
             return lineWrapper;
         }
         public ScriptWrapper parent {get; set; }
-        
+        public abstract XElement ToXML();
     }
+
+    
 }

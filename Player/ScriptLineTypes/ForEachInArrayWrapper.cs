@@ -11,6 +11,10 @@ namespace Player.ScriptLineTypes
 {
     class ForEachInArrayWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
 
         ForEachInArray line;
 

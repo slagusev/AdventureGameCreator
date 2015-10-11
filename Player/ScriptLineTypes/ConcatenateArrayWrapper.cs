@@ -10,6 +10,10 @@ namespace Player.ScriptLineTypes
 {
     class ConcatenateArrayWrapper : ScriptLineWrapper
     {
+        public override System.Xml.Linq.XElement ToXML()
+        {
+            return line.ToXML();
+        }
         ConcatenateArray line;
         public ConcatenateArrayWrapper(ConcatenateArray ca)
         {

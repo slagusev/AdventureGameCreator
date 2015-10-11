@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Player
 {
@@ -210,6 +212,7 @@ namespace Player
             DropItemCommand = new Editor.RelayCommand(DropItem);
             EquipItemCommand = new Editor.RelayCommand(EquipItem);
             UnequipItemCommand = new Editor.RelayCommand(UnequipItem);
+            SaveCommand = new Editor.RelayCommand(SaveGame);
         }
         public Editor.RelayCommand<ExitWrapper> UseExitCommand { get; private set; }
         public Editor.RelayCommand<InteractableWrapper> ExamineCommand { get; private set; }
@@ -221,6 +224,7 @@ namespace Player
         public Editor.RelayCommand DropItemCommand { get; private set; }
         public Editor.RelayCommand EquipItemCommand { get; private set; }
         public Editor.RelayCommand UnequipItemCommand { get; private set; }
+        public Editor.RelayCommand SaveCommand { get; private set; }
         public void UseExit(ExitWrapper exit)
         {
             WriteText("-------------------------------------------", null);
@@ -761,7 +765,105 @@ namespace Player
             }
         }
 
+        public void SaveGame()
+        {
+            Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+            sfd.Filter = "Adventure Game Save Files (*.ags)|*.ags";
+            if (sfd.ShowDialog().Value)
+            {
+                FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
+                var sw = new StreamWriter(fs);
+                sw.Write(ToXML(sfd.FileName).ToString());
+                sw.Flush();
+                sw.Close();
+            }
+            
+        }
 
-        
+        public XElement ToXML(string SaveLocation)
+        {
+            var events = from a in CurrentGame.ActiveEvents select a.ToXML();
+            var inventory = from a in CurrentGame.PlayerInventory select a.ToXML();
+            var equippedItems = from a in CurrentGame.EquippedItems.Distinct() where a.Value != null select a.Value.ToXML();
+            var variables = from a in CurrentGame.VarById select new XElement("Variable", new XElement("ID",a.Key), a.Value.ToXML());
+            var arrays = from a in CurrentGame.ArraysById select new XElement("Array", new XElement("ID", a.Key), new XElement("Values", (from b in a.Value select 
+                                                                                                    (b.GetType() == typeof(int) ? new XElement("Value", new XElement("Type","Number"), new XElement("Value",(int)b)) :
+                                                                                                     (b.GetType() == typeof(ItemInstance) ? new XElement("Value", new XElement("Type", "Item" ), new XElement("Value", ((ItemInstance)b).ToXML())) :
+                                                                                                     new XElement("Value", new XElement("Type","String"), new XElement("Value", b.ToString())))))));
+
+            return new XElement("SavedGame",
+                new XElement("Events", events),
+                new XElement("Inventory", inventory),
+                new XElement("Equipment", equippedItems),
+                new XElement("Variables", variables),
+                new XElement("Arrays", arrays),
+                new XElement("CurrentRoom",CurrentGame.CurrentRoom.RoomBase.RoomID),
+                new XElement("Location", Editor.MainViewModel.GetRelativePath(SaveLocation, Location))
+                );
+        }
+        public static MainViewModel FromXML(XElement saveXml, string fileLocation)
+        {
+            string location = saveXml.Element("Location").Value;
+            string gameLocation = Editor.MainViewModel.AbsolutePath(fileLocation, location);
+            FileStream fs = new FileStream(gameLocation, FileMode.Open);
+            var sr = new StreamReader(fs);
+            var loadXml = XElement.Parse(sr.ReadToEnd());
+            sr.Close();
+
+            var mvm = new MainViewModel();
+            mvm.Location = gameLocation;
+            //player.DataContext = mvm;
+            mvm.CurrentGame = Game.FromXml(loadXml);
+
+            var currentRoom = Guid.Parse(saveXml.Element("CurrentRoom").Value);
+
+            Editor.App.Current.Resources["MainViewModelStatic"] = mvm;
+
+            foreach (var room in mvm.CurrentGame.Rooms)
+            {
+                if (room.Value.RoomBase.RoomID == currentRoom)
+                    mvm.CurrentGame.CurrentRoom = room.Value;
+            }
+
+            mvm.CurrentGame.ActiveEvents = (from a in saveXml.Element("Events").Elements("Event") select ActiveEvent.FromXML(a)).ToList();
+            mvm.CurrentGame.PlayerInventory = new ObservableCollection<ItemInstance>(from a in saveXml.Element("Inventory").Elements() select ItemInstance.FromXML(a, mvm.CurrentGame));
+            
+            foreach (var a in saveXml.Element("Equipment").Elements())
+            {
+                mvm.CurrentGame.TryEquipItem(ItemInstance.FromXML(a, mvm.CurrentGame), true);
+            }
+            foreach (var a in saveXml.Element("Variables").Elements())
+            {
+                var oldVar = mvm.CurrentGame.VarById[Guid.Parse(a.Element("ID").Value)];
+                var newVar = VariableWrapper.FromXML(a.Element("Variable"), mvm.CurrentGame, mvm.CurrentGame.VarById[Guid.Parse(a.Element("ID").Value)].VariableBase);
+                oldVar.CurrentCommonEventValue = newVar.CurrentCommonEventValue;
+                oldVar.CurrentItemValue = newVar.CurrentItemValue;
+                oldVar.CurrentNumberValue = newVar.CurrentNumberValue;
+                oldVar.CurrentStringValue = newVar.CurrentStringValue;
+            }
+            foreach (var a in saveXml.Element("Arrays").Elements())
+            {
+                var arr = mvm.CurrentGame.ArraysById[Guid.Parse(a.Element("ID").Value)];
+                foreach (var b in a.Element("Values").Elements())
+                {
+                    switch (b.Element("Type").Value)
+                    {
+                        case "Number":
+                            arr.Add(Convert.ToInt32(b.Element("Value").Value));
+                            break;
+                        case "String":
+                            arr.Add(b.Element("Value").Value);
+                            break;
+                        case "Item":
+                            arr.Add(ItemInstance.FromXML(b.Element("Value").Element("Item"),mvm.CurrentGame));
+                            break;
+                    }
+                }
+            }
+            mvm.CurrentGame.RefreshAll();
+            return mvm;
+
+        }
+
     }
 }
