@@ -110,16 +110,25 @@ namespace Editor.Editors
             }
             if (window != null)
             {
-                window.DataContext = script.SelectedLine;
+                Script tempScript = new Script();
+                tempScript.ScriptLines.Add(script.SelectedLine);
+                tempScript = Script.FromXML(tempScript.ToXML(), tempScript); //Copy the script to have a new reference
+                window.DataContext = tempScript.ScriptLines.First();
                 window.ShowDialog();
                 //Invalidate the form
-                var selected = script.SelectedLine;
-                script.SelectedLine = null;
-                var lines = script.ScriptLines;
-                script.ScriptLines = null;
-                script.ScriptLines = new System.Collections.ObjectModel.ObservableCollection<ScriptLine>();
-                script.ScriptLines = lines;
-                script.SelectedLine = selected;
+                if (window.DialogResult == true)
+                {
+                    var tempLine = tempScript.ScriptLines.First();
+                    script.AddBeforeSelected(tempLine);
+                    script.ScriptLines.Remove(script.SelectedLine);
+                    var selected = tempLine;
+                    script.SelectedLine = null;
+                    var lines = script.ScriptLines;
+                    script.ScriptLines = null;
+                    script.ScriptLines = new System.Collections.ObjectModel.ObservableCollection<ScriptLine>();
+                    script.ScriptLines = lines;
+                    script.SelectedLine = selected;
+                }
             }
 
         }
