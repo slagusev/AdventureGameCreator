@@ -46,6 +46,7 @@ namespace Editor.NewForms
                     Variable variable = new Variable { IsNumber = true, Name = txtName.Text, Id = Guid.NewGuid(), DefaultNumber = 0 };
                     MainViewModel.MainViewModelStatic.Variables.Add(variable);
                     variable.Group = "Default";
+                    MainViewModel.MainViewModelStatic.VariableGroups.ForceAdd(variable);
                     var wv = new WindowView
                     {
                         TabName = "Variable - " + variable.Name,

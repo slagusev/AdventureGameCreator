@@ -116,6 +116,14 @@ namespace Editor
             if (RemoveObject(obj) || boundCollection.Contains(obj))
                 AddToList(Parser(obj), obj);
         }
+        public void ForceAdd(T obj)
+        {
+            if (!boundCollection.Contains(obj))
+            {
+                //boundCollection.Add(obj);
+                AddToList(Parser(obj), obj);
+            }
+        }
         private bool RemoveObject(T obj)
         {
             var group = (from a in Groups where a.Item2.Contains(obj) select a).FirstOrDefault();
