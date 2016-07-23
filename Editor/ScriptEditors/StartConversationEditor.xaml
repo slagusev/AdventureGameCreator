@@ -7,6 +7,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="10,10,10,-10">
             <TextBlock>Select a conversation to start:</TextBlock>
+            <!--
             <ListBox Margin="10,10,10,0" ItemsSource="{Binding Conversations, Source={StaticResource MainViewModelStatic}}" SelectedItem="{Binding ConversationID.LinkedConversation, Mode=TwoWay}" Height="150">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -14,6 +15,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            -->
+            <Controls:ConversationSelector Margin="10,0,0,0" SelectedItem="{Binding ConversationID, Mode=TwoWay}" Height="150" >
+                
+            </Controls:ConversationSelector>
             <Button HorizontalAlignment="Center" Margin="20"  Width="100" Click="Button_Click_1"  Content="OK"/>
         </StackPanel>
     </ScrollViewer>

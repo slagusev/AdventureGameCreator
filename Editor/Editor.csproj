@@ -74,6 +74,9 @@
     <Compile Include="Editors\ConversationEditor.xaml.cs">
       <DependentUpon>ConversationEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ConversationSelector.xaml.cs">
+      <DependentUpon>ConversationSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\ImageFinder.xaml.cs">
       <DependentUpon>ImageFinder.xaml</DependentUpon>
     </Compile>
@@ -330,6 +333,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ConversationEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\ConversationSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

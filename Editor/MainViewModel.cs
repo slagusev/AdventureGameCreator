@@ -87,6 +87,7 @@ namespace Editor
 
             MainViewModelStatic = this;
             CommonEventGroups = new GenericGroup<CommonEvent>(CommonEvents, a => a.Group, a => a.Name);
+            ConversationGroups = new GenericGroup<Conversation>(this.Conversations, a => a.GroupName, a => a.Name);
             VariableGroups = new GenericGroup<Variable>(Variables, a => a.Group, a => a.Name);
             //this.OpenWindows.Add(new WindowView { Content = new Editor.Editors.InteractableEditor() });
             #region More debug data
@@ -347,6 +348,7 @@ namespace Editor
 
                 _conversations = value;
                 RaisePropertyChanged(ConversationsPropertyName);
+                RecalculateConversationGroups();
             }
         }
         /// <summary>
@@ -558,6 +560,36 @@ namespace Editor
 
                 _commonEventGroups = value;
                 RaisePropertyChanged(CommonEventGroupsPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ConversationGroups" /> property's name.
+        /// </summary>
+        public const string ConversationGroupsPropertyName = "ConversationGroups";
+
+        private GenericGroup<Conversation> _conversationGroups = null;
+
+        /// <summary>
+        /// Sets and gets the ConversationGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public GenericGroup<Conversation> ConversationGroups
+        {
+            get
+            {
+                return _conversationGroups;
+            }
+
+            set
+            {
+                if (_conversationGroups == value)
+                {
+                    return;
+                }
+
+                _conversationGroups = value;
+                RaisePropertyChanged(ConversationGroupsPropertyName);
             }
         }
 
@@ -827,6 +859,10 @@ namespace Editor
         internal void RecalculateCommonEventGroups()
         {
             CommonEventGroups = new GenericGroup<CommonEvent>(this.CommonEvents, a => a.Group, a => a.Name);            
+        }
+        internal void RecalculateConversationGroups()
+        {
+            ConversationGroups = new GenericGroup<Conversation>(this.Conversations, a => a.GroupName, a => a.Name);
         }
         internal void RecalculateVariableGroups()
         {

@@ -644,7 +644,7 @@ namespace Editor.ObjectTypes
         public XElement ToXML()
         {
             XElement label = new XElement("Label", this.Label);
-            XElement associatedVariable = new XElement("AssociatedVariable", this.AssociatedVariable.LinkedVarId);
+            XElement associatedVariable = new XElement("AssociatedVariable", (this.AssociatedVariable != null ? this.AssociatedVariable.LinkedVarId : Guid.Empty));
             XElement visibility = new XElement("Visibility", this.DisplayCondition.ToXML());
             if (IsPlaintext)
             {

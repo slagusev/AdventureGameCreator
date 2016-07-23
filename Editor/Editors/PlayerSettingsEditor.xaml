@@ -60,7 +60,7 @@
                                 <Controls:ScriptControl DataContext="{Binding DisplayCondition}" Height="200" Width="400"></Controls:ScriptControl>
                             </Expander>
                             <TextBlock>Associated Variable:</TextBlock>
-                            <Controls:VariableSelector Margin="10" Height="150" HorizontalAlignment="Left" Width="200" SelectedItem="{Binding AssociatedVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowItems="False"/>
+                            <Controls:VariableSelector Margin="10" Height="150" HorizontalAlignment="Left" Width="200" SelectedItem="{Binding AssociatedVariable, Mode=TwoWay}" ShowCommonEventRefs="False" ShowItems="False" ShowString="True"/>
                             <TextBlock>Display As:</TextBlock>
                             <StackPanel Margin="10" Orientation="Horizontal">
                                 <CheckBox Margin="0,0,10,0" IsChecked="{Binding IsPlaintext}">Plaintext</CheckBox>

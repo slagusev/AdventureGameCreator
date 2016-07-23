@@ -112,7 +112,7 @@ namespace Editor.Editors
             {
                 Script tempScript = new Script();
                 tempScript.ScriptLines.Add(script.SelectedLine);
-                tempScript = Script.FromXML(tempScript.ToXML(), tempScript); //Copy the script to have a new reference
+                tempScript = Script.FromXML(tempScript.ToXML(), script); //Copy the script to have a new reference
                 window.DataContext = tempScript.ScriptLines.First();
                 window.ShowDialog();
                 //Invalidate the form

@@ -16,13 +16,13 @@ namespace Editor.Scripter.TextFunctions
         /// </summary>
         public const string ConversationIDPropertyName = "ConversationID";
 
-        private ConversationRef _conversationId = new ConversationRef();
+        private GenericRef<Conversation> _conversationId = GenericRef<Conversation>.GetConversationRef();
 
         /// <summary>
         /// Sets and gets the ConversationID property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        public ConversationRef ConversationID
+        public GenericRef<Conversation> ConversationID
         {
             get
             {
@@ -44,17 +44,19 @@ namespace Editor.Scripter.TextFunctions
         {
             get
             {
-                return "Start the conversation: " + (ConversationID != null && ConversationID.LinkedConversation != null ? ConversationID.LinkedConversation.Name : "UNKNOWN");
+                return "Start the conversation: " + (ConversationID != null && ConversationID.Value != null ? ConversationID.Value.Name : "UNKNOWN");
             }
         }
         public override System.Xml.Linq.XElement ToXML()
         {
-            return new XElement("StartConversation", ConversationID.LinkedConversationId);
+            return new XElement("StartConversation", ConversationID.Ref);
         }
 
         public static StartConversation FromXML(XElement element)
         {
-            return new StartConversation() { ConversationID = new ConversationRef() { LinkedConversationId = Guid.Parse(element.Value) } };
+            var startConversation = new StartConversation() { ConversationID = GenericRef<Conversation>.GetConversationRef() };
+            startConversation.ConversationID.Ref = Guid.Parse(element.Value);
+            return startConversation;
         }
     }
 }

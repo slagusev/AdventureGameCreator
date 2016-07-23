@@ -140,6 +140,40 @@ namespace Editor.ObjectTypes
                 RaisePropertyChanged(StagesPropertyName);
             }
         }
+        /// <summary>
+        /// The <see cref="GroupName" /> property's name.
+        /// </summary>
+        public const string GroupNamePropertyName = "GroupName";
+
+        private string _groupName = "Default";
+
+        /// <summary>
+        /// Sets and gets the GroupName property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public string GroupName
+        {
+            get
+            {
+                return _groupName;
+            }
+
+            set
+            {
+                if (_groupName == value)
+                {
+                    return;
+                }
+
+                _groupName = value;
+                RaisePropertyChanged(GroupNamePropertyName);
+                if (MainViewModel.MainViewModelStatic != null)
+                {
+                    MainViewModel.MainViewModelStatic.ConversationGroups.RefreshInList(this);
+                }
+            }
+        }
+
 
         /// <summary>
         /// The <see cref="StartingStage" /> property's name.
@@ -217,7 +251,8 @@ namespace Editor.ObjectTypes
                 new XElement("Name", this.Name),
                 new XElement("Id", this.Id),
                 new XElement("StartStage", this.StartingStage),
-                new XElement("Stages", this.Stages.Select(a => a.ToXML())));
+                new XElement("Stages", this.Stages.Select(a => a.ToXML())),
+                new XElement("GroupName", this.GroupName));
         }
         public static Conversation FromXML(XElement xml)
         {
@@ -225,6 +260,10 @@ namespace Editor.ObjectTypes
             if (xml.Element("Name") != null)
             {
                 c.Name = xml.Element("Name").Value;
+            }
+            if (xml.Element("GroupName") != null)
+            {
+                c.GroupName = xml.Element("GroupName").Value;
             }
             if (xml.Element("Id") != null)
             {

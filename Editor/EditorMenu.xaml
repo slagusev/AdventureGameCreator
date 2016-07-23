@@ -76,11 +76,23 @@
                     </HierarchicalDataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
-            <TreeViewItem Header="Conversations" IsExpanded="False" ItemsSource="{Binding Conversations, Source={StaticResource MainViewModelStatic}}">
+            <TreeViewItem Header="Conversations" IsExpanded="False" ItemsSource="{Binding ConversationGroups.Groups, Source={StaticResource MainViewModelStatic}}">
+                <!--
                 <TreeViewItem.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>
                     </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+                -->
+                <TreeViewItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Item2}">
+                        <TextBlock Text="{Binding Item1, Mode=OneWay}"></TextBlock>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
             <TreeViewItem Header="Common Events" IsExpanded="False" ItemsSource="{Binding CommonEventGroups.Groups, Source={StaticResource MainViewModelStatic}}">

@@ -143,5 +143,24 @@ namespace Editor.ObjectTypes
                 else return Guid.Empty;
             });
         }
+        public static GenericRef<Conversation> GetConversationRef()
+        {
+            return new GenericRef<Conversation>(id =>
+            {
+                foreach (var a in MainViewModel.MainViewModelStatic.Conversations)
+                {
+
+                    if (a.Id == id)
+                        return a;
+
+                }
+                return null;
+            }, conversation =>
+            {
+                if (conversation != null)
+                    return conversation.Id;
+                else return Guid.Empty;
+            });
+        }
     }
 }

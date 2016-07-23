@@ -71,7 +71,7 @@ namespace Editor.ObjectTypes
             ItemScript.IsItemScript = true;
             ItemScript.IsInConversation = true;
             ItemScript.CanStartConversations = false;
-            AllSituationsScript.AllowedCommonEventTypes.Add(ScriptTypeItem);
+            ItemScript.AllowedCommonEventTypes.Add(ScriptTypeItem);
             AddCommonEventType("Item Script", "A common event that can be used on item usage.", ItemScript);
 
             Script DescriptionScript = new Script();

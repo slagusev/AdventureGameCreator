@@ -18,10 +18,10 @@ namespace Player.ScriptLineTypes
 
         public override bool? Execute()
         {
-            if (line.ConversationID.LinkedConversation != null)
+            if (line.ConversationID.Value != null)
             {
                 var vm = MainViewModel.GetMainViewModelStatic();
-                vm.CurrentConversation = new ObjectTypesWrappers.ConversationWrapper(line.ConversationID.LinkedConversation);
+                vm.CurrentConversation = new ObjectTypesWrappers.ConversationWrapper(line.ConversationID.Value);
                 vm.SetConversationMode();
                 vm.CurrentConversation.GoToStage(vm.CurrentConversation.CurrentStage);
                 return null;
