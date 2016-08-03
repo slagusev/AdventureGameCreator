@@ -104,6 +104,12 @@
     <Compile Include="Editors\ScriptControl.xaml.cs">
       <DependentUpon>ScriptControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editors\StatusEffectEditor.xaml.cs">
+      <DependentUpon>StatusEffectEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StatusEffectSelector.xaml.cs">
+      <DependentUpon>StatusEffectSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editors\VariableEditor.xaml.cs">
       <DependentUpon>VariableEditor.xaml</DependentUpon>
     </Compile>
@@ -148,12 +154,17 @@
     <Compile Include="NewForms\NewRoom.xaml.cs">
       <DependentUpon>NewRoom.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewForms\NewStatusEffect.xaml.cs">
+      <DependentUpon>NewStatusEffect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewForms\NewVariable.xaml.cs">
       <DependentUpon>NewVariable.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewForms\NewZone.xaml.cs">
       <DependentUpon>NewZone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ObjectTypes\StatusEffect.cs" />
+    <Compile Include="ObjectTypes\StatusEffectValue.cs" />
     <Compile Include="ObjectTypes\VarArray.cs" />
     <Compile Include="ObjectTypes\CommonEvent.cs" />
     <Compile Include="ObjectTypes\CommonEventRef.cs" />
@@ -184,6 +195,9 @@
     </Compile>
     <Compile Include="ScriptEditors\AddItemEditor.xaml.cs">
       <DependentUpon>AddItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\AddStatusEffectEditor.xaml.cs">
+      <DependentUpon>AddStatusEffectEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\AddTextEditor.xaml.cs">
       <DependentUpon>AddTextEditor.xaml</DependentUpon>
@@ -224,6 +238,9 @@
     <Compile Include="ScriptEditors\GetAllItemsOfTypeEditor.xaml.cs">
       <DependentUpon>GetAllItemsOfTypeEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEditors\GetArgumentEditor.xaml.cs">
+      <DependentUpon>GetArgumentEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScriptEditors\GetCurrentItemEditor.xaml.cs">
       <DependentUpon>GetCurrentItemEditor.xaml</DependentUpon>
     </Compile>
@@ -241,6 +258,9 @@
     </Compile>
     <Compile Include="ScriptEditors\RemoveItemEditor.xaml.cs">
       <DependentUpon>RemoveItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEditors\RemoveStatusEffectEditor.xaml.cs">
+      <DependentUpon>RemoveStatusEffectEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScriptEditors\ReturnValueEditor.xaml.cs">
       <DependentUpon>ReturnValueEditor.xaml</DependentUpon>
@@ -300,6 +320,10 @@
     <Compile Include="Scripter\Misc\Comment.cs" />
     <Compile Include="Scripter\Script.cs" />
     <Compile Include="Scripter\ScriptLine.cs" />
+    <Compile Include="Scripter\StatusEffects\AddStatusEffect.cs" />
+    <Compile Include="Scripter\StatusEffects\CheckIfEffectsResolved.cs" />
+    <Compile Include="Scripter\StatusEffects\GetArgument.cs" />
+    <Compile Include="Scripter\StatusEffects\RemoveStatusEffect.cs" />
     <Compile Include="Scripter\TextFunctions\AddImage.cs" />
     <Compile Include="Scripter\TextFunctions\AddText.cs" />
     <Compile Include="Scripter\TextFunctions\DisplayText.cs" />
@@ -373,6 +397,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editors\ScriptControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\StatusEffectEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\StatusEffectSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -452,6 +484,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewForms\NewStatusEffect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewForms\NewVariable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -473,6 +509,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\AddItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\AddStatusEffectEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -528,6 +568,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScriptEditors\GetArgumentEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScriptEditors\GetCurrentItemEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -549,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScriptEditors\RemoveItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptEditors\RemoveStatusEffectEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

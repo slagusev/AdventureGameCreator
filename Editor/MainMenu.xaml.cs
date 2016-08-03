@@ -100,5 +100,10 @@ namespace Editor
         {
             new NewArray().ShowDialog();
         }
+
+        private void newStatusEffect_Click(object sender, RoutedEventArgs e)
+        {
+            new NewStatusEffect().ShowDialog();
+        }
     }
 }

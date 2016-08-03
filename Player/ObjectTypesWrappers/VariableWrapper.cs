@@ -36,7 +36,7 @@ namespace Player.ObjectTypesWrappers
 
         internal XElement ToXML()
         {
-            return new XElement("Variable", "Id",
+            return new XElement("Variable", new XElement("Id", VariableBase.Id),
                 new XElement("CurrentNumberValue", CurrentNumberValue),
                 new XElement("CurrentStringValue", CurrentStringValue),
                 new XElement("CurrentCommonEventValue", CurrentCommonEventValue != null ?  CurrentCommonEventValue.LinkedCommonEventId : Guid.Empty),
@@ -47,6 +47,7 @@ namespace Player.ObjectTypesWrappers
         {
             return new VariableWrapper(baseVar)
             {
+                
                 CurrentNumberValue = Convert.ToInt32(xml.Element("CurrentNumberValue").Value),
                 CurrentStringValue = xml.Element("CurrentStringValue").Value,
                 CurrentCommonEventValue = new CommonEventRef(Guid.Parse(xml.Element("CurrentCommonEventValue").Value)),

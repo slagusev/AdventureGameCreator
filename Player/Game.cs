@@ -27,6 +27,7 @@ namespace Player
         public Dictionary<Guid, List<object>> ArraysById = new Dictionary<Guid, List<object>>();
         public Dictionary<string, VariableWrapper> VarByName = new Dictionary<string, VariableWrapper>();
         public List<ActiveEvent> ActiveEvents = new List<ActiveEvent>();
+        public List<StatusEffectWrapper> ActiveStatusEffects = new List<StatusEffectWrapper>();
         /// <summary>
         /// The <see cref="CurrentRoom" /> property's name.
         /// </summary>
@@ -518,5 +519,7 @@ namespace Player
             //}
             RefreshAll();
         }
+
+        
     }
 }

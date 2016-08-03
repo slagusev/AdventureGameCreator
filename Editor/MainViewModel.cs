@@ -89,6 +89,7 @@ namespace Editor
             CommonEventGroups = new GenericGroup<CommonEvent>(CommonEvents, a => a.Group, a => a.Name);
             ConversationGroups = new GenericGroup<Conversation>(this.Conversations, a => a.GroupName, a => a.Name);
             VariableGroups = new GenericGroup<Variable>(Variables, a => a.Group, a => a.Name);
+            StatusEffectGroups = new GenericGroup<StatusEffect>(StatusEffects, a => a.Group, a => a.Name);
             //this.OpenWindows.Add(new WindowView { Content = new Editor.Editors.InteractableEditor() });
             #region More debug data
             /*
@@ -484,6 +485,36 @@ namespace Editor
         }
 
         /// <summary>
+        /// The <see cref="StatusEffects" /> property's name.
+        /// </summary>
+        public const string StatusEffectsPropertyName = "StatusEffects";
+
+        private ObservableCollection<StatusEffect> _statusEffects = new ObservableCollection<StatusEffect>();
+
+        /// <summary>
+        /// Sets and gets the StatusEffects property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public ObservableCollection<StatusEffect> StatusEffects
+        {
+            get
+            {
+                return _statusEffects;
+            }
+
+            set
+            {
+                if (_statusEffects == value)
+                {
+                    return;
+                }
+
+                _statusEffects = value;
+                RaisePropertyChanged(StatusEffectsPropertyName);
+                ReclaculateStatusEffectGroups();
+            }
+        }
+        /// <summary>
         /// The <see cref="Variables" /> property's name.
         /// </summary>
         public const string VariablesPropertyName = "Variables";
@@ -563,6 +594,36 @@ namespace Editor
             }
         }
 
+
+        /// <summary>
+        /// The <see cref="StatusEffectGroups" /> property's name.
+        /// </summary>
+        public const string StatusEffectGroupsPropertyName = "StatusEffectGroups";
+
+        private GenericGroup<StatusEffect> _statusEffectGroups = null;
+
+        /// <summary>
+        /// Sets and gets the StatusEffectGroups property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public GenericGroup<StatusEffect> StatusEffectGroups
+        {
+            get
+            {
+                return _statusEffectGroups;
+            }
+
+            set
+            {
+                if (_statusEffectGroups == value)
+                {
+                    return;
+                }
+
+                _statusEffectGroups = value;
+                RaisePropertyChanged(StatusEffectGroupsPropertyName);
+            }
+        }
         /// <summary>
         /// The <see cref="ConversationGroups" /> property's name.
         /// </summary>
@@ -695,6 +756,7 @@ namespace Editor
                 new XElement("Items", from a in Items select a.ToXml()),
                 new XElement("Conversations", from a in Conversations select a.ToXML()),
                 new XElement("CommonEvents", from a in CommonEvents select a.ToXML()),
+                new XElement("StatusEffects", from a in StatusEffects select a.ToXML()),
                 new XElement(Settings.ToXML())
                 );
         }
@@ -702,7 +764,14 @@ namespace Editor
         public static MainViewModel FromXML(XElement xml)
         {
             MainViewModel mvm = new MainViewModel();
-
+            XElement statusEffects = xml.Element("StatusEffects");
+            if (statusEffects != null)
+            {
+                foreach (var a in statusEffects.Elements("StatusEffect"))
+                {
+                    mvm.StatusEffects.Add(StatusEffect.FromXML(a));
+                }
+            }
             XElement zones = xml.Element("Zones");
             if (zones != null)
             {
@@ -787,6 +856,7 @@ namespace Editor
                     mvm.CommonEvents.Add(CommonEvent.FromXML(a));
                 }
             }
+           
             XElement conversations = xml.Element("Conversations");
             if (conversations != null)
             {
@@ -863,6 +933,10 @@ namespace Editor
         internal void RecalculateConversationGroups()
         {
             ConversationGroups = new GenericGroup<Conversation>(this.Conversations, a => a.GroupName, a => a.Name);
+        }
+        internal void ReclaculateStatusEffectGroups()
+        {
+            StatusEffectGroups = new GenericGroup<StatusEffect>(StatusEffects, a => a.Group, a => a.Name);
         }
         internal void RecalculateVariableGroups()
         {

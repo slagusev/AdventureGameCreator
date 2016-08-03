@@ -382,5 +382,29 @@ namespace Editor.ScriptEditors
             this.Close();
         }
 
+        private void addStatusEffect_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.AddStatusEffectEditor(), new Scripter.StatusEffects.AddStatusEffect());
+        }
+
+        private void removeStatusEffect_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.RemoveStatusEffectEditor(), new Scripter.StatusEffects.RemoveStatusEffect());
+        }
+
+        private void getNumberArgument_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(new ScriptEditors.GetArgumentEditor(), new Scripter.StatusEffects.GetArgument((this.DataContext as Script).CurrentStatusEffect));
+        }
+
+        private void checkIfResolved_Click(object sender, RoutedEventArgs e)
+        {
+            var script = this.DataContext as Script;
+            script.AddBeforeSelected(new Scripter.StatusEffects.CheckIfEffectsResolved());
+            this.Close();
+        }
+
+
+
     }
 }

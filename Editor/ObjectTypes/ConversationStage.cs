@@ -25,7 +25,7 @@ namespace Editor.ObjectTypes
             this.StageAction.HasTextFunctionality = true;
             this.StageAction.IsItemScript = false;
             this.StageAction.IsInConversation = true;
-            this.StageAction.CanStartConversations = false;
+            this.StageAction.CanStartConversations = true;
             this.StageAction.AllowedCommonEventTypes.Add(CommonEvent.ScriptTypeMovementAndInteractable);
             WireCommands();            
         }

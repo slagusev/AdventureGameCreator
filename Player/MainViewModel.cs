@@ -228,7 +228,15 @@ namespace Player
         public void UseExit(ExitWrapper exit)
         {
             WriteText("-------------------------------------------", null);
+            
             var movementResult = new ScriptWrapper(CurrentGame.Settings.MovementScript).Execute();
+            foreach (var a in CurrentGame.ActiveStatusEffects)
+            {
+                a.RunOnMove();
+
+
+            }
+            CheckStatusEffectsResolved();
             bool result = true;
             foreach (var a in CurrentGame.EquippedItems.Select(a => a.Value).Where(a => a != null).Distinct())
             {
@@ -244,7 +252,30 @@ namespace Player
             
             OutputCurrentRoomDescription();
             MainViewModel.GetMainViewModelStatic().CurrentGame.RunActiveEvents();
+            
             GC.Collect();
+        }
+
+        public void CheckStatusEffectsResolved()
+        {
+            List<StatusEffectWrapper> seMarkedForRemoval = new List<StatusEffectWrapper>();
+            foreach (var a in CurrentGame.ActiveStatusEffects)
+            {
+                //a.RunOnMove();
+                if (a.RunCheckIfResolved())
+                {
+                    a.RunFinalize();
+                    seMarkedForRemoval.Add(a);
+                }
+
+            }
+            foreach (var a in seMarkedForRemoval)
+            {
+                if (CurrentGame.ActiveStatusEffects.Contains(a))
+                {
+                    CurrentGame.ActiveStatusEffects.Remove(a);
+                }
+            }
         }
         public void ExamineObject(InteractableWrapper interactable)
         {
@@ -783,6 +814,7 @@ namespace Player
         public XElement ToXML(string SaveLocation)
         {
             var events = from a in CurrentGame.ActiveEvents select a.ToXML();
+            var statusEffects = from a in CurrentGame.ActiveStatusEffects select a.ToXML();
             var inventory = from a in CurrentGame.PlayerInventory select a.ToXML();
             var equippedItems = from a in CurrentGame.EquippedItems.Distinct() where a.Value != null select a.Value.ToXML();
             var variables = from a in CurrentGame.VarById select new XElement("Variable", new XElement("ID",a.Key), a.Value.ToXML());
@@ -793,6 +825,7 @@ namespace Player
 
             return new XElement("SavedGame",
                 new XElement("Events", events),
+                new XElement("StatusEffects", statusEffects),
                 new XElement("Inventory", inventory),
                 new XElement("Equipment", equippedItems),
                 new XElement("Variables", variables),
@@ -826,6 +859,7 @@ namespace Player
             }
 
             mvm.CurrentGame.ActiveEvents = (from a in saveXml.Element("Events").Elements("Event") select ActiveEvent.FromXML(a)).ToList();
+            
             mvm.CurrentGame.PlayerInventory = new ObservableCollection<ItemInstance>(from a in saveXml.Element("Inventory").Elements() select ItemInstance.FromXML(a, mvm.CurrentGame));
             
             foreach (var a in saveXml.Element("Equipment").Elements())
@@ -860,6 +894,7 @@ namespace Player
                     }
                 }
             }
+            mvm.CurrentGame.ActiveStatusEffects = (from a in saveXml.Element("StatusEffects").Elements("ActiveStatusEffect") select StatusEffectWrapper.FromXML(a, mvm.CurrentGame)).ToList();
             mvm.CurrentGame.RefreshAll();
             return mvm;
 

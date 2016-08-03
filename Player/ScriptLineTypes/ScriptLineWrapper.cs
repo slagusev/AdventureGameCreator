@@ -5,6 +5,7 @@ using Editor.Scripter.ConversationFlow;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
 using Editor.Scripter.Misc;
+using Editor.Scripter.StatusEffects;
 using Editor.Scripter.TextFunctions;
 using Player.ObjectTypesWrappers;
 using System;
@@ -156,7 +157,22 @@ namespace Player.ScriptLineTypes
             {
                 lineWrapper = new StopProcessingWrapper();
             }
-
+            if (lineType == typeof(AddStatusEffect))
+            {
+                lineWrapper = new AddStatusEffectWrapper((AddStatusEffect)line);
+            }
+            if (lineType == typeof(RemoveStatusEffect))
+            {
+                lineWrapper = new RemoveStatusEffectWrapper((RemoveStatusEffect)line);
+            }
+            if (lineType == typeof(GetArgument))
+            {
+                lineWrapper = new GetArgumentWrapper((GetArgument)line);
+            }
+            if (lineType == typeof(CheckIfEffectsResolved))
+            {
+                lineWrapper = new CheckIfEffectsResolvedWrapper();
+            }
             if (lineWrapper != null)
             {
                 lineWrapper.parent = parent;

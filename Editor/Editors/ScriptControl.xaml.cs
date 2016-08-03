@@ -60,6 +60,9 @@ namespace Editor.Editors
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.GetAllItems), typeof(ScriptEditors.GetAllItemsEditor));
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.GetAllItemsOfType), typeof(ScriptEditors.GetAllItemsOfTypeEditor));
             ScriptEditorsByScriptType.Add(typeof(Scripter.Arrays.ConcatenateArray), typeof(ScriptEditors.ConcatenateArrayEditor));
+            ScriptEditorsByScriptType.Add(typeof(Scripter.StatusEffects.AddStatusEffect), typeof(ScriptEditors.AddStatusEffectEditor));
+            ScriptEditorsByScriptType.Add(typeof(Scripter.StatusEffects.RemoveStatusEffect), typeof(ScriptEditors.RemoveStatusEffectEditor));
+            ScriptEditorsByScriptType.Add(typeof(Scripter.StatusEffects.GetArgument), typeof(ScriptEditors.GetArgumentEditor));
         }
 
         public Window GetScriptEditorByType(Type scriptLineType)

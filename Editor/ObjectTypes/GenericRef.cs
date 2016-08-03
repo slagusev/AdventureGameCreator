@@ -143,6 +143,23 @@ namespace Editor.ObjectTypes
                 else return Guid.Empty;
             });
         }
+        public static GenericRef<StatusEffect> GetStatusEffectRef()
+        {
+            return new GenericRef<StatusEffect>(id =>
+            {
+                foreach (var a in MainViewModel.MainViewModelStatic.StatusEffects)
+                {
+                    if (a.Id == id)
+                        return a;
+                }
+                return null;
+            }, se=>
+            {
+                if (se != null)
+                    return se.Id;
+                return Guid.Empty;
+            });
+        }
         public static GenericRef<Conversation> GetConversationRef()
         {
             return new GenericRef<Conversation>(id =>

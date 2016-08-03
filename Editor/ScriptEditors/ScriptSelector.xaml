@@ -80,6 +80,19 @@
                 </GroupBox>
             </ScrollViewer>
             <ScrollViewer>
+                <GroupBox Header="Status Effects">
+
+                    <StackPanel >
+                        <Button Content="Add Status" x:Name="addStatusEffect" Click="addStatusEffect_Click"/>
+                        <Button Content="Remove Status" x:Name="removeStatusEffect" Click="removeStatusEffect_Click"/>
+                        <Button Content="Get Argument" x:Name="getNumberArgument" Visibility="{Binding IsStatusEffect, Converter={StaticResource VisibilityConverter}}" Click="getNumberArgument_Click"/>
+                        <Button Content="Check If Resolved" x:Name="checkIfResolved" Click="checkIfResolved_Click"/>
+                        
+                    </StackPanel>
+
+                </GroupBox>
+            </ScrollViewer>
+            <ScrollViewer>
                 <GroupBox Header="Miscellaneous">
                     
                     <StackPanel >

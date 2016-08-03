@@ -24,6 +24,7 @@
             <MenuItem Header="I_tem" Name="newItem" Click="newItem_Click"></MenuItem>
             <MenuItem Header="Conv_ersation" Name="newConversation" Click="newConversation_Click_1"></MenuItem>
             <MenuItem Header="Common _Event" Name="newCommonEvent" Click="newCommonEvent_Click_1"></MenuItem>
+            <MenuItem Header="Status E_ffect" Name="newStatusEffect" Click="newStatusEffect_Click"></MenuItem>
         </MenuItem>
     </Menu>
 </UserControl>

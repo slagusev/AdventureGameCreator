@@ -28,6 +28,7 @@ namespace Player.ObjectTypesWrappers
         public Dictionary<Guid, VariableWrapper> localVars = new Dictionary<Guid,VariableWrapper>();
         public bool isSubscript = false;
         public Dictionary<string, VariableWrapper> localVarsByName = new Dictionary<string, VariableWrapper>();
+        public StatusEffectWrapper CurrentStatusEffect;
         public void DupeVars(ScriptWrapper s)
         {
             ScriptWrapper parent = s;
@@ -50,10 +51,10 @@ namespace Player.ObjectTypesWrappers
                 }
             }
         }
-        public bool? Execute()
+        public bool? Execute(bool dontCopyLocals = false)
         {
             TextResult.Clear();
-            if (parent == null)
+            if (parent == null && !dontCopyLocals)
             {
                 foreach (var a in MainViewModel.GetMainViewModelStatic().CurrentGame.VarById.Where(a => a.Value.VariableBase.Name.StartsWith("_")))
                 {

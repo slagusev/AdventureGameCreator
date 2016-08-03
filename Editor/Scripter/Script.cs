@@ -1,4 +1,5 @@
-﻿using Editor.Scripter.ItemManagement;
+﻿using Editor.ObjectTypes;
+using Editor.Scripter.ItemManagement;
 using Editor.Scripter.Misc;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace Editor.Scripter
             this.AllowedCommonEventTypes.Clear();
             this.IsInConversation = s.IsInConversation;
             this.CanStartConversations = s.CanStartConversations;
+            this.IsStatusEffect = s.IsStatusEffect;
+            this.CurrentStatusEffect = s.CurrentStatusEffect;
             foreach (var ce in s.AllowedCommonEventTypes)
             {
                 this.AllowedCommonEventTypes.Add(ce);
@@ -247,6 +250,18 @@ namespace Editor.Scripter
                         break;
                     case "StopProcessing":
                         script.ScriptLines.Add(new Editor.Scripter.Flow.StopProcessing());
+                        break;
+                    case "AddStatusEffect":
+                        script.ScriptLines.Add(StatusEffects.AddStatusEffect.FromXML(element));
+                        break;
+                    case "RemoveStatusEffect":
+                        script.ScriptLines.Add(StatusEffects.RemoveStatusEffect.FromXML(element));
+                        break;
+                    case "GetArgument":
+                        script.ScriptLines.Add(StatusEffects.GetArgument.FromXML(element,script.CurrentStatusEffect));
+                        break;
+                    case "CheckIfEffectsResolved":
+                        script.ScriptLines.Add(new StatusEffects.CheckIfEffectsResolved());
                         break;
                     default:
                         break;
@@ -647,6 +662,64 @@ namespace Editor.Scripter
 
                 _canAddItem = value;
                 RaisePropertyChanged(CanAddItemPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="IsStatusEffect" /> property's name.
+        /// </summary>
+        public const string IsStatusEffectPropertyName = "IsStatusEffect";
+
+        private bool _isStatusEffect = false;
+
+        /// <summary>
+        /// Sets and gets the IsStatusEffect property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public bool IsStatusEffect
+        {
+            get
+            {
+                return _isStatusEffect;
+            }
+
+            set
+            {
+                if (_isStatusEffect == value)
+                {
+                    return;
+                }
+
+                _isStatusEffect = value;
+                RaisePropertyChanged(IsStatusEffectPropertyName);
+            }
+        }
+        /// <summary>
+        /// The <see cref="CurrentStatusEffect" /> property's name.
+        /// </summary>
+        public const string CurrentStatusEffectPropertyName = "CurrentStatusEffect";
+
+        private StatusEffect _currentStatusEffect = null;
+
+        /// <summary>
+        /// Sets and gets the CurrentStatusEffect property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// </summary>
+        public StatusEffect CurrentStatusEffect
+        {
+            get
+            {
+                return _currentStatusEffect;
+            }
+
+            set
+            {
+                if (_currentStatusEffect == value)
+                {
+                    return;
+                }
+
+                _currentStatusEffect = value;
+                RaisePropertyChanged(CurrentStatusEffectPropertyName);
             }
         }
 

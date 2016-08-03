@@ -107,6 +107,18 @@
                     </HierarchicalDataTemplate>
                 </TreeViewItem.ItemTemplate>
             </TreeViewItem>
+            <TreeViewItem Header="Status Effects" IsExpanded="False" ItemsSource="{Binding StatusEffectGroups.Groups, Source={StaticResource MainViewModelStatic}}">
+                <TreeViewItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Item2}">
+                        <TextBlock Text="{Binding Item1, Mode=OneWay}"></TextBlock>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
 
             <TreeViewItem Header="Game And Character Settings" x:Name="gameSettings" MouseDoubleClick="gameSettings_MouseDoubleClick"></TreeViewItem>
         </TreeView>

@@ -5,6 +5,7 @@ using Editor.Scripter.Conditions;
 using Editor.Scripter.Flow;
 using Editor.Scripter.ItemManagement;
 using Editor.Scripter.Misc;
+using Editor.Scripter.StatusEffects;
 using Editor.Scripter.TextFunctions;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,9 @@ namespace Editor
         public static AddToArray TestAddToArray { get; set; }
         public static ForEachInArray TestForEachInArray { get; set; }
 
+        public static StatusEffect TestStatusEffect { get; set; }
+        public static Editor.Scripter.StatusEffects.AddStatusEffect AddStatusEffectTest { get; set; }
+        public static Editor.Scripter.StatusEffects.GetArgument GetArgTest { get; set; }
         static TestData()
         {
 
@@ -232,8 +236,21 @@ namespace Editor
             //TestArray.IsNumber = true;
             //TestArray.Name = "Test";
             //TestArray.Group = "Test Group";
-            
+            TestStatusEffect = new StatusEffect();
+            TestStatusEffect.Name = "Sample Status Effect";
+            TestStatusEffect.OnInitialize.AddBeforeSelected(new Comment { CommentText = "On Initialize Script" });
+            TestStatusEffect.OnMove.AddBeforeSelected(new Comment { CommentText = "On Move Script" });
+            TestStatusEffect.OnStack.AddBeforeSelected(new Comment { CommentText = "On Stack Script" });
+            TestStatusEffect.OnFinish.AddBeforeSelected(new Comment { CommentText = "On Finish Script" });
+            TestStatusEffect.CheckIfCleared.AddBeforeSelected(new Comment { CommentText = "Check If Cleared Script" });
+            TestStatusEffect.CanOccurMultipleTimes = false;
+            TestStatusEffect.Arguments.Add(new StatusEffectValue { Name = "Duration", IsNumber = true });
+            TestStatusEffect.Arguments.Add(new StatusEffectValue { Name = "Text Test", IsString = true });
+            TestStatusEffect.SelectedArgument = TestStatusEffect.Arguments.Last();
 
+            //AddStatusEffectTest = new AddStatusEffect();
+            //AddStatusEffectTest.AssociatedEffect = new GenericRef<StatusEffect>((id) => TestStatusEffect, (statusEffect) => TestStatusEffect.Id) { Ref = TestStatusEffect.Id };
+            //AddStatusEffect.UpdateAllArguments(TestStatusEffect);
 
         }
     }

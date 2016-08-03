@@ -21,7 +21,7 @@ namespace Player.ObjectTypesWrappers
 
         public void GoToStage(int stage)
         {
-
+            
             var stageInstance = Convo.Stages.Where(a => a.StageId == stage).FirstOrDefault();
             if (stageInstance != null)
             {
@@ -36,7 +36,7 @@ namespace Player.ObjectTypesWrappers
             }
             else ConversationFinished = true;
             MainViewModel.GetMainViewModelStatic().CurrentGame.RefreshAll();
-            if (ConversationFinished)
+            if (ConversationFinished && MainViewModel.GetMainViewModelStatic().CurrentConversation == this)
             {
                 MainViewModel.GetMainViewModelStatic().SetExploreMode();
             }
